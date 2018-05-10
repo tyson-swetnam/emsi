@@ -2,9 +2,17 @@
 
 [Cyverse Atmosphere](http://www.cyverse.org/atmosphere) and [XSEDE Jetstream](https://www.jetstream-cloud.org/)
 
-# Install Docker
-
 Once the instance is `active` you can install additional software.
+
+# Install Anaconda (Jupyter Lab)
+
+Type:
+
+```
+ezd
+```
+
+# Install Docker
 
 Follow the `ezd` installation instructions and [install Docker](https://cyverse-ez-quickstart.readthedocs-hosted.com/en/latest/#ez-install-docker)  using the provided Ansible playbook.
 
