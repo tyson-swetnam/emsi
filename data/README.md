@@ -1,3 +1,3 @@
 # Sample Data extracts from Google Earth Engine
 
-These are a few 
+NDVI Time Series data from the example JavaScripts 
