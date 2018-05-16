@@ -15,7 +15,7 @@ example data files extracted from Earth Engine
 
 JavaScripts used in Earth Engine for data extractions
 
-### /Rmd
+### /rmd
 
 R Markdown files with data analyses
 
