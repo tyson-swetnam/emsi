@@ -1,0 +1,278 @@
+---
+title: "EMSI LANDSAT 5,7 Pinalenos"
+author: "Tyson Lee Swetnam"
+date: "May 15, 2018"
+output:
+  pdf_document: default
+  html_document: default
+always_allow_html: yes
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Import packages
+
+```{r message=FALSE, warning=FALSE}
+# install.packages("PerformanceAnalytics")
+# install.packages("lubridate")
+# install.packages("dlm")
+# library(devtools)
+# devtools::install_github('hadley/ggplot2')
+# install_github('sinhrks/ggfortify')
+# install.packages("foreign")
+# install.packages("truncreg")
+# install.packages("boot")
+# install.packages("plotly")
+```
+
+```{r message=FALSE, warning=FALSE}
+library(PerformanceAnalytics)
+library(ggplot2)
+library(lubridate)
+library(plotly)
+```
+
+## Data
+
+I extracted the entire time series of 16-day Landsat  NDVI data from Google Earth Engine (GEE) for an AOI on the Cienega Ranch, near the Mt Graham International Observatory (MGIO) and nearby High Peak (Mt. Graham).
+
+In GEE I filtered the time series using the Landsat Surface Reflectance Tier 1 data.
+
+```{r message=FALSE, warning=FALSE}
+## Import the Landsat 16-day NDVI from Google Earth Engine extract
+
+aoi4 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat7_mgio_ndvi.csv")
+aoi3 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat5_mgio_ndvi.csv")
+aoi2 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat7_highpeak_ndvi.csv")
+aoi1 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat5_highpeak_ndvi.csv")
+
+## Remove days with low NDVI values - likely due to cluds and snow.
+
+aoi4$ndvi_nans <- as.numeric(as.character(aoi4$ndvi))
+aoi4$ndvi_range <- ifelse(aoi4$ndvi_nans>0,aoi4$ndvi_nans,NA)
+## Convert the dates to an R readable format
+aoi4$asdate <- as.Date(aoi4$date, format = "%b - %d - %Y")
+aoi4$julian <- yday(aoi4$asdate)
+aoi4$julian_rounded <- round((aoi4$julian/365)*52)*7
+
+aoi3$ndvi_nans <- as.numeric(as.character(aoi3$ndvi))
+aoi3$ndvi_range <- ifelse(aoi3$ndvi_nans>0.3,aoi3$ndvi_nans,NA)
+## Convert the dates to an R readable format
+aoi3$asdate <- as.Date(aoi3$date, format = "%b - %d - %Y")
+aoi3$julian <- yday(aoi3$asdate)
+aoi3$julian_rounded <- round((aoi3$julian/365)*52)*7
+
+aoi2$ndvi_nans <- as.numeric(as.character(aoi2$ndvi))
+aoi2$ndvi_range <- ifelse(aoi2$ndvi_nans>0,aoi2$ndvi_nans,NA)
+## Convert the dates to an R readable format
+aoi2$asdate <- as.Date(aoi2$date, format = "%b - %d - %Y")
+aoi2$julian <- yday(aoi2$asdate)
+aoi2$julian_rounded <- round((aoi2$julian/365)*52)*7
+
+aoi1$ndvi_nans <- as.numeric(as.character(aoi1$ndvi))
+aoi1$ndvi_range <- ifelse(aoi1$ndvi_nans>0,aoi1$ndvi_nans,NA)
+## Convert the dates to an R readable format
+aoi1$asdate <- as.Date(aoi1$date, format = "%b - %d - %Y")
+aoi1$julian <- yday(aoi1$asdate)
+aoi1$julian_rounded <- round((aoi1$julian/365)*52)*7
+
+```
+
+Plot NDVI:
+```{r message=FALSE, warning=FALSE}
+# Plot examples for a range of dates
+range_dates = aoi3[1:478,]
+p1 <- ggplot(range_dates[!is.na(range_dates$ndvi_range),], aes(x=asdate, y=ndvi_range))+ geom_point(aes(color=ndvi_range)) + scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.5) + ggtitle("Landsat 5 1984-2011 16-Day NDVI MGIO") + xlab("Date") + ylab("NDVI") + geom_line(color='white', size = 0.1) 
+
+p1 <- p1 + theme(
+    line = element_line(colour = "white"),
+    title = element_text(colour = "white"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "white"),
+    legend.text = element_text(colour = "white"),
+    axis.text = element_text(colour = "white"),
+    axis.ticks = element_line(colour = "white"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "white"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggplotly(p1)
+plot(p1)
+
+ggsave('~/Documents/landsat5_mgio_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+```
+
+In order to make EMSI sensitive to inter-annual variation, e.g. vegetation can be more stressed than average during fall or spring dry seasons, I calculate a moving average over the Julian calendar year (1 - 365(6) days) for the time series I had available from Landsat 7.
+
+Here I calculate EMSI during a reference period between 1984 and 1996
+
+```{r message=FALSE, warning=FALSE}
+
+# Predict the Julian date average of Landsat 7 NDVI using a Loess function
+mean_loess7 <- predict(loess(ndvi_range ~ julian_rounded, aoi3[1:196,], span=0.1), aoi3[1:196,]$julian_rounded)
+# Calculate mean NDVI for each 16-day Julian period
+ndvi_mean7 <- setNames(aggregate(aoi3[1:196,]$ndvi_range, list(aoi3[1:196,]$julian_rounded), mean, na.rm=TRUE, na.action=NULL), c("julian", "ndvi_mean"))
+
+# Calculate emsi using Performance Analytics sd.multiperiod
+aoi4$emsi = (aoi4$ndvi_range - mean_loess7) /  sd.multiperiod(aoi4$ndvi_range,scale=1)
+aoi3$emsi = (aoi3$ndvi_range - mean_loess7) /  sd.multiperiod(aoi3$ndvi_range,scale=1)
+aoi2$emsi = (aoi2$ndvi_range - mean_loess7) /  sd.multiperiod(aoi2$ndvi_range,scale=1)
+aoi1$emsi = (aoi1$ndvi_range - mean_loess7) /  sd.multiperiod(aoi1$ndvi_range,scale=1)
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Histograms of the time series
+hist(aoi3[1:196,]$julian_rounded,breaks=52,xlab="Julian day of year", main = "Landsat 5 Histogram of Dates in Reference Dataset")
+```
+
+I used Loess function (curved blue line) to find the moving average of each period. The black line links the means of each 16-day period. 
+
+```{r message=FALSE, warning=FALSE}
+# Landsat 5 MGIO
+
+p2 <- ggplot(aoi3[1:196,], aes(x=julian_rounded,y=ndvi_range)) + 
+  geom_point(aes(color=ndvi_range)) + 
+  scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.5) + 
+  ggtitle("Landsat 5 1984-1996 Reference 16-Day Moving Average NDVI over MGIO") + 
+  xlab("Julian Date") + 
+  ylab("NDVI") + 
+  geom_smooth(method="loess", se=TRUE, level=0.95) 
+
+p2 <- p2 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+plot(p2)
+ggsave('~/Documents/landsat5_mgio_ndvi_mean.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+ggplotly(p2)
+
+```
+
+The calculation of emsi still retains some of the same trends as the original NDVI, but it is now sensitive to changes in vegetation condition during the winter, spring, and fall seasons.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+range_dates = aoi4[1:406,]
+
+p4 <- ggplot(range_dates[!is.na(range_dates$emsi),], aes(x=asdate,y=emsi)) + 
+  geom_point(aes(color=emsi)) + 
+  scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.0) + 
+  scale_y_continuous(limits = c(-5.0,5.0), breaks = seq(-5,5,0.5)) + 
+  ggtitle("Landsat 7 EMSI") + 
+  xlab("Date") + 
+  ylab("EMSI") + 
+  geom_line(size = 0.1, color="white")
+
+p4 <- p4 + theme(
+    line = element_line(colour = "white"),
+    title = element_text(colour = "white"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "white"),
+    legend.text = element_text(colour = "white"),
+    axis.text = element_text(colour = "white"),
+    axis.ticks = element_line(colour = "white"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "white"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+plot(p4)
+ggsave('~/Documents/landsat7_mgio_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+ggplotly(p4)
+```
+
+I also show the 16-day average of NDVI over the 18 year time series (early 1984 until 2017) for all three satellites.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+ggplot(aoi2[!is.na(aoi2$emsi),], aes(x=asdate,y=emsi)) + geom_point(aes(color=emsi)) + scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.0) + scale_y_continuous(limits = c(-5,5), breaks = seq(-5,5,0.5)) + ggtitle("Landsat 7 High Peak EMSI") + xlab("Date") + ylab("EMSI") + geom_line(size = 0.1, color="blue")
+
+ggplot(aoi1[!is.na(aoi1$emsi),], aes(x=asdate,y=emsi)) + geom_point(aes(color=emsi)) + scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.0) + scale_y_continuous(limits = c(-5,5), breaks = seq(-5,5,0.5)) + ggtitle("Landsat 5 High Peak EMSI") + xlab("Date") + ylab("EMSI") + geom_line(size = 0.1)
+
+```
+
+Alternately, I can plot the three time series together.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Plot time series
+l7 = aoi2[1:406,]
+
+p2 <- ggplot(l7, aes(x=asdate,y=emsi)) + 
+  geom_point(aes(color=emsi)) + 
+  scale_colour_gradient2(low = "red", high = "green", midpoint = 0.0) + 
+  scale_y_continuous(limits = c(-5,5), breaks = seq(-5,5,0.5)) +
+  #geom_line(data = l5, aes(x=asdate,y=emsi), size = 0.1, color = "yellow") + 
+  geom_line(data = l7, aes(x=asdate,y=emsi), size = 0.1, color = "white") +
+  ggtitle("High Peak EMSI") + 
+  xlab("Calendar Date") + ylab("EMSI")
+
+
+p2 <- p2 + theme(
+    line = element_line(colour = "white"),
+    title = element_text(colour = "white"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "white"),
+    legend.text = element_text(colour = "white"),
+    axis.text = element_text(colour = "white"),
+    axis.ticks = element_line(colour = "white"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "white"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggsave('~/Documents/landsat7_highpeak_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+plot(p2)
+ggplotly(p2)
+```
+
+```{r}
+# Plot time series together
+l5 = aoi1[240:343,]
+
+p2 <- ggplot(l5, aes(x=asdate,y=emsi)) + 
+  geom_point(aes(color=emsi)) + 
+  scale_colour_gradient2(low = "red", high = "green", midpoint = 0.0) + 
+  scale_y_continuous(limits = c(-3,1.3), breaks = seq(-3,1.3,0.5)) +
+  geom_line(data = l5, aes(x=asdate,y=emsi), size = 0.1, color = "yellow") + 
+  # geom_line(data = l7, aes(x=asdate,y=emsi), size = 0.1, color = "white") +
+  ggtitle("Dos Cabezas EMSI") + 
+  xlab("Calendar Date") + ylab("EMSI")
+
+p2 <- p2 + theme(
+    line = element_line(colour = "white"),
+    title = element_text(colour = "white"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+plot (p2)
+
+ggsave('~/Documents/landsat7_dos_cabezas_grazed.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+```
