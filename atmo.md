@@ -6,10 +6,14 @@ Once the instance is `active` you can install additional software.
 
 # Install Anaconda (Jupyter Lab)
 
+This installation is Python3, and installs the R kernel.
+
+Additional instructions [here](https://cyverse-neon-data-institute-2018.readthedocs-hosted.com/en/latest/step1.html#ez-installation-of-project-jupyter)
+
 Type:
 
 ```
-ezd
+ezj -R
 ```
 
 # Install Docker
