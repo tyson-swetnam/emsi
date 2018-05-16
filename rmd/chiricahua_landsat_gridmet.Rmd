@@ -1,0 +1,660 @@
+---
+title: "Chiricahuas ERC vs EMSI"
+author: "Tyson Lee Swetnam"
+date: "5/16/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Import packages
+
+```{r message=FALSE, warning=FALSE}
+# install.packages("PerformanceAnalytics")
+# install.packages("lubridate")
+# install.packages("dlm")
+# library(devtools)
+# devtools::install_github('hadley/ggplot2')
+# install_github('sinhrks/ggfortify')
+# install.packages("foreign")
+# install.packages("truncreg")
+# install.packages("boot")
+# install.packages("plotly")
+```
+
+```{r message=FALSE, warning=FALSE}
+library(PerformanceAnalytics)
+library(ggplot2)
+library(lubridate)
+library(plotly)
+```
+
+## Data
+
+I extracted the entire time series of 16-day Landsat  NDVI data from Google Earth Engine (GEE) for an AOI in the Chiricahua Mountains, Arizona. 
+
+I also extracted the Gridmet daily product for fire behavior.
+
+In GEE I filtered the time series using the Landsat Surface Reflectance Tier 1 data.
+
+```{r message=FALSE, warning=FALSE}
+
+## Import Gridmet 1000-hour Fuel Moistures, Energy Release Component (ERC), and Burning Index (BI)
+
+## 1000hr Fuel Moistures
+fm1000_1984_1994 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_fm1000_chiricahua_sa1_1984_1994.csv")
+fm1000_1995_2005 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_fm1000_chiricahua_sa1_1995_2005.csv")
+fm1000_2006_2018 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_fm1000_chiricahua_sa1_2006_2018.csv")
+
+fm1000 <- rbind(fm1000_1984_1994, fm1000_1995_2005, fm1000_2006_2018)
+## Convert the dates to an R readable format
+fm1000$asdate <- as.Date(fm1000$date, format = "%b %d, %Y")
+fm1000$julian <- yday(fm1000$asdate)
+fm1000$julian_rounded <- round((fm1000$julian/365)*52)*7
+
+## ERC
+erc_1984_1994 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_erc_chiricahua_sa1_1984_1994.csv")
+erc_1995_2005 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_erc_chiricahua_sa1_1995_2005.csv")
+erc_2006_2018 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_erc_chiricahua_sa1_2006_2018.csv")
+
+erc <- rbind(erc_1984_1994, erc_1995_2005, erc_2006_2018)
+## Convert the dates to an R readable format
+erc$asdate <- as.Date(erc$date, format = "%b %d, %Y")
+erc$julian <- yday(erc$asdate)
+erc$julian_rounded <- round((erc$julian/365)*52)*7
+
+## BI
+## 1000hr Fuel Moistures
+bi_1984_1994 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_bi_chiricahua_sa1_1984_1994.csv")
+bi_1995_2005 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_bi_chiricahua_sa1_1995_2005.csv")
+bi_2006_2018 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_bi_chiricahua_sa1_2006_2018.csv")
+
+bi <- rbind(bi_1984_1994, bi_1995_2005, bi_2006_2018)
+## Convert the dates to an R readable format
+bi$asdate <- as.Date(bi$date, format = "%b %d, %Y")
+bi$julian <- yday(bi$asdate)
+bi$julian_rounded <- round((bi$julian/365)*52)*7
+
+## Import the Landsat 16-day NDVI from Google Earth Engine extract
+l8_sa2 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat8_chiricahua_sa2_ndvi.csv")
+l7_sa2 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat7_chiricahua_sa2_ndvi.csv")
+l5_sa2 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat5_chiricahua_sa2_ndvi.csv")
+l8_sa1 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat8_chiricahua_sa1_ndvi.csv")
+l7_sa1 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat7_chiricahua_sa1_ndvi.csv")
+l5_sa1 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat5_chiricahua_sa1_ndvi.csv")
+
+## Remove days with low NDVI values - likely due to cluds and snow.
+l8_sa2$ndvi_nans <- as.numeric(as.character(l8_sa2$ndvi))
+l8_sa2$ndvi_range <- ifelse(l8_sa2$ndvi_nans>0.15,l8_sa2$ndvi_nans,NA)
+## Convert the dates to an R readable format
+l8_sa2$asdate <- as.Date(l8_sa2$date, format = "%b %d, %Y")
+l8_sa2$julian <- yday(l8_sa2$asdate)
+l8_sa2$julian_rounded <- round((l8_sa2$julian/365)*52)*7
+
+l7_sa2$ndvi_nans <- as.numeric(as.character(l7_sa2$ndvi))
+l7_sa2$ndvi_range <- ifelse(l7_sa2$ndvi_nans>0.15,l7_sa2$ndvi_nans,NA)
+## Convert the dates to an R readable format
+l7_sa2$asdate <- as.Date(l7_sa2$date, format = "%b %d, %Y")
+l7_sa2$julian <- yday(l7_sa2$asdate)
+l7_sa2$julian_rounded <- round((l7_sa2$julian/365)*52)*7
+
+
+l5_sa2$ndvi_nans <- as.numeric(as.character(l5_sa2$ndvi))
+l5_sa2$ndvi_range <- ifelse(l5_sa2$ndvi_nans>0.3,l5_sa2$ndvi_nans,NA)
+## Convert the dates to an R readable format
+l5_sa2$asdate <- as.Date(l5_sa2$date, format = "%b %d, %Y")
+l5_sa2$julian <- yday(l5_sa2$asdate)
+l5_sa2$julian_rounded <- round((l5_sa2$julian/365)*52)*7
+
+l8_sa1$ndvi_nans <- as.numeric(as.character(l8_sa1$ndvi))
+l8_sa1$ndvi_range <- ifelse(l8_sa1$ndvi_nans>0.3,l8_sa1$ndvi_nans,NA)
+## Convert the dates to an R readable format
+l8_sa1$asdate <- as.Date(l8_sa1$date, format = "%b %d, %Y")
+l8_sa1$julian <- yday(l8_sa1$asdate)
+l8_sa1$julian_rounded <- round((l8_sa1$julian/365)*52)*7
+
+l7_sa1$ndvi_nans <- as.numeric(as.character(l7_sa1$ndvi))
+l7_sa1$ndvi_range <- ifelse(l7_sa1$ndvi_nans>0.3,l7_sa1$ndvi_nans,NA)
+## Convert the dates to an R readable format
+l7_sa1$asdate <- as.Date(l7_sa1$date, format = "%b %d, %Y")
+l7_sa1$julian <- yday(l7_sa1$asdate)
+l7_sa1$julian_rounded <- round((l7_sa1$julian/365)*52)*7
+
+l5_sa1$ndvi_nans <- as.numeric(as.character(l5_sa1$ndvi))
+l5_sa1$ndvi_range <- ifelse(l5_sa1$ndvi_nans>0.35,l5_sa1$ndvi_nans,NA)
+## Convert the dates to an R readable format
+l5_sa1$asdate <- as.Date(l5_sa1$date, format = "%b %d, %Y")
+l5_sa1$julian <- yday(l5_sa1$asdate)
+l5_sa1$julian_rounded <- round((l5_sa1$julian/365)*52)*7
+
+```
+
+Plot NDVI:
+```{r message=FALSE, warning=FALSE}
+# Plot examples for a range of dates
+
+# Landsat 5 Study Area 1
+range_dates = l5_sa1[1:478,]
+p1 <- ggplot(range_dates[!is.na(range_dates$ndvi_range),], aes(x=asdate, y=ndvi_range))+ geom_point(aes(color=ndvi_range)) + scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.5) + ggtitle("Landsat 5 1984-2011 16-Day NDVI Chiricahua Study Area 1") + xlab("Date") + ylab("NDVI") + geom_line(color='blue', size = 0.1) 
+
+p1 <- p1 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggplotly(p1)
+plot(p1)
+ggsave('~/Documents/landsat5_chiricahua_sa1_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+# Landsat 5 Study Area 2
+range_dates = l5_sa2[1:478,]
+p2 <- ggplot(range_dates[!is.na(range_dates$ndvi_range),], aes(x=asdate, y=ndvi_range))+ geom_point(aes(color=ndvi_range)) + scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.5) + ggtitle("Landsat 5 1984-2011 16-Day NDVI Chiricahua Study Area 2") + xlab("Date") + ylab("NDVI") + geom_line(color='blue', size = 0.1) 
+
+p2 <- p2 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggplotly(p2)
+plot(p2)
+ggsave('~/Documents/landsat5_chiricahua_sa2_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+```
+```{r message=FALSE, warning=FALSE}
+# Plot examples for a range of dates
+
+# Landsat 7 Study Area 1
+range_dates = l7_sa1[1:403,]
+p1 <- ggplot(range_dates[!is.na(range_dates$ndvi_range),], aes(x=asdate, y=ndvi_range))+ geom_point(aes(color=ndvi_range)) + scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.5) + ggtitle("Landsat 7 1999-2018 16-Day NDVI Chiricahua Study Area 1") + xlab("Date") + ylab("NDVI") + geom_line(color='blue', size = 0.1) 
+
+p1 <- p1 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggplotly(p1)
+plot(p1)
+ggsave('~/Documents/landsat7_chiricahua_sa1_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+# Landsat 7 Study Area 2
+range_dates = l7_sa2[1:403,]
+p2 <- ggplot(range_dates[!is.na(range_dates$ndvi_range),], aes(x=asdate, y=ndvi_range))+ geom_point(aes(color=ndvi_range)) + scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.5) + ggtitle("Landsat 7 1999-2018 16-Day NDVI Chiricahua Study Area 2") + xlab("Date") + ylab("NDVI") + geom_line(color='blue', size = 0.1) 
+
+p2 <- p2 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggplotly(p2)
+plot(p2)
+ggsave('~/Documents/landsat7_chiricahua_sa2_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+```
+```{r message=FALSE, warning=FALSE}
+# Plot examples for a range of dates
+
+# Landsat 8 Study Area 1
+range_dates = l8_sa1[1:111,]
+p1 <- ggplot(range_dates[!is.na(range_dates$ndvi_range),], aes(x=asdate, y=ndvi_range))+ geom_point(aes(color=ndvi_range)) + scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.5) + ggtitle("Landsat 8 2013-2018 16-Day NDVI Chiricahua Study Area 1") + xlab("Date") + ylab("NDVI") + geom_line(color='blue', size = 0.1) 
+
+p1 <- p1 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggplotly(p1)
+plot(p1)
+ggsave('~/Documents/landsat8_chiricahua_sa1_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+# Landsat 7 Study Area 2
+range_dates = l8_sa2[1:111,]
+p2 <- ggplot(range_dates[!is.na(range_dates$ndvi_range),], aes(x=asdate, y=ndvi_range))+ geom_point(aes(color=ndvi_range)) + scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.5) + ggtitle("Landsat 8 2013-2018 16-Day NDVI Chiricahua Study Area 2") + xlab("Date") + ylab("NDVI") + geom_line(color='blue', size = 0.1) 
+
+p2 <- p2 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggplotly(p2)
+plot(p2)
+ggsave('~/Documents/landsat7_chiricahua_sa2_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+```
+
+In order to make EMSI sensitive to inter-annual variation, e.g. vegetation can be more stressed than average during fall or spring dry seasons, I calculate a moving average over the Julian calendar year (1 - 365(6) days) for the time series I had available from Landsat 8.
+
+I used Loess function (curved blue line) to find the moving average of each period. The black line links the means of each 16-day period. 
+
+```{r message=FALSE, warning=FALSE}
+# Landsat 8 Chiricahua Mean NDVI
+
+p2 <- ggplot(l8_sa1[1:111,], aes(x=julian_rounded,y=ndvi_range)) + 
+  geom_point(aes(color=ndvi_range)) + 
+  scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.5) + 
+  ggtitle("Landsat 8 Reference 16-Day Moving Average NDVI over Chiricahua") + 
+  xlab("Julian Date") + 
+  ylab("NDVI") + 
+  geom_smooth(method="loess", se=TRUE, level=0.95) 
+
+p2 <- p2 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+plot(p2)
+ggsave('~/Documents/landsat8_chiricahua_ndvi_mean.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+ggplotly(p2)
+
+```
+
+Here I calculate EMSI during a reference period between 1984 and 1996
+
+```{r message=FALSE, warning=FALSE}
+
+# Predict the Julian date average of Landsat 8 NDVI using a Loess function
+mean_loess5 <- predict(loess(ndvi_range ~ julian_rounded, l8_sa1[1:111,], span=0.1), l8_sa1[1:111,]$julian_rounded)
+
+# Calculate mean NDVI for each 16-day Julian period
+ndvi_mean5 <- setNames(aggregate(l8_sa1[1:111,]$ndvi_range, list(l8_sa1[1:111,]$julian_rounded), mean, na.rm=TRUE, na.action=NULL), c("julian", "ndvi_mean"))
+
+# Calculate emsi using Performance Analytics sd.multiperiod
+l8_sa2$emsi = (l8_sa2$ndvi_range - mean_loess5) /  sd.multiperiod(l8_sa2$ndvi_range,scale=1)
+l7_sa2$emsi = (l7_sa2$ndvi_range - mean_loess5) /  sd.multiperiod(l7_sa2$ndvi_range,scale=1)
+l5_sa2$emsi = (l5_sa2$ndvi_range - mean_loess5) /  sd.multiperiod(l5_sa2$ndvi_range,scale=1)
+l8_sa1$emsi = (l8_sa1$ndvi_range - mean_loess5) /  sd.multiperiod(l8_sa1$ndvi_range,scale=1)
+l7_sa1$emsi = (l7_sa1$ndvi_range - mean_loess5) /  sd.multiperiod(l7_sa1$ndvi_range,scale=1)
+l5_sa1$emsi = (l5_sa1$ndvi_range - mean_loess5) /  sd.multiperiod(l5_sa1$ndvi_range,scale=1)
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Histograms of the time series
+hist(l8_sa1[1:100,]$julian_rounded,breaks=52,xlab="Julian day of year", main = "Landsat 8 Histogram of Dates in Reference Dataset")
+```
+
+The calculation of emsi still retains some of the same trends as the original NDVI, but it is now sensitive to changes in vegetation condition during the winter, spring, and fall seasons.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+range_dates = l7_sa1[1:403,]
+
+p4 <- ggplot(range_dates[!is.na(range_dates$emsi),], aes(x=asdate,y=emsi)) + 
+  geom_point(aes(color=emsi)) + 
+  scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.0) + 
+  scale_y_continuous(limits = c(-5.0,5.0), breaks = seq(-5,5,0.5)) + 
+  ggtitle("Landsat 7 EMSI") + 
+  xlab("Date") + 
+  ylab("EMSI") + 
+  geom_line(size = 0.1, color="blue")
+
+p4 <- p4 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+plot(p4)
+ggsave('~/Documents/landsat7_chiricahua_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+ggplotly(p4)
+```
+
+I also show the 16-day average of NDVI over the 18 year time series (early 1984 until 2017) for all three satellites.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+ggplot(l7_sa1[!is.na(l7_sa1$emsi),], aes(x=asdate,y=emsi)) + geom_point(aes(color=emsi)) + scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.0) + scale_y_continuous(limits = c(-5,5), breaks = seq(-5,5,0.5)) + ggtitle("Landsat 7 High Peak EMSI") + xlab("Date") + ylab("EMSI") + geom_line(size = 0.1, color="blue")
+
+ggplot(l5_sa1[!is.na(l5_sa1$emsi),], aes(x=asdate,y=emsi)) + geom_point(aes(color=emsi)) + scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.0) + scale_y_continuous(limits = c(-5,5), breaks = seq(-5,5,0.5)) + ggtitle("Landsat 5 High Peak EMSI") + xlab("Date") + ylab("EMSI") + geom_line(size = 0.1)
+
+```
+
+Alternately, I can plot the three time series together.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Plot time series
+l8 <- l8_sa1[1:111,]
+l7 <- l7_sa1[1:403,]
+l5 <- l5_sa1[1:486,]
+
+p2 <- ggplot(l5, aes(x=asdate,y=emsi)) + 
+  geom_point(aes(color=emsi), size = 1) + 
+  scale_colour_gradient2(low = "red", high = "green", midpoint = 0.0) + 
+  scale_y_continuous(limits = c(-5,5), breaks = seq(-5,5,0.5)) +
+  geom_line(data = l8, aes(x=asdate,y=emsi), size = 0.1, color = "black") + 
+  geom_line(data = l5, aes(x=asdate,y=emsi), size = 0.1, color = "black") + 
+  geom_line(data = l7, aes(x=asdate,y=emsi), size = 0.1, color = "blue") +
+  ggtitle("Chiricahua Study Area 1 EMSI") + 
+  xlab("Calendar Date") + ylab("EMSI")
+
+
+p2 <- p2 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggsave('~/Documents/landsat_chiricahua_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+plot(p2)
+ggplotly(p2)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Plot time series
+l8 <- l8_sa2[1:111,]
+l7 <- l7_sa2[1:403,]
+l5 <- l5_sa2[1:486,]
+
+p2 <- ggplot(l5, aes(x=asdate,y=emsi)) + 
+  geom_point(aes(color=emsi), size = 1) + 
+  scale_colour_gradient2(low = "red", high = "green", midpoint = 0.0) + 
+  scale_y_continuous(limits = c(-5,5), breaks = seq(-5,5,0.5)) +
+  geom_line(data = l8, aes(x=asdate,y=emsi), size = 0.1, color = "black") + 
+  geom_line(data = l5, aes(x=asdate,y=emsi), size = 0.1, color = "black") + 
+  geom_line(data = l7, aes(x=asdate,y=emsi), size = 0.1, color = "blue") +
+  ggtitle("Chiricahua Study Area 1 EMSI") + 
+  xlab("Calendar Date") + ylab("EMSI")
+
+
+p2 <- p2 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggsave('~/Documents/landsat_chiricahua_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+plot(p2)
+ggplotly(p2)
+```
+
+Plotting the GridMet data vs the EMSI
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Loess function of FM1000
+p <- ggplot(fm1000[9131:10591,], aes(x=asdate,y=fm1000)) + 
+  geom_point(aes(color=fm1000), size = 0.1) + 
+  scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 50) + 
+  ggtitle("Fuel Moistures 1000 hour Moving Average Chiricahua") + 
+  xlab("Date") + 
+  ylab("Fuel Moisture") + 
+  geom_smooth(method="loess", span = 0.01, size = 0.1)
+
+p <- p + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_blank(), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+) + scale_y_continuous(position = "right")
+
+plot(p)
+ggsave('~/Documents/landsat_chiricahua_fm1000.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+```
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Loess function of ERC
+
+p <- ggplot(erc[9131:10591,], aes(x=asdate,y=erc)) + 
+  geom_point(aes(color=erc), size = 0.1) + 
+  scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 50) + 
+  ggtitle("ERC Moving Average Chiricahua") + 
+  xlab("Date") + 
+  ylab("Energy Release Component") + 
+  geom_smooth(method="loess", span = 0.01, size = 0.1)
+
+p <- p + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_blank(), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+) + scale_y_continuous(position = "right")
+
+plot(p)
+ggsave('~/Documents/landsat_chiricahua_erc.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Loess function of Burning Indexx
+
+p <- ggplot(bi[9131:10591,], aes(x=asdate,y=bi)) + 
+  geom_point(aes(color=bi), size = 0.1) + 
+  scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 50) + 
+  ggtitle("Burning Index Moving Average Chiricahua") + 
+  xlab("Date") + 
+  ylab("Buring Index") + 
+  geom_smooth(method="loess", span = 0.01, size = 0.1)
+
+p <- p + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_blank(), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+) + scale_y_continuous(position = "right")
+
+plot(p)
+ggsave('~/Documents/landsat_chiricahua_bi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+```
+
+```{r}
+range_dates = l7_sa2[206:293,]
+
+p4 <- ggplot(range_dates[!is.na(range_dates$emsi),], aes(x=asdate,y=emsi)) + 
+  geom_point(aes(color=emsi)) + 
+  scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.0) + 
+  scale_y_continuous(limits = c(-4.0,3.5), breaks = seq(-4,3.5,0.5)) + 
+  ggtitle("Landsat 7 EMSI") + 
+  xlab("Date") + 
+  ylab("EMSI") + 
+  geom_line(size = 0.1, color="blue")
+
+p4 <- p4 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_blank(), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+plot(p4)
+
+ggsave('~/Documents/landsat_chiricahua_emsi_l7_sr2.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+```
+
+```{r}
+# LANDSAT 5 NDVI
+range_dates = l5_sa2[100:161,]
+
+p4 <- ggplot(range_dates[!is.na(range_dates$ndvi),], aes(x=asdate,y=ndvi)) + 
+  geom_point(aes(color=ndvi)) + 
+  scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.4) + 
+  scale_y_continuous(limits = c(0.2,0.6), breaks = seq(0.2,0.6,0.1)) + 
+  ggtitle("Landsat 5 NDVI") + 
+  xlab("Date") + 
+  ylab("NDVI") + 
+  geom_line(size = 0.1, color="blue")
+
+p4 <- p4 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_blank(), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+plot(p4)
+
+ggsave('~/Documents/landsat_chiricahua_ndvi_l5_sr2.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+range_dates = l8_sa1[1:111,]
+
+p2 <- ggplot(range_dates[!is.na(range_dates$emsi),], aes(x=asdate, y=emsi)) + 
+  geom_point(aes(color=emsi)) + 
+  scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0) + 
+  ggtitle("Landsat 8 2013-2018 16-Day NDVI Chiricahua Study Area 1") + 
+  xlab("Date") + 
+  ylab("EMSI") + 
+  geom_line(color='blue', size = 0.1) 
+
+p2 <- p2 + theme(
+    line = element_line(colour = "blue"),
+    title = element_text(colour = "blue"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "blue"),
+    legend.text = element_text(colour = "blue"),
+    axis.text = element_text(colour = "blue"),
+    axis.ticks = element_line(colour = "blue"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "blue"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggplotly(p2)
+```

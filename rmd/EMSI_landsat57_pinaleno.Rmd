@@ -205,10 +205,63 @@ I also show the 16-day average of NDVI over the 18 year time series (early 1984 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
-ggplot(aoi2[!is.na(aoi2$emsi),], aes(x=asdate,y=emsi)) + geom_point(aes(color=emsi)) + scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.0) + scale_y_continuous(limits = c(-5,5), breaks = seq(-5,5,0.5)) + ggtitle("Landsat 7 High Peak EMSI") + xlab("Date") + ylab("EMSI") + geom_line(size = 0.1, color="blue")
+p2 <- ggplot(aoi2[!is.na(aoi2$emsi),], aes(x=asdate,y=emsi)) + 
+  geom_point(aes(color=emsi)) + 
+  scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.0) + 
+  scale_y_continuous(limits = c(-4,1.5), breaks = seq(-4,1.5,0.5)) + 
+  ggtitle("Landsat 7 High Peak EMSI") + 
+  xlab("Date") + 
+  ylab("EMSI") + 
+  geom_line(size = 0.1, color="blue")
 
-ggplot(aoi1[!is.na(aoi1$emsi),], aes(x=asdate,y=emsi)) + geom_point(aes(color=emsi)) + scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.0) + scale_y_continuous(limits = c(-5,5), breaks = seq(-5,5,0.5)) + ggtitle("Landsat 5 High Peak EMSI") + xlab("Date") + ylab("EMSI") + geom_line(size = 0.1)
+p2 <- p2 + theme(
+    line = element_line(colour = "white"),
+    title = element_text(colour = "white"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    #legend.box.background = element_rect(fill = "transparent"),
+    legend.box.background = element_blank(),
+    legend.title = element_text(colour = "white"),
+    legend.text = element_text(colour = "white"),
+    axis.text = element_text(colour = "white"),
+    axis.ticks = element_line(colour = "white"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "white"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
 
+ggsave('~/Documents/landsat7_highpeak_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+plot(p2)
+
+p3 <- ggplot(aoi1[!is.na(aoi1$emsi),], aes(x=asdate,y=emsi)) + 
+  geom_point(aes(color=emsi)) + 
+  scale_colour_gradient2(low = "red", mid = "green" , high = "blue", midpoint = 0.0) + 
+  scale_y_continuous(limits = c(-4,1.5), breaks = seq(-4,1.5,0.5)) + 
+  ggtitle("Landsat 5 High Peak EMSI") + 
+  xlab("Date") + 
+  ylab("EMSI") + 
+  geom_line(size = 0.1)
+
+p3 <- p3 + theme(
+    line = element_line(colour = "white"),
+    title = element_text(colour = "white"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    #legend.box.background = element_rect(fill = "transparent"),
+    legend.box.background = element_blank(),
+    legend.title = element_text(colour = "white"),
+    legend.text = element_text(colour = "white"),
+    axis.text = element_text(colour = "white"),
+    axis.ticks = element_line(colour = "white"),
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    panel.grid.minor = element_line(colour = "white"), 
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+)
+
+ggsave('~/Documents/landsat5_highpeak_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+
+plot(p3)
 ```
 
 Alternately, I can plot the three time series together.
@@ -220,7 +273,7 @@ l7 = aoi2[1:406,]
 p2 <- ggplot(l7, aes(x=asdate,y=emsi)) + 
   geom_point(aes(color=emsi)) + 
   scale_colour_gradient2(low = "red", high = "green", midpoint = 0.0) + 
-  scale_y_continuous(limits = c(-5,5), breaks = seq(-5,5,0.5)) +
+  scale_y_continuous(limits = c(-4,1.5), breaks = seq(-4,1.5,0.5)) +
   #geom_line(data = l5, aes(x=asdate,y=emsi), size = 0.1, color = "yellow") + 
   geom_line(data = l7, aes(x=asdate,y=emsi), size = 0.1, color = "white") +
   ggtitle("High Peak EMSI") + 
