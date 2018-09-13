@@ -6,7 +6,11 @@ Maintainer: [Tyson Lee Swetnam](http://tyson-swetnam.github.io/) [![](https://or
 
 ## Contents
 
-The repository is organized for reproducible research. Users can run analyses through [CyVerse](https://cyverse.org), or clone this repo and run the analyses locally. 
+The repository is organized for reproducible research. 
+
+Users can (re)run our analyses using data science workbenches, like [CyVerse](https://cyverse.org), or they clone this repository to their local machine and run the analyses there. 
+
+See the [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for software requirements.
 
 ### /data
 
