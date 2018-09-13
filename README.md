@@ -10,16 +10,19 @@ The repository is organized for reproducible research. Users can run analyses th
 
 ### /data
 
-example data files extracted from Earth Engine
+example data files extracted from Earth Engine used in manuscript figures.
 
 ### /javascripts
 
-JavaScripts used in Earth Engine for data extractions
+JavaScript code used in [Earth Engine Code UI](https://code.earthengine.google.com/) for point and area data extraction.
 
 ### /rmd
 
-R Markdown files with data analyses
+R Markdown files with statistical data analyses.
 
+### /ipynb
+
+Jupyter Notebooks (Python3, R) for data analyses.
 
 ### Quickstart
 
