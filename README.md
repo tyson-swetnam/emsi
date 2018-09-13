@@ -1,4 +1,4 @@
-# EMSI
+# EMSI (Ecosystem Moisture Stress Index)
 
 Code, example data, and manuscript supplemental materials which accompany **Swetnam et al. The Ecosystem Moisture Stress Index XXXX**
 
