@@ -1,0 +1,55 @@
+---
+title: "Map Figure"
+author: "Tyson Lee Swetnam"
+date: "9/20/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+# Install Packages
+#=================
+#install.packages(c("ggplot2", "devtools", "dplyr", "stringr"))
+#install.packages(c("maps", "mapdata"))
+#devtools::install_github("dkahle/ggmap")
+#=================
+```
+
+```{r}
+library(ggplot2)
+library(ggmap)
+library(maps)
+library(mapdata)
+library(mapproj)
+```
+
+## Global Map
+
+```{r}
+# Create data
+data=as.data.frame(rbind(
+  'Okavango Delta, Botswana'=c(22.5601, -19.0901),
+	'Yakutia, Russia'=c(120.3300, 63.4300),
+	'USA-Mexico Grasslands'=c(-110.5901, 31.3400),
+	'Acre Rainforest, Brasil'=c(-71.9610, -9.1901)
+	))
+colnames(data)=c("long","lat")
+
+# https://cran.r-project.org/web/packages/maps/maps.pdf 
+# make the map
+map('world',col="#f2f2f2", fill=TRUE, bg="white", lwd=0.15,mar=rep(0,4),border=0, ylim=c(-70,80), resolution=0 )
+map.scale(relwidth = 0.15, metric = TRUE, ratio = FALSE)
+points(x=data$long, y=data$lat, col="black", cex=2, pch=20)
+text(rownames(data), x=data$long, y=data$lat,  col="black", cex=1, pos=4)
+
+```
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
