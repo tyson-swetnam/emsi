@@ -6,15 +6,14 @@ import ee
 
 ee.Initialize()
 
-## Polygon area for extraction
-## Polygon area for extraction
+## Polygon area for extraction - change AOI
 geom=ee.Geometry.Polygon(
        [[[-110.700, 31.245],
           [-110.367, 31.245],
           [-110.367, 31.429],
           [-110.700, 31.429]]])
 
-## Landsat 7 Collection
+## Landsat 7 Collection 
 l7=ee.ImageCollection('LANDSAT/LE07/C01/T1_SR').filterDate('1999-01-01', '2018-08-31').filterBounds(geom)
 
 def exportCollectionToDrive (userCollection,folderName):
@@ -68,4 +67,5 @@ def exportCollectionToDrive (userCollection,folderName):
 
     print('Finished exporting data')
     print('')
+## Export images to your Google Drive        
 exportCollectionToDrive(userCollection=l7, folderName="gee-collection-usmex-landsat7")
