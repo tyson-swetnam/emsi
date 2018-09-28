@@ -14,7 +14,7 @@ See the [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for software requirem
 
 ### /data
 
-example data files extracted from Earth Engine used in manuscript figures.
+example time series `.csv` files extracted in manuscript figures.
 
 ### /javascripts
 
@@ -22,7 +22,11 @@ JavaScript code used in [Earth Engine Code UI](https://code.earthengine.google.c
 
 ### /rmd
 
-R Markdown files with statistical data analyses.
+R Markdown files with statistical data analyses for figures in manuscript. 
+
+### /python
+
+Python `.py` files for extracting image collections to Google Drive.
 
 ### /ipynb
 
