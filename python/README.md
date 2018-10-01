@@ -45,3 +45,12 @@ Run the `.py` file locally:
 ```
 python gee-collection-usmex-l7.py
 ```
+
+# CyberDuck
+
+After transfering the file collections to a Google Drive Account, I used [CyberDuck CLI ](https://duck.sh/) to move the files from my Google Drive onto my workstation.
+
+```
+duck --verbose --parallel 2 --username <username>@<my-institution-email> --download googledrive://<my-institution-email>/My%20Drive/<collection-name>/ ~/emsi/data/collections/<collection-name>
+
+```
