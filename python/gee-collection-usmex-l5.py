@@ -15,7 +15,7 @@ geom=ee.Geometry.Polygon(
           [-110.700, 31.429]]])
 
 ## Landsat 5 Collection
-l5=ee.ImageCollection('LANDSAT/LT05/C01/T1_SR').filterDate('1984-05-01', '2011-11-30').filterBounds(geom)
+l5=ee.ImageCollection('LANDSAT/LT05/C01/T1_SR').filterDate('1998-01-01', '2011-11-30').filterBounds(geom)
 
 def exportCollectionToDrive (userCollection,folderName):
     userCollection2=userCollection#.map(toals)
@@ -47,7 +47,7 @@ def exportCollectionToDrive (userCollection,folderName):
         imgp=ee.Number(imgarea.get(band)).multiply(sc).multiply(sc).divide(area)
 
         ##Check for overlap
-        if imgp.getInfo()>=0.7:
+        if imgp.getInfo()>=0.8:
             task = ee.batch.Export.image.toDrive(
                 image = img.normalizedDifference(['B4', 'B3']).rename('NDVI').toFloat(),
                 description = fileName,

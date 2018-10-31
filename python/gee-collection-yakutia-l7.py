@@ -8,10 +8,10 @@ ee.Initialize()
 
 ## Polygon area for extraction
 geom=ee.Geometry.Polygon(
-       [[[-110.700, 31.245],
-          [-110.367, 31.245],
-          [-110.367, 31.429],
-          [-110.700, 31.429]]])
+       [[[120.080, 63.590],
+          [120.080, 63.160],
+          [121.280, 63.160],
+          [121.280, 63.590]]])
 
 ## Landsat 7 Collection
 l7=ee.ImageCollection('LANDSAT/LE07/C01/T1_SR').filterDate('2003-05-17', '2018-09-30').filterBounds(geom)
@@ -50,7 +50,7 @@ def exportCollectionToDrive (userCollection,folderName):
             task = ee.batch.Export.image.toDrive(
                 image = img.normalizedDifference(['B4', 'B3']).rename('NDVI').toFloat(),
                 description = fileName,
-                folder = 'gee-collection-usmex-landsat7-p2',
+                folder = 'gee-collection-yakutia-landsat7-p2',
                 maxPixels = 1e13,
                 region = fileGeometry,
                 scale = 30)
@@ -67,4 +67,4 @@ def exportCollectionToDrive (userCollection,folderName):
 
     print('Finished exporting data')
     print('')
-exportCollectionToDrive(userCollection=l7, folderName="gee-collection-usmex-landsat7-p2")
+exportCollectionToDrive(userCollection=l7, folderName="gee-collection-yakutia-landsat7-p2")
