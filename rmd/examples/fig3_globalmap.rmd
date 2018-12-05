@@ -1,7 +1,7 @@
 ---
-title: "Map Figure"
+title: "Global Map Figure 3"
 author: "Tyson Lee Swetnam"
-date: "9/20/2018"
+date: "12/5/2018"
 output: html_document
 ---
 
@@ -18,9 +18,8 @@ When you click the **Knit** button a document will be generated that includes bo
 ```{r}
 # Install Packages
 #=================
-#install.packages(c("ggplot2", "devtools", "dplyr", "stringr"))
+#install.packages(c("ggplot2", "ggmap", "devtools", "dplyr", "stringr", "ggrepel"))
 #install.packages(c("maps", "mapdata"))
-#devtools::install_github("dkahle/ggmap")
 #=================
 ```
 
@@ -30,26 +29,39 @@ library(ggmap)
 library(maps)
 library(mapdata)
 library(mapproj)
+library(ggrepel)
 ```
 
 ## Global Map
 
 ```{r}
-# Create data
-data=as.data.frame(rbind(
-  'Okavango Delta, Botswana'=c(22.5601, -19.0901),
-	'Yakutia, Russia'=c(120.3300, 63.4300),
-	'USA-Mexico Grasslands'=c(-110.5901, 31.3400),
-	'Acre Rainforest, Brasil'=c(-71.9610, -9.1901)
-	))
-colnames(data)=c("long","lat")
+#==============
+# GET WORLD MAP
+#==============
 
-# https://cran.r-project.org/web/packages/maps/maps.pdf 
-# make the map
-map('world',col="#f2f2f2", fill=TRUE, bg="white", lwd=0.15,mar=rep(0,4),border=0, ylim=c(-70,80), resolution=0 )
-map.scale(relwidth = 0.15, metric = TRUE, ratio = FALSE)
-points(x=data$long, y=data$lat, col="black", cex=2, pch=20)
-text(rownames(data), x=data$long, y=data$lat,  col="black", cex=1, pos=4)
+map.world <- map_data("world")
+```
 
+```{r}
+# Create study area locations
+study_areas=data.frame("location" = c("Okavango Delta, Botswana", "Yakutia Taiga, Russian Federation", "USA-Mexico Borderlands", "Acre Rainforest-Agriculture, Brazil"), "long" = c(22.5601, 120.3300, -110.5901, -71.9610), "lat" = c(-19.0901, 63.4300, 31.3400, -9.1901))
+```
+
+```{r}
+# Generate map and save it
+
+ggplot() + geom_polygon(data = map.world,  aes(x=long, y = lat, group = group), fill = "gray", color = "black", size = 0.15) + 
+  geom_point(data = study_areas, aes(x=long, y = lat, label=location), color = "black", size=2) +
+  coord_quickmap() +
+  coord_fixed(1.3) +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  geom_label_repel(data = study_areas, aes(x=long, y=lat, label = location),
+                  box.padding   = 0.35, 
+                  point.padding = 0.5,
+                  segment.color = 'grey50') +
+  theme_minimal()
+
+ggsave('~/Documents/world_map_fig3.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
