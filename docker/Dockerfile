@@ -1,4 +1,5 @@
-FROM rocker/verse:latest
+FROM rocker/verse:3.5.2
+# This container is built from a base image by the Rocker Group - who are awesome. 
 MAINTAINER "Tyson Swetnam" tswetnam@cyverse.org
 
 # Original Dockerfile from Rocker/Geospatial
