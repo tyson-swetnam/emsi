@@ -26,8 +26,8 @@ RUN apt-get update \
     netcdf-bin \
     protobuf-compiler \
     tk-dev \
-    unixodbc-dev \
-  && install2.r --error \
+    unixodbc-dev 
+RUN install2.r --error \
     RColorBrewer \
     RandomFields \
     RNetCDF \
@@ -51,7 +51,8 @@ RUN apt-get update \
     spatstat \
     spdep \
     geoR \
-    geosphere \
+    geosphere 
+RUN install2.r --error \    
     # Added Packages
     PerformanceAnalytics \
     boot \
@@ -61,6 +62,6 @@ RUN apt-get update \
     foreign \
     lubridate \
     plotly \
-    truncreg \
+    truncreg 
     ## from bioconductor
-    && R -e "BiocInstaller::biocLite('rhdf5')"
+RUN R -e "BiocInstaller::biocLite('rhdf5')"
