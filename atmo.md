@@ -1,4 +1,4 @@
-# Launching instance on CyVerse Atmosphere or XSEDE Jetstream
+# Launch an instance of CyVerse Atmosphere or XSEDE Jetstream
 
 [Cyverse Atmosphere](http://www.cyverse.org/atmosphere) and [XSEDE Jetstream](https://www.jetstream-cloud.org/)
 
@@ -41,6 +41,20 @@ check installation
 ```
 docker run hello-world
 ```
+
+Install RStudio with dependencies
+
+```
+docker pull tswetnam/emsi-rstudio:3.5.2
+```
+
+Run the container in detached mode on `localhost:8787` or `public-ip:8787`
+```
+docker run -it -d -p 8787:8787 --user $(id -u):$(id -g) --password rstudio tswetnam/emsi-rstudio:3.5.2
+```
+
+Open your preferred browser, and navigate to the port, type your username and `rstudio` password. 
+
 
 # Install and Run Google Earth Engine API Docker Container
 
