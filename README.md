@@ -20,6 +20,8 @@ example time series `.csv` files extracted in manuscript figures.
 
 ### /docker
 
+Dockerfiles for automated builds on Docker Hub and CyVerse VICE
+
 ### /ipynb
 
 Jupyter Notebooks (Python3, R) for data analyses.
