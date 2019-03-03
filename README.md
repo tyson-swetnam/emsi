@@ -18,6 +18,12 @@ See the [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for software requirem
 
 example time series `.csv` files extracted in manuscript figures.
 
+### /docker
+
+### /ipynb
+
+Jupyter Notebooks (Python3, R) for data analyses.
+
 ### /javascripts
 
 JavaScript code used in [Earth Engine Code UI](https://code.earthengine.google.com/) for point and area data extraction.
@@ -29,10 +35,6 @@ R Markdown files with statistical data analyses for figures in manuscript.
 ### /python
 
 Python `.py` files for extracting image collections to Google Drive.
-
-### /ipynb
-
-Jupyter Notebooks (Python3, R) for data analyses.
 
 ### Quickstart
 
