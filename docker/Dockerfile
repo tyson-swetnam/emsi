@@ -64,4 +64,5 @@ RUN install2.r --error \
     plotly \
     truncreg 
     ## from bioconductor
+RUN R -e "install.packages("BiocManager")" -e "BiocManager::install("BiocInstaller", version = "3.8")"    
 RUN R -e "BiocInstaller::biocLite('grimbough/rhdf5')"
