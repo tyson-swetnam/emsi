@@ -82,6 +82,8 @@ gomplate -f /nginx.conf.tmpl -o /etc/nginx/nginx.conf\n\
 supervisord -c /etc/supervisor/supervisord.conf -n\n'\
 >> /usr/local/bin/run.sh
 
+RUN chmod 755 /usr/local/bin/run.sh
+
 #nginx.conf.tmpl
 RUN echo 'daemon off;\n\
 worker_processes  1;\n\
