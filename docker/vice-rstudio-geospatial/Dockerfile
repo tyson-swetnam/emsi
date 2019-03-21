@@ -117,6 +117,9 @@ http {\n\
 }\n'\
 >> nginx.conf.tmpl
 
+# remove original rserver.conf file
+RUN rm /etc/rstudio/rserver.conf
+# create new rserver.conf file
 RUN echo '# Server Configuration File\n\
 www-address=127.0.0.1\n\
 rsession-which-r=/usr/local/bin/R\n'\
