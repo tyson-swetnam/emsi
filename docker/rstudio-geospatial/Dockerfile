@@ -1,9 +1,9 @@
-FROM rocker/verse:3.5.2
+FROM rocker/verse:3.5.3
 # This container is built from a base image by the Rocker Group - who are awesome. 
 MAINTAINER "Tyson Swetnam" tswetnam@cyverse.org
 
 # Original Dockerfile from Rocker/Geospatial
-# Added several additional R packages and dependencies
+# Install linux dependencies
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     lbzip2 \
@@ -27,6 +27,7 @@ RUN apt-get update \
     protobuf-compiler \
     tk-dev \
     unixodbc-dev 
+# Original Rocker Geospatial R libraries
 RUN install2.r --error \
     RColorBrewer \
     RandomFields \
@@ -51,7 +52,8 @@ RUN install2.r --error \
     spatstat \
     spdep \
     geoR \
-    geosphere 
+    geosphere
+# Added new R libraries 
 RUN install2.r --error \    
     # Added Packages
     PerformanceAnalytics \
