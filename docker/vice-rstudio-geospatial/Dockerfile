@@ -1,5 +1,5 @@
-FROM rocker/verse:3.5.2
-# This container is built from a base image by the Rocker Group - who are awesome. 
+FROM rocker/verse:3.5.3
+# This container is built from a R base image by the Rocker Group - who are awesome. 
 MAINTAINER "Tyson Swetnam" tswetnam@cyverse.org
 
 # Original Dockerfile from Rocker/Geospatial
@@ -63,8 +63,9 @@ RUN install2.r --error \
     lubridate \
     plotly \
     truncreg 
+## End RStudio build
 
-## VICE Configurations
+#### CyVerse VICE Configs below
 RUN apt-get update \
     && apt-get install -y lsb wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2
 
@@ -80,9 +81,8 @@ RUN chmod a+x /usr/bin/gomplate
 RUN echo '#!/bin/sh\n\ 
 gomplate -f /nginx.conf.tmpl -o /etc/nginx/nginx.conf\n\
 supervisord -c /etc/supervisor/supervisord.conf -n\n'\
->> /usr/local/bin/run.sh
-
-RUN chmod 755 /usr/local/bin/run.sh
+>> /usr/local/bin/run.sh && \
+chmod a+x /usr/local/bin/run.sh
 
 #nginx.conf.tmpl
 RUN echo 'daemon off;\n\
@@ -115,23 +115,25 @@ http {\n\
     }\n\
   }\n\
 }\n'\
->> nginx.conf.tmpl
+>> nginx.conf.tmpl && \
+chmod a+x nginx.conf.tmpl
 
 # remove original rserver.conf file
-RUN rm /etc/rstudio/rserver.conf
 # create new rserver.conf file
-RUN echo '# Server Configuration File\n\
+RUN rm /etc/rstudio/rserver.conf && echo '# Server Configuration File\n\
 www-address=127.0.0.1\n\
 rsession-which-r=/usr/local/bin/R\n'\
->> /etc/rstudio/rserver.conf
+>> /etc/rstudio/rserver.conf && \
+chmod a+x /etc/rstudio/rserver.conf
 
 RUN echo '[program:nginx]\n\
 command=nginx\n'\
->> /etc/supervisor/conf.d/nginx.conf
-
+>> /etc/supervisor/conf.d/nginx.conf && \
+chmod a+x /etc/supervisor/conf.d/nginx.conf
 RUN echo '[program:rstudio]\n\
 command=/usr/lib/rstudio-server/bin/rserver --server-daemonize 0\n'\
->> /etc/supervisor/conf.d/rstudio.conf
+>> /etc/supervisor/conf.d/rstudio.conf && \
+chmod a+x /etc/supervisor/conf.d/rstudio.conf
 
 ENV REDIRECT_URL "http://localhost"
 ENV PASSWORD "password"
