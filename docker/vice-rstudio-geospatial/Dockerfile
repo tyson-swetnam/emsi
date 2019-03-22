@@ -2,8 +2,8 @@ FROM rocker/verse:3.5.3
 # This container is built from a R base image by the Rocker Group - who are awesome. 
 MAINTAINER "Tyson Swetnam" tswetnam@cyverse.org
 
-# Original Dockerfile from Rocker/Geospatial
-# Added several additional R packages and dependencies
+# Original dependencies from rocker/geospatial
+# Add Linux dependencies
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     lbzip2 \
@@ -27,6 +27,7 @@ RUN apt-get update \
     protobuf-compiler \
     tk-dev \
     unixodbc-dev 
+# Add R geospatial libraries    
 RUN install2.r --error \
     RColorBrewer \
     RandomFields \
@@ -52,8 +53,8 @@ RUN install2.r --error \
     spdep \
     geoR \
     geosphere 
+# Added geospatial and other packages specific to our work    
 RUN install2.r --error \    
-    # Added Packages
     PerformanceAnalytics \
     boot \
     devtools \
@@ -65,7 +66,7 @@ RUN install2.r --error \
     truncreg 
 ## End RStudio build
 
-#### CyVerse VICE Configs below
+#### CyVerse VICE specific configs are below
 RUN apt-get update \
     && apt-get install -y lsb wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2
 
