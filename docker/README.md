@@ -15,6 +15,6 @@ docker run -it --rm -d -p 8787:8787 -e PASSWORD=password tswetnam/rstudio:geospa
 `vice-rstudio-geospatial` is intended for deployment on the CyVerse VICE. To test it locally with Docker:
 
 ```
-docker run -it --rm -v /$HOME:/app --workdir /app -p 8787:80 -e REDIRECT_URL=http://calliope.cyverse.org:8787 tswetnam/vice-rstudio-geospatial:3.5.3
+docker run -it --rm -v /$HOME:/app --workdir /app -p 8787:80 -e REDIRECT_URL=http://localhost:8787 tswetnam/vice-rstudio-geospatial:3.5.3
 ```
 
