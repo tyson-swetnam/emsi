@@ -65,6 +65,7 @@ RUN install2.r --error \
     ggridges 
 
 ## Install CyVerse VICE Depends
+RUN apt-get update && apt-get install -y lsb wget apt-transport-https python2.7 python-requests curl supervisor nginx gnupg2
 
 RUN wget -qO - https://packages.irods.org/irods-signing-key.asc | apt-key add - \
     && echo "deb [arch=amd64] https://packages.irods.org/apt/ xenial main" > /etc/apt/sources.list.d/renci-irods.list \
