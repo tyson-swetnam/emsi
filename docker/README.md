@@ -18,3 +18,4 @@ docker run -it --rm -d -p 8787:8787 -e PASSWORD=password tswetnam/rstudio:geospa
 docker run -it --rm -v /$HOME:/app --workdir /app -p 8787:80 -e REDIRECT_URL=http://localhost:8787 tswetnam/vice-rstudio-geospatial:3.5.3
 ```
 
+The default username is `rstudio` and the default password is `rstudio1`
