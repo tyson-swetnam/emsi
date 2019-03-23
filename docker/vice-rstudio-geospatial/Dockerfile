@@ -81,6 +81,8 @@ COPY rserver.conf /etc/rstudio/rserver.conf
 COPY supervisor-nginx.conf /etc/supervisor/conf.d/nginx.conf
 COPY supervisor-rstudio.conf /etc/supervisor/conf.d/rstudio.conf
 
+RUN chmod a+x /usr/local/bin/run.sh
+
 ENV REDIRECT_URL "http://localhost"
 ENV PASSWORD "rstudio1"
 
