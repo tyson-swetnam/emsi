@@ -19,7 +19,9 @@ example time series `.csv` files extracted in manuscript figures.
 
 ### /docker
 
-Dockerfiles for automated builds on Docker Hub and CyVerse VICE
+Dockerfiles for automated container builds on Docker Hub.
+
+Containers can be run locally (emsi-rstudio) image, or on CyVerse VICE.
 
 image            | description                               | size   | metrics | build status 
 ---------------- | ----------------------------------------- | ------ | ------- | --------------
