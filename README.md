@@ -17,6 +17,8 @@ See the [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for software requirem
 
 example time series `.csv` files extracted in manuscript figures.
 
+Extracted imagery data are hosted on [CyVerse DataCommons](http://datacommons.cyverse.org/). Original imagery are available from GEE or Planet.com.
+
 ### /docker
 
 Dockerfiles for automated container builds on Docker Hub.
