@@ -75,17 +75,21 @@ RUN wget -qO - https://packages.irods.org/irods-signing-key.asc | apt-key add - 
 ADD https://github.com/hairyhenderson/gomplate/releases/download/v2.5.0/gomplate_linux-amd64 /usr/bin/gomplate
 RUN chmod a+x /usr/bin/gomplate
 
+# provide read and write access to Rstudio users for default R library location
+RUN chmod -R 777 /usr/local/lib/R/site-library
+
+RUN bash /etc/cont-init.d/userconf
+
 COPY run.sh /usr/local/bin/run.sh
+RUN chmod +x /usr/local/bin/run.sh
+
 COPY nginx.conf.tmpl /nginx.conf.tmpl
 COPY rserver.conf /etc/rstudio/rserver.conf
 COPY supervisor-nginx.conf /etc/supervisor/conf.d/nginx.conf
 COPY supervisor-rstudio.conf /etc/supervisor/conf.d/rstudio.conf
 
-RUN chmod a+x /usr/local/bin/run.sh
-
-ENV REDIRECT_URL "http://localhost"
+ENV REDIRECT_URL "http://localhost/"
 ENV PASSWORD "rstudio1"
 
-RUN bash /etc/cont-init.d/userconf
-
 ENTRYPOINT ["/usr/local/bin/run.sh"]
+
