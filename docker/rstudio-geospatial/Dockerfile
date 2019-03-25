@@ -15,3 +15,5 @@ RUN install2.r --error \
     plotly \
     truncreg \
     ggridges 
+
+ENV PASSWORD "rstudio1"
