@@ -92,4 +92,3 @@ ENV REDIRECT_URL "http://localhost/"
 ENV PASSWORD "rstudio1"
 
 ENTRYPOINT ["/usr/local/bin/run.sh"]
-
