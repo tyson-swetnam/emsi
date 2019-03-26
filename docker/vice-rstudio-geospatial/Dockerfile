@@ -30,6 +30,7 @@ RUN chmod a+x /usr/bin/gomplate
 # provide read and write access to Rstudio users for default R library location
 RUN chmod -R 777 /usr/local/lib/R/site-library
 
+ENV PASSWORD "rstudio1"
 RUN bash /etc/cont-init.d/userconf
 
 COPY run.sh /usr/local/bin/run.sh
@@ -41,6 +42,5 @@ COPY supervisor-nginx.conf /etc/supervisor/conf.d/nginx.conf
 COPY supervisor-rstudio.conf /etc/supervisor/conf.d/rstudio.conf
 
 ENV REDIRECT_URL "http://localhost/"
-ENV PASSWORD "rstudio1"
 
 ENTRYPOINT ["/usr/local/bin/run.sh"]
