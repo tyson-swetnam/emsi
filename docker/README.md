@@ -9,9 +9,9 @@ image            | description                               | size   | metrics 
 
 ## Run Docker locally or on a Virtual Machine
 
-To run the containers, you must first pull them from DockerHub, or activate a [CyVerse Account](https://user.cyverse.org/services/mine).
+To run the RStudio container, you must first pull them from DockerHub, or activate a [CyVerse Account](https://user.cyverse.org/services/mine).
 
-`rstudio-geospatial` container is hosted on DockerHub.
+`emsi-geospatial` container is hosted on DockerHub.
 
 ```
 docker pull tswetnam/emsi-rstudio:3.5.3
