@@ -23,7 +23,7 @@ docker run -it --rm -d -p 8787:8787 -e PASSWORD=password tswetnam/emsi-rstudio:3
 
 The default username is `rstudio` and password is `rstudio1`
 
-# Run in CyVerse VICE
+## Run in CyVerse VICE
 
 `vice-rstudio-geospatial` is intended for deployment on the [CyVerse VICE](https://cyverse-visual-interactive-computing-environment.readthedocs-hosted.com/en/latest/index.html). 
 
