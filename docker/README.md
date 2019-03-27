@@ -23,11 +23,15 @@ docker run -it --rm -d -p 8787:8787 -e PASSWORD=password tswetnam/emsi-rstudio:3
 
 The default username is `rstudio` and password is `rstudio1`
 
-## Run in CyVerse VICE
+## Run Docker container in CyVerse VICE
 
-`vice-rstudio-geospatial` is intended for deployment on the [CyVerse VICE](https://cyverse-visual-interactive-computing-environment.readthedocs-hosted.com/en/latest/index.html). 
+This container is run on the CyVerse data science workbench, called [VICE](https://cyverse-visual-interactive-computing-environment.readthedocs-hosted.com/en/latest/index.html). 
 
-To test this container locally:
+Unless you plan on making changes to this container, you should just use the existing launch button above. 
+
+###### Developer notes
+
+To test the container locally:
 
 ```
 docker run -it --rm -v /$HOME:/app --workdir /app -p 8787:80 -e REDIRECT_URL=http://localhost:8787 tswetnam/vice-rstudio-geospatial:3.5.3
