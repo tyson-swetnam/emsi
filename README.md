@@ -8,17 +8,21 @@ Maintainer: [Tyson Lee Swetnam](http://tyson-swetnam.github.io/) [![](https://or
 
 ## Contents
 
-The repository is organized for reproducible research. 
+The repository is organized to enable reproducible research. 
 
-Users can (re)run our analyses using data science workbenches, like [CyVerse](https://cyverse.org), or they clone this repository to their local machine and run the analyses there. 
+Users can (re)run our analyses using their own computer or a cloud-based data science workbench, like [CyVerse](https://cyverse.org) Discovery Environment. 
 
-See the [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for software requirements.
+See our [Wiki](https://github.com/tyson-swetnam/emsi/wiki) tab for free membership access and other requirements.
 
 ### /data
 
-example time series `.csv` files extracted in manuscript figures.
+Example time series used in the manscript. 
 
-Extracted imagery data are hosted on [CyVerse DataCommons](http://datacommons.cyverse.org/). Original imagery are available from GEE or Planet.com.
+Data are stored as `.csv` files for use in R. R Markdown notebooks are provided which render these data as tables and figures in the main text.
+
+Additional derivative imagery layers from Google Earth Engine are hosted on [CyVerse DataCommons](http://datacommons.cyverse.org/). 
+
+Original imagery are available from GEE or Planet.com.
 
 ### /docker
 
