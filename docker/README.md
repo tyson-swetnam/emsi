@@ -11,7 +11,7 @@ image            | description                               | size   | metrics 
 
 To run the RStudio container, you must first pull them from DockerHub, or activate a [CyVerse Account](https://user.cyverse.org/services/mine).
 
-`emsi-geospatial` container is hosted on DockerHub.
+A Docker container for running RStudio is hosted on DockerHub.
 
 ```
 docker pull tswetnam/emsi-rstudio:3.5.3
