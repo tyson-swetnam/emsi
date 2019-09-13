@@ -1,5 +1,5 @@
 ---
-title: "Global Map Figure 3"
+title: "Global Map - Figure 3"
 author: "Tyson Lee Swetnam"
 date: "12/5/2018"
 output: html_document
@@ -9,16 +9,16 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Dependencies
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This Rmd was created in RStudio-Server, R v3.6.0. It should be usable via the Rocker Geospatial RStudio (https://www.rocker-project.org/images/, http://doi.org/10.5281/zenodo.3384215) Docker container.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Additional dependencies required for generating this figure, uncomment `#` and Run Current Chunk to install:
 
 ```{r}
 # Install Packages
 #=================
-#install.packages(c("ggplot2", "ggmap", "devtools", "dplyr", "stringr", "ggrepel"))
+install.packages(c("ggplot2", "ggmap", "devtools", "dplyr", "stringr", "ggrepel"))
 #install.packages(c("maps", "mapdata"))
 #=================
 ```
@@ -53,15 +53,15 @@ study_areas=data.frame("location" = c("Okavango Delta, Botswana", "Yakutia Taiga
 ggplot() + geom_polygon(data = map.world,  aes(x=long, y = lat, group = group), fill = "gray", color = "black", size = 0.15) + 
   geom_point(data = study_areas, aes(x=long, y = lat, label=location), color = "black", size=2) +
   coord_quickmap() +
-  coord_fixed(1.3) +
+  coord_fixed(1) +
   xlab("Longitude") +
   ylab("Latitude") +
   geom_label_repel(data = study_areas, aes(x=long, y=lat, label = location),
-                  box.padding   = 0.35, 
-                  point.padding = 0.5,
+                  box.padding   = 0, 
+                  point.padding = 1,
                   segment.color = 'grey50') +
   theme_minimal()
 
-ggsave('~/Documents/world_map_fig3.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/world_map_fig3.png', width = 8.5, dpi = 300, bg = "transparent")
 ```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

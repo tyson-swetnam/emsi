@@ -1,7 +1,12 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
  ---
-title: "emsi LANDSAT 5,7,8 & Sentinel-2"
+title: "Figure 4 NDVI & EMSI time series of LANDSAT 5,7,8 & Sentinel-2"
 author: "Tyson Lee Swetnam"
-date: "September 22, 2018"
+date: "September 13, 2019"
 output:
   pdf_document: default
   html_document: default
@@ -30,7 +35,7 @@ If you havent run the script before, you may need to install some dependencies a
 # install.packages("foreign", dependencies=TRUE)
 # install.packages("truncreg", dependencies=TRUE)
 # install.packages("boot", dependencies=TRUE)
-# install.packages("plotly", dependencies=TRUE)
+install.packages("plotly", dependencies=TRUE)
 ```
 
 ## Load Packages
@@ -96,9 +101,9 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 
 ## Import Example Data
 
-In the Git repository `/data/examples` folder I've saved exports from Google Earth Engine (GEE) NDVI Explorer .js files (also saved in the `/javascripts` folder).
+In the Git repository `/data/examples` folder I've saved data exported from the Google Earth Engine (GEE) NDVI Explorer (.js files provided in the `/javascripts` folder).
 
-I extracted the time series of 16-day Landsat 5,7,8 and 5-day Sentinel-2 NDVI data using Surface Reflectance with bit-mask flags for cloud, cloud shadow, water, or snow (Landsat), scenes with cloud <20% (Sentinel-2). Even with these filters turned on there are some pixels affected by snow or cloud contaminated pixels.
+I have extracted the time series of 16-day Landsat 5,7,8 and 5-day Sentinel-2 NDVI data using their Surface Reflectance model with bit-mask flags for cloud, cloud shadow, water, or snow (Landsat), scenes with cloud <20% (Sentinel-2). Even with these filters turned on there are some pixels affected by snow or cloud contaminated pixels.
 
 ```{r message=FALSE, warning=FALSE}
 ## Import Landsat 5,7,8 16-day and Sentinel-2 5 day NDVI from Google Earth Engine extracted CSVs
@@ -186,7 +191,7 @@ names(aoi32) <- c("date", "ndvi")
 
 ## Calculate Julian dates from calendar
 
-I created a function to set the Julian (1-366) dates from the data, I also flag dates with no data.
+Create a function to set the Julian (1-366) dates from the data, also flags any dates with no data.
 ```{r message=FALSE, warning=FALSE}
 # Create Functions for calculating Julian Dates 
 aoi.date_julian <-  function(df){
@@ -358,7 +363,6 @@ ndvi_mean_grassus$all <- setNames(aggregate(all4$ndvi_range, list(all4$julian_ro
 ```
 
 ### Acre
-
 ```{r message=FALSE, warning=FALSE}
 # Calculate mean NDVI for Julian period in Agricultural
 ndvi_mean_ag <- c(NA)
@@ -380,7 +384,6 @@ ndvi_mean_rainforest$all <- setNames(aggregate(all6$ndvi_range, list(all6$julian
 ```
 
 ### Yakutia
-
 ```{r message=FALSE, warning=FALSE}
 # Calculate mean NDVI for Julian period in Taiga
 ndvi_mean_taiga <- c(NA)
@@ -422,7 +425,7 @@ Create sets of time series plots for the Julian dates
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 # Okavango Thornscrub
 plot_ndvi_shrubland <- ggplot() +
-  xlim(1,365) + ylim(0.0,1.0) +
+  xlim(1,365) + ylim(0.0,0.75) +
   geom_point(data = aoi1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range, color = "Landsat 5"), size = 2.0) + 
   geom_smooth(data = aoi1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, size=0.5, color = "red") +
   geom_point(data = aoi2[!is.na(aoi2$ndvi_range),], aes(x=julian,y=ndvi_range, color = "Landsat 7"), size = 2.0) +
@@ -431,18 +434,18 @@ plot_ndvi_shrubland <- ggplot() +
   geom_smooth(data = aoi3[!is.na(aoi3$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, size=0.5, color = "blue") +
   geom_point(data = aoi4[!is.na(aoi4$ndvi_range),], aes(x=julian,y=ndvi_range, color = "Sentinel-2"), size = 2.0) +
   geom_smooth(data = aoi4[!is.na(aoi4$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, size=0.5, color = "orange") +
-  geom_smooth(data = all1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range, color = "Landsat-Series"), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, size=1) + 
-  scale_color_manual(values = c("red","green","blue","black","orange")) + # Colors are given an alphabetical order from above
+  geom_smooth(data = all1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range, color = "Landsat-Series"), method="loess", se = FALSE, na.rm = FALSE, span = 0.3, size=1) + 
+  scale_color_manual(name = "EOS Platform", values = c("red","green","blue","black","orange")) + # Colors are placed in order from above series
   ggtitle("Okavango Thornscrub") + 
-  xlab("Julian Day") + ylab("NDVI")
+  xlab("Julian Day") + ylab("NDVI") + theme(legend.key=element_blank()) 
 
 plot_ndvi_shrubland <- plot_ndvi_shrubland + theme(
     line = element_line(colour = "black"),
     title = element_text(colour = "black"),
     #legend.background = element_rect(fill = "transparent"), # get rid of legend bg
     #legend.box.background = element_rect(fill = "transparent"),
-    #legend.title = element_text(colour = "black"),
-    #legend.text = element_text(colour = "black"),
+    legend.title = element_text(colour = "black"),
+    legend.text = element_text(colour = "black"),
     axis.text = element_text(colour = "black"),
     axis.ticks = element_line(colour = "black"),
     panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
@@ -453,7 +456,7 @@ plot_ndvi_shrubland <- plot_ndvi_shrubland + theme(
 
 plot(plot_ndvi_shrubland)
 
-ggsave('~/emsi/data/output/ndvi_okavango_shrubland.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/examples/ndvi_okavango_shrubland.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ggplotly(plot_ndvi_shrubland)
 
@@ -462,7 +465,7 @@ ggplotly(plot_ndvi_shrubland)
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 # Okavango Thornscrub
 plot_ndvi_shrubland <- ggplot() +
-   xlim(1,365) + ylim(0.0,1.0) +
+   xlim(1,365) + ylim(0.0,0.75) +
   geom_point(data = aoi1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), size = 2.0, color = "red") + 
   geom_smooth(data = aoi1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "red", size=0.5) +
   geom_point(data = aoi2[!is.na(aoi2$ndvi_range),], aes(x=julian,y=ndvi_range), size = 2.0, color = "green") +
@@ -471,9 +474,9 @@ plot_ndvi_shrubland <- ggplot() +
   geom_smooth(data = aoi3[!is.na(aoi3$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "blue", size=0.5) +
   geom_point(data = aoi4[!is.na(aoi4$ndvi_range),], aes(x=julian,y=ndvi_range), size = 2.0, color = "orange") +
   geom_smooth(data = aoi4[!is.na(aoi4$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "orange", size=0.5) +
-  geom_smooth(data = all1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "black", size=1) +
+  geom_smooth(data = all1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.3, color = "black", size=1) +
   ggtitle("Okavango Thornscrub") + 
-  xlab("Julian Day") + ylab("NDVI")
+  xlab("Julian Day") + ylab("NDVI") + theme(legend.key=element_blank()) 
 
 plot_ndvi_shrubland <- plot_ndvi_shrubland + theme(
     line = element_line(colour = "black"),
@@ -491,7 +494,7 @@ plot_ndvi_shrubland <- plot_ndvi_shrubland + theme(
 )
 
 plot(plot_ndvi_shrubland)
-ggsave('~/emsi/data/output/ndvi_okavango_shrub.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/examples/ndvi_okavango_shrub.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ggplotly(plot_ndvi_shrubland)
 
@@ -501,7 +504,7 @@ ggplotly(plot_ndvi_shrubland)
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 # Okavango Swamp
 plot_ndvi_swamp <- ggplot() +
-   xlim(1,365) + ylim(0.0,1.0) +
+   xlim(1,365) + ylim(0.0,0.75) +
   geom_point(data = aoi5[!is.na(aoi5$ndvi_range),], aes(x=julian,y=ndvi_range), size = 2.0, color = "red") + 
   geom_smooth(data = aoi5[!is.na(aoi5$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "red", size=0.5) +
   geom_point(data = aoi6[!is.na(aoi6$ndvi_range),], aes(x=julian,y=ndvi_range), size = 2.0, color = "green") +
@@ -530,11 +533,12 @@ plot_ndvi_swamp <- plot_ndvi_swamp + theme(
 )
 
 plot(plot_ndvi_swamp)
-ggsave('~/emsi/data/output/datandvi_okavango_swamp.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/examples/ndvi_okavango_swamp.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ggplotly(plot_ndvi_swamp)
 
 ```
+
 ### US-Mex Border Mexico
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 # US Mexico Grassland Mexico
@@ -762,10 +766,11 @@ ggsave('~/emsi/data/output/ndvi_yakutiaalaas.png', width = 8, height = 4.5, dpi 
 ggplotly(plot_ndvi_yakutiaalaas)
 ```
 ### Okavango Thornscrub
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 # Okavango Thornscrub
 plot_emsi_shrubland <- ggplot() +
-  xlim(1,365) + ylim(-3,3) +
+  xlim(1,365) + ylim(-2,2) +
   geom_point(data = aoi1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi), size = 2.0, color = "red") + 
   geom_smooth(data = aoi1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "red", size=0.5) +
   geom_point(data = aoi2[!is.na(aoi2$emsi),], aes(x=julian,y=emsi), size = 2.0, color="green") +
@@ -774,18 +779,18 @@ plot_emsi_shrubland <- ggplot() +
   geom_smooth(data = aoi3[!is.na(aoi3$emsi),], aes(x=julian,y=emsi),method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "blue", size=0.5) +
   geom_point(data = aoi4[!is.na(aoi4$emsi),], aes(x=julian,y=emsi), size = 2.0, color="orange") +
   geom_smooth(data = aoi4[!is.na(aoi4$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "orange", size=0.5) +
-  geom_smooth(data = all1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, size=1, color="black") + 
-  scale_color_manual(values = c("red","green","blue","black","orange")) + # Colors are given an alphabetical order from above
+  geom_smooth(data = all1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.3, size=1, color="black") + 
+  scale_color_manual(name = "EOS Platform", values = c("red","green","blue","black","orange")) + # Colors are placed in order from above series
   ggtitle("Okavango Thornscrub") + 
   xlab("Julian Day") + ylab("EMSI")
 
 plot_emsi_shrubland <- plot_emsi_shrubland + theme(
     line = element_line(colour = "black"),
     title = element_text(colour = "black"),
-    #legend.background = element_rect(fill = "transparent"), # get rid of legend bg
-    #legend.box.background = element_rect(fill = "transparent"),
-    #legend.title = element_text(colour = "black"),
-    #legend.text = element_text(colour = "black"),
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.title = element_text(colour = "black"),
+    legend.text = element_text(colour = "black"),
     axis.text = element_text(colour = "black"),
     axis.ticks = element_line(colour = "black"),
     panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
@@ -796,47 +801,7 @@ plot_emsi_shrubland <- plot_emsi_shrubland + theme(
 
 plot(plot_emsi_shrubland)
 
-ggsave('~/emsi/data/output/emsi_okavango_shrubland.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
-
-ggplotly(plot_emsi_shrubland)
-
-```
-### Okavango Thornscrub
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Okavango Thornscrub
-plot_emsi_shrubland <- ggplot() +
-  xlim(1,365) + ylim(-3,3) +
-  geom_point(data = aoi1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi), size = 2.0, color = "red") + 
-  geom_smooth(data = aoi1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "red", size=0.5) +
-  geom_point(data = aoi2[!is.na(aoi2$emsi),], aes(x=julian,y=emsi), size = 2.0, color="green") +
-  geom_smooth(data = aoi2[!is.na(aoi2$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "green", size=0.5) +
-  geom_point(data = aoi3[!is.na(aoi3$emsi),], aes(x=julian,y=emsi), size = 2.0, color="blue") +
-  geom_smooth(data = aoi3[!is.na(aoi3$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "blue", size=0.5) +
-  geom_point(data = aoi4[!is.na(aoi4$emsi),], aes(x=julian,y=emsi), size = 2.0, color="orange") +
-  geom_smooth(data = aoi4[!is.na(aoi4$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "orange", size=0.5) +
-  geom_smooth(data = all1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, size=1, color="black") + 
-  scale_color_manual(values = c("red","green","blue","black","orange")) + # Colors are given an alphabetical order from above
-  ggtitle("Okavango Thornscrub") + 
-  xlab("Julian Day") + ylab("EMSI")
-
-plot_emsi_shrubland <- plot_emsi_shrubland + theme(
-    line = element_line(colour = "black"),
-    title = element_text(colour = "black"),
-    #legend.background = element_rect(fill = "transparent"), # get rid of legend bg
-    #legend.box.background = element_rect(fill = "transparent"),
-    #legend.title = element_text(colour = "black"),
-    #legend.text = element_text(colour = "black"),
-    axis.text = element_text(colour = "black"),
-    axis.ticks = element_line(colour = "black"),
-    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
-    panel.grid.minor = element_line(colour = "black"), 
-    panel.grid.major = element_line(colour = "gray"), 
-    plot.background = element_rect(fill = "transparent",colour = NA)
-)
-
-plot(plot_emsi_shrubland)
-
-ggsave('~/emsi/data/output/emsi_okavango_shrubland.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/examples/emsi_okavango_shrubland.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ggplotly(plot_emsi_shrubland)
 
