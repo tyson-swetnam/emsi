@@ -35,7 +35,7 @@ If you havent run the script before, you may need to install some dependencies a
 # install.packages("foreign", dependencies=TRUE)
 # install.packages("truncreg", dependencies=TRUE)
 # install.packages("boot", dependencies=TRUE)
-install.packages("plotly", dependencies=TRUE)
+# install.packages("plotly", dependencies=TRUE)
 ```
 
 ## Load Packages
@@ -427,14 +427,14 @@ Create sets of time series plots for the Julian dates
 plot_ndvi_shrubland <- ggplot() +
   xlim(1,365) + ylim(0.0,0.75) +
   geom_point(data = aoi1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range, color = "Landsat 5"), size = 2.0) + 
-  geom_smooth(data = aoi1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, size=0.5, color = "red") +
+  geom_smooth(data = aoi1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.5, size=0.5, color = "red") +
   geom_point(data = aoi2[!is.na(aoi2$ndvi_range),], aes(x=julian,y=ndvi_range, color = "Landsat 7"), size = 2.0) +
-  geom_smooth(data = aoi2[!is.na(aoi2$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, size=0.5, color = "green") +
+  geom_smooth(data = aoi2[!is.na(aoi2$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.5, size=0.5, color = "green") +
   geom_point(data = aoi3[!is.na(aoi3$ndvi_range),], aes(x=julian,y=ndvi_range, color = "Landsat 8"), size = 2.0) +
-  geom_smooth(data = aoi3[!is.na(aoi3$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, size=0.5, color = "blue") +
+  geom_smooth(data = aoi3[!is.na(aoi3$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.5, size=0.5, color = "blue") +
   geom_point(data = aoi4[!is.na(aoi4$ndvi_range),], aes(x=julian,y=ndvi_range, color = "Sentinel-2"), size = 2.0) +
-  geom_smooth(data = aoi4[!is.na(aoi4$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, size=0.5, color = "orange") +
-  geom_smooth(data = all1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range, color = "Landsat-Series"), method="loess", se = FALSE, na.rm = FALSE, span = 0.3, size=1) + 
+  geom_smooth(data = aoi4[!is.na(aoi4$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.5, size=0.5, color = "orange") +
+  geom_smooth(data = all1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range, color = "Landsat-Series"), method="loess", se = FALSE, na.rm = FALSE, span = 0.5, size=1) + 
   scale_color_manual(name = "EOS Platform", values = c("red","green","blue","black","orange")) + # Colors are placed in order from above series
   ggtitle("Okavango Thornscrub") + 
   xlab("Julian Day") + ylab("NDVI") + theme(legend.key=element_blank()) 
@@ -456,7 +456,7 @@ plot_ndvi_shrubland <- plot_ndvi_shrubland + theme(
 
 plot(plot_ndvi_shrubland)
 
-ggsave('~/emsi/rmd/examples/ndvi_okavango_shrubland.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/examples/fig_4_ndvi_okavango_shrubland.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ggplotly(plot_ndvi_shrubland)
 
@@ -467,14 +467,14 @@ ggplotly(plot_ndvi_shrubland)
 plot_ndvi_shrubland <- ggplot() +
    xlim(1,365) + ylim(0.0,0.75) +
   geom_point(data = aoi1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), size = 2.0, color = "red") + 
-  geom_smooth(data = aoi1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "red", size=0.5) +
+  geom_smooth(data = aoi1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.5, color = "red", size=0.5) +
   geom_point(data = aoi2[!is.na(aoi2$ndvi_range),], aes(x=julian,y=ndvi_range), size = 2.0, color = "green") +
-  geom_smooth(data = aoi2[!is.na(aoi2$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "green", size=0.5) +
+  geom_smooth(data = aoi2[!is.na(aoi2$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.5, color = "green", size=0.5) +
   geom_point(data = aoi3[!is.na(aoi3$ndvi_range),], aes(x=julian,y=ndvi_range), size = 2.0, color = "blue") +
-  geom_smooth(data = aoi3[!is.na(aoi3$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "blue", size=0.5) +
+  geom_smooth(data = aoi3[!is.na(aoi3$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.5, color = "blue", size=0.5) +
   geom_point(data = aoi4[!is.na(aoi4$ndvi_range),], aes(x=julian,y=ndvi_range), size = 2.0, color = "orange") +
-  geom_smooth(data = aoi4[!is.na(aoi4$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "orange", size=0.5) +
-  geom_smooth(data = all1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.3, color = "black", size=1) +
+  geom_smooth(data = aoi4[!is.na(aoi4$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.5, color = "orange", size=0.5) +
+  geom_smooth(data = all1[!is.na(aoi1$ndvi_range),], aes(x=julian,y=ndvi_range), method="loess", se = FALSE, na.rm = FALSE, span = 0.5, color = "black", size=1) +
   ggtitle("Okavango Thornscrub") + 
   xlab("Julian Day") + ylab("NDVI") + theme(legend.key=element_blank()) 
 
@@ -494,7 +494,7 @@ plot_ndvi_shrubland <- plot_ndvi_shrubland + theme(
 )
 
 plot(plot_ndvi_shrubland)
-ggsave('~/emsi/rmd/examples/ndvi_okavango_shrub.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/examples/ndvi_okavango_shrubland.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ggplotly(plot_ndvi_shrubland)
 
@@ -771,18 +771,18 @@ ggplotly(plot_ndvi_yakutiaalaas)
 # Okavango Thornscrub
 plot_emsi_shrubland <- ggplot() +
   xlim(1,365) + ylim(-2,2) +
-  geom_point(data = aoi1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi), size = 2.0, color = "red") + 
-  geom_smooth(data = aoi1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "red", size=0.5) +
-  geom_point(data = aoi2[!is.na(aoi2$emsi),], aes(x=julian,y=emsi), size = 2.0, color="green") +
-  geom_smooth(data = aoi2[!is.na(aoi2$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "green", size=0.5) +
-  geom_point(data = aoi3[!is.na(aoi3$emsi),], aes(x=julian,y=emsi), size = 2.0, color="blue") +
-  geom_smooth(data = aoi3[!is.na(aoi3$emsi),], aes(x=julian,y=emsi),method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "blue", size=0.5) +
-  geom_point(data = aoi4[!is.na(aoi4$emsi),], aes(x=julian,y=emsi), size = 2.0, color="orange") +
-  geom_smooth(data = aoi4[!is.na(aoi4$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.2, color = "orange", size=0.5) +
-  geom_smooth(data = all1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 0.3, size=1, color="black") + 
+  geom_point(data = aoi1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi, color = "Landsat 5"), size = 2.0) + 
+  geom_smooth(data = aoi1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 1, size=0.5, color = "red") +
+  geom_point(data = aoi2[!is.na(aoi2$emsi),], aes(x=julian,y=emsi, color = "Landsat 7"), size = 2.0) +
+  geom_smooth(data = aoi2[!is.na(aoi2$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 1, size=0.5, color = "green") +
+  geom_point(data = aoi3[!is.na(aoi3$emsi),], aes(x=julian,y=emsi, color = "Landsat 8"), size = 2.0) +
+  geom_smooth(data = aoi3[!is.na(aoi3$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 1, size=0.5, color = "blue") +
+  geom_point(data = aoi4[!is.na(aoi4$emsi),], aes(x=julian,y=emsi, color = "Sentinel-2"), size = 2.0) +
+  geom_smooth(data = aoi4[!is.na(aoi4$emsi),], aes(x=julian,y=emsi), method="loess", se = FALSE, na.rm = FALSE, span = 1, size=0.5, color = "orange") +
+  geom_smooth(data = all1[!is.na(aoi1$emsi),], aes(x=julian,y=emsi, color = "Landsat-Series"), method="loess", se = FALSE, na.rm = FALSE, span = 1, size=1) + 
   scale_color_manual(name = "EOS Platform", values = c("red","green","blue","black","orange")) + # Colors are placed in order from above series
-  ggtitle("Okavango Thornscrub") + 
-  xlab("Julian Day") + ylab("EMSI")
+   ggtitle("Okavango Thornscrub") + 
+  xlab("Julian Day") + ylab("EMSI") + theme(legend.key=element_blank()) 
 
 plot_emsi_shrubland <- plot_emsi_shrubland + theme(
     line = element_line(colour = "black"),
@@ -801,7 +801,7 @@ plot_emsi_shrubland <- plot_emsi_shrubland + theme(
 
 plot(plot_emsi_shrubland)
 
-ggsave('~/emsi/rmd/examples/emsi_okavango_shrubland.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/examples/fig_5_emsi_okavango_shrubland.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ggplotly(plot_emsi_shrubland)
 
@@ -1116,7 +1116,7 @@ These plot use the calendar dates to create NDVI time series
 ndvi_shrubland <- ggplot(all1[!is.na(all1$ndvi),], aes(x=asdate,y=ndvi)) + 
   geom_point(aes(color=ndvi), size=2.0) + 
   scale_colour_gradient2(low = "cyan", mid = "green", high = "darkgreen", midpoint = 0.5, limits=c(0,0.95)) + 
-  scale_y_continuous(limits = c(0,0.8), breaks = seq(0,1,0.1)) + geom_smooth(data = all1[!is.na(all1$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +
+  scale_y_continuous(limits = c(0,0.8), breaks = seq(0,1,0.1)) + geom_smooth(data = all1[!is.na(all1$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +
   ggtitle("Okavango Thornscrub") + 
   xlab("Date") + 
   ylab("NDVI") 
@@ -1147,7 +1147,7 @@ ggplotly(ndvi_shrubland)
 ndvi_swamp <- ggplot(all2[!is.na(all2$ndvi),], aes(x=asdate,y=ndvi)) + 
   geom_point(aes(color=ndvi), size=2.0) + 
    scale_colour_gradient2(low = "cyan", mid = "green", high = "darkgreen", midpoint = 0.5, limits=c(0,0.95)) + 
-  scale_y_continuous(limits = c(0,0.8), breaks = seq(0,1,0.1)) + geom_smooth(data = all2[!is.na(all2$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +  ggtitle("Okavango Swamp") + 
+  scale_y_continuous(limits = c(0,0.8), breaks = seq(0,1,0.1)) + geom_smooth(data = all2[!is.na(all2$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +  ggtitle("Okavango Swamp") + 
   xlab("Date") + 
   ylab("NDVI") 
 
@@ -1176,7 +1176,7 @@ ggplotly(ndvi_swamp)
 ndvi_grassmx <- ggplot(all3[!is.na(all3$ndvi),], aes(x=asdate,y=ndvi)) + 
   geom_point(aes(color=ndvi), size=2.0) + 
   scale_colour_gradient2(low = "cyan", mid = "green", high = "darkgreen", midpoint = 0.5, limits=c(0,0.95)) + 
-  scale_y_continuous(limits = c(0,0.7), breaks = seq(0,1,0.1)) + geom_smooth(data = all3[!is.na(all3$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +  ggtitle("Mexico Grassland") + 
+  scale_y_continuous(limits = c(0,0.7), breaks = seq(0,1,0.1)) + geom_smooth(data = all3[!is.na(all3$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +  ggtitle("Mexico Grassland") + 
   xlab("Date") + 
   ylab("NDVI") 
 
@@ -1205,7 +1205,7 @@ ggplotly(ndvi_grassmx)
 ndvi_grassus <- ggplot(all4[!is.na(all4$ndvi),], aes(x=asdate,y=ndvi)) + 
   geom_point(aes(color=ndvi), size=2.0) + 
   scale_colour_gradient2(low = "cyan", mid = "green", high = "darkgreen", midpoint = 0.5, limits=c(0,0.95)) + 
-  scale_y_continuous(limits = c(0,0.7), breaks = seq(0,1,0.1)) + geom_smooth(data = all4[!is.na(all4$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +  ggtitle("USA Grassland") + 
+  scale_y_continuous(limits = c(0,0.7), breaks = seq(0,1,0.1)) + geom_smooth(data = all4[!is.na(all4$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +  ggtitle("USA Grassland") + 
   xlab("Date") + 
   ylab("NDVI") 
 
@@ -1234,7 +1234,7 @@ ggplotly(ndvi_grassus)
 ndvi_acreag <- ggplot(all5[!is.na(all5$ndvi),], aes(x=asdate,y=ndvi)) + 
   geom_point(aes(color=ndvi), size=2.0) + 
   scale_colour_gradient2(low = "cyan", mid = "green", high = "darkgreen", midpoint = 0.5, limits=c(0,0.95)) + 
-  scale_y_continuous(limits = c(0,1), breaks = seq(0,1,0.1)) + geom_smooth(data = all5[!is.na(all5$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +  ggtitle("Acre Agriculture") + 
+  scale_y_continuous(limits = c(0,1), breaks = seq(0,1,0.1)) + geom_smooth(data = all5[!is.na(all5$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +  ggtitle("Acre Agriculture") + 
   xlab("Date") + 
   ylab("NDVI") 
 
@@ -1263,7 +1263,7 @@ ggplotly(ndvi_acreag)
 ndvi_acrerainforest <- ggplot(all6[!is.na(all6$ndvi),], aes(x=asdate,y=ndvi)) + 
   geom_point(aes(color=ndvi), size=2.0) + 
   scale_colour_gradient2(low = "cyan", mid = "green", high = "darkgreen", midpoint = 0.5, limits=c(0,0.95)) + 
-  scale_y_continuous(limits = c(0,1), breaks = seq(0,1,0.1)) + geom_smooth(data = all6[!is.na(all6$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +  ggtitle("Acre Rainforest") + 
+  scale_y_continuous(limits = c(0,1), breaks = seq(0,1,0.1)) + geom_smooth(data = all6[!is.na(all6$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +  ggtitle("Acre Rainforest") + 
   xlab("Date") + 
   ylab("NDVI") 
 
@@ -1292,7 +1292,7 @@ ggplotly(ndvi_acrerainforest)
 ndvi_taiga <- ggplot(all7[!is.na(all7$ndvi),], aes(x=asdate,y=ndvi)) + 
   geom_point(aes(color=ndvi), size=2.0) + 
   scale_colour_gradient2(low = "cyan", mid = "green", high = "darkgreen", midpoint = 0.5, limits=c(0,0.95)) + 
-  scale_y_continuous(limits = c(0,1), breaks = seq(0,1,0.1)) + geom_smooth(data = all7[!is.na(all7$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +  ggtitle("Yakutia Taiga") + 
+  scale_y_continuous(limits = c(0,1), breaks = seq(0,1,0.1)) + geom_smooth(data = all7[!is.na(all7$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +  ggtitle("Yakutia Taiga") + 
   xlab("Date") + 
   ylab("NDVI") 
 
@@ -1321,7 +1321,7 @@ ggplotly(ndvi_taiga)
 ndvi_alaas <- ggplot(all8[!is.na(all8$ndvi),], aes(x=asdate,y=ndvi)) + 
   geom_point(aes(color=ndvi), size=2.0) + 
   scale_colour_gradient2(low = "cyan", mid = "green", high = "darkgreen", midpoint = 0.5, limits=c(0,0.95)) + 
-  scale_y_continuous(limits = c(0,1), breaks = seq(0,1,0.1)) + geom_smooth(data = all8[!is.na(all8$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) + 
+  scale_y_continuous(limits = c(0,1), breaks = seq(0,1,0.1)) + geom_smooth(data = all8[!is.na(all8$ndvi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) + 
   ggtitle("Yakutia Alaas") + 
   xlab("Date") + 
   ylab("NDVI") 
@@ -1352,9 +1352,10 @@ These plot use the calendar dates to create EVI time series
 ### Okavango Thornscrub
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 emsi_shrubland <- ggplot(all1[!is.na(all1$emsi),], aes(x=asdate,y=emsi)) + 
-  geom_point(aes(color=emsi), size=2.0) + 
+  geom_point(aes(color=emsi), size=2.0) + geom_line(aes(x=asdate,y=emsi), size= 0.1) +
   scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.0, limits=c(-2.3,2.3)) + 
-  scale_y_continuous(limits = c(-2.3,2.3), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all1[!is.na(all2$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +
+  scale_y_continuous(limits = c(-2.3,2.3), breaks = seq(-2.5,2.5,0.5)) + 
+  #geom_smooth(data = all1[!is.na(all2$emsi),], method="auto", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=0.5, alpha=0.2) +
   ggtitle("Okavango Thornscrub") + 
   xlab("Date") + 
   ylab("EMSI") 
@@ -1376,16 +1377,17 @@ emsi_shrubland <- emsi_shrubland + theme(
 
 emsi_shrubland + scale_fill_discrete(guide = guide_legend(reverse=TRUE))
 
-ggsave('~/Documents/okavango_shrubland_landsat578s2_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/examples/okavango_shrubland_landsat578s2_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ggplotly(emsi_shrubland)
 ```
 ### Okavango Swamp
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 emsi_swamp <- ggplot(all2[!is.na(all2$emsi),], aes(x=asdate,y=emsi)) + 
-   geom_point(aes(color=emsi), size=2.0) + 
+   geom_point(aes(color=emsi), size=2.0) + geom_line(aes(x=asdate,y=emsi), size= 0.1) +
   scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.0, limits=c(-2.3,2.3)) + 
-  scale_y_continuous(limits = c(-2.3,2.3), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all2[!is.na(all2$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +
+  scale_y_continuous(limits = c(-2.3,2.3), breaks = seq(-2.5,2.5,0.5)) + 
+  #geom_smooth(data = all2[!is.na(all2$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +
   ggtitle("Okavango Swamp") + 
   xlab("Date") + 
   ylab("EMSI") 
@@ -1415,7 +1417,7 @@ ggplotly(emsi_swamp)
 emsi_grassmx <- ggplot(all3[!is.na(all3$emsi),], aes(x=asdate,y=emsi)) + 
   geom_point(aes(color=emsi), size=2.0) + 
   scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.0, limits=c(-2.3,2.3)) + 
-  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all3[!is.na(all3$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +
+  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all3[!is.na(all3$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +
   ggtitle("Mexico Grassland") + 
   xlab("Date") + 
   ylab("EMSI") 
@@ -1445,7 +1447,7 @@ ggplotly(emsi_grassmx)
 emsi_grassus <- ggplot(all4[!is.na(all4$emsi),], aes(x=asdate,y=emsi)) + 
   geom_point(aes(color=emsi), size=2.0) + 
   scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.0, limits=c(-2.3,2.3)) + 
-  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all4[!is.na(all4$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +
+  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all4[!is.na(all4$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +
   ggtitle("USA Grassland") + 
   xlab("Date") + 
   ylab("EMSI") 
@@ -1475,7 +1477,7 @@ ggplotly(emsi_grassus)
 emsi_acreag <- ggplot(all5[!is.na(all5$emsi),], aes(x=asdate,y=emsi)) + 
   geom_point(aes(color=emsi), size=2.0) + 
   scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.0, limits=c(-2.3,2.3)) + 
-  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all5[!is.na(all5$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +
+  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all5[!is.na(all5$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +
   ggtitle("Acre Agriculture") + 
   xlab("Date") + 
   ylab("EMSI") 
@@ -1505,7 +1507,7 @@ ggplotly(emsi_acreag)
 emsi_acrerainforest <- ggplot(all6[!is.na(all6$emsi),], aes(x=asdate,y=emsi)) + 
   geom_point(aes(color=emsi), size=2.0) + 
     scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.0, limits=c(-2.3,2.3)) + 
-  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all6[!is.na(all6$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +
+  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all6[!is.na(all6$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +
   ggtitle("Acre Rainforest") + 
   xlab("Date") + 
   ylab("EMSI") 
@@ -1535,7 +1537,7 @@ ggplotly(emsi_acrerainforest)
 emsi_taiga <- ggplot(all7[!is.na(all7$emsi),], aes(x=asdate,y=emsi)) + 
   geom_point(aes(color=emsi), size=2.0) + 
     scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.0, limits=c(-2.3,2.3)) + 
-  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all7[!is.na(all7$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +
+  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all7[!is.na(all7$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +
   ggtitle("Yakutia Taiga") + 
   xlab("Date") + 
   ylab("EMSI") 
@@ -1565,7 +1567,7 @@ ggplotly(emsi_taiga)
 emsi_alaas <- ggplot(all8[!is.na(all8$emsi),], aes(x=asdate,y=emsi)) + 
   geom_point(aes(color=emsi), size=2.0) + 
     scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.0, limits=c(-2.3,2.3)) + 
-  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all8[!is.na(all8$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.2, color = "black", size=1.0) +
+  scale_y_continuous(limits = c(-2.5,2.5), breaks = seq(-2.5,2.5,0.5)) + geom_smooth(data = all8[!is.na(all8$emsi),], method="loess", se = FALSE, na.rm = TRUE, span = 0.025, color = "black", size=1.0) +
   ggtitle("Yakutia Alaas") + 
   xlab("Date") + 
   ylab("EMSI") 
@@ -1599,6 +1601,6 @@ m2 <- multiplot(emsi_acreag, ndvi_acreag, emsi_acrerainforest, ndvi_acrerainfore
 
 
 ```{r}
-m1 <- multiplot(emsi_shrubland, emsi_swamp,cols=2)
+m1 <- multiplot(emsi_shrubland, ndvi_shrubland,cols=1)
 
 ```
