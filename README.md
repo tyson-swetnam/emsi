@@ -3,10 +3,9 @@
 
 Code, example data, and manuscript supplemental materials which accompany **Swetnam et al. The Ecosystem Moisture Stress Index XXXX**
 
-Author(s):
-Maintainer: [Tyson Lee Swetnam](http://tyson-swetnam.github.io/) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0002-6639-7181)
+Lead Author: [Tyson Lee Swetnam](http://tyson-swetnam.github.io/) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0002-6639-7181)
 
-Co-Authors: [Donald A. Falk](https://snre.arizona.edu/people/donald-falk) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0003-3873-722X), [Samapriya Roy](https://samapriya.github.io/) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-1527-2602), Stephen Yool,
+Co-Authors: [Donald A. Falk](https://snre.arizona.edu/people/donald-falk) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0003-3873-722X), [Samapriya Roy](https://samapriya.github.io/) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-1527-2602), & Stephen Yool.
 
 ## Contents
 
@@ -18,20 +17,19 @@ See our [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for additional detail
 
 ### /data
 
-Example time series presented in the manuscript. 
+Tabular time series data presented in the manuscript. 
 
-Data are from NASA data services, as well as Google Earth Engine Collections. These data can be extracted again using our example `/ipynb` and `/rmd` notebooks. 
+Raster data are from [NASA data archive](https://earthdata.nasa.gov/earth-observation-data) services (e.g., [landsat](https://landsat.gsfc.nasa.gov/data/), [modis](https://modis.gsfc.nasa.gov/data/)) and ESA data services. Data are also hosted as [Google Earth Engine Collections](https://developers.google.com/earth-engine/datasets/). These raster data can be extracted to your local computer using our example `/ipynb` and `/rmd` notebooks. 
 
-Prevously extracted data are stored as `.csv` and geotiff `.tif` files on Cyverse Data Store R Markdown notebooks are provided which render these data as tables and figures in the main text.
+Prevously extracted data are stored as `.csv` and geotiff `.tif` files on [CyVerse Data Store](https://data.cyverse.org/dav-anon/tswetnam/emsi), and R Markdown notebooks are provided in this repo which wil extract and render these data as the tables and figures used in the main text.
 
 Additional derivative imagery layers from Google Earth Engine are hosted on [CyVerse DataCommons](http://datacommons.cyverse.org/). 
 
-Original imagery are available from GEE or Planet.com.
+Original commercial imagery are available from [Planet.com](https://planet.com).
 
 ### /docker
 
 Dockerfile and automated container builds hosted on [![DockerHub](https://img.shields.io/badge/DockerHub-blue.svg?style=popout&logo=Docker)](https://hub.docker.com/r/cyversevice/rstudio-geospatial) [![CircleCI](https://circleci.com/gh/cyverse-vice/rstudio-geospatial.svg?style=svg)](https://circleci.com/gh/cyverse-vice/rstudio-geospatial) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3246938.svg)](https://doi.org/10.5281/zenodo.3246938)
-
 
 Container can be run on [CyVerse Discovery Environment](https://de.cyverse.org)
 
@@ -60,4 +58,3 @@ Python `.py` files for extracting image collections to Google Drive.
 ### Quickstart
 
 Start a [CyVerse](https://cyverse.org) cloud instance on Atmosphere and provision it with [Earth Engine API](atmo.md)
-
