@@ -1,8 +1,9 @@
-FROM rocker/geospatial:3.5.3
-# This container is built from a base image by the Rocker Group - who are awesome. 
+FROM cyversevie/rstudio-geospatial:3.6.3
+# This container's base image is by the Rocker Group
+# CyVerse image installs iRODS iCommands and nginx for https proxy
 MAINTAINER "Tyson Lee Swetnam tswetnam@cyverse.org"
 
-# Add additional R libraries beyond Rocker Geospatial which fit our specific project needs.
+# Add additional R libraries beyond base Rocker Geospatial 
 RUN install2.r --error \    
     # Added Packages
     PerformanceAnalytics \
