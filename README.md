@@ -3,21 +3,26 @@
 
 Code, example data, and manuscript supplemental materials which accompany **Swetnam et al. The Ecosystem Moisture Stress Index XXXX**
 
-Author, Maintainer: [Tyson Lee Swetnam](http://tyson-swetnam.github.io/) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0002-6639-7181)
+Author(s):
+Maintainer: [Tyson Lee Swetnam](http://tyson-swetnam.github.io/) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0002-6639-7181)
+
+Co-Authors: [Donald A. Falk](https://snre.arizona.edu/people/donald-falk) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0003-3873-722X), [Samapriya Roy](https://samapriya.github.io/) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-1527-2602), Stephen Yool,
 
 ## Contents
 
-The repository is organized to enable reproducible research. 
+The repository is organized (in the attempt) to enable reproducible research. 
 
-Users can (re)run our analyses using their own computer or a cloud-based data science workbench, like [CyVerse](https://cyverse.org) Discovery Environment. 
+You can (re)run our analyses using your own computer or cloud-based data science workbench, e.g., [CyVerse](https://cyverse.org) Discovery Environment. 
 
-See our [Wiki](https://github.com/tyson-swetnam/emsi/wiki) tab for free membership access and other requirements.
+See our [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for additional details
 
 ### /data
 
-Example time series used in the manscript. 
+Example time series presented in the manuscript. 
 
-Data are stored as `.csv` files for use in R. R Markdown notebooks are provided which render these data as tables and figures in the main text.
+Data are from NASA data services, as well as Google Earth Engine Collections. These data can be extracted again using our example `/ipynb` and `/rmd` notebooks. 
+
+Prevously extracted data are stored as `.csv` and geotiff `.tif` files on Cyverse Data Store R Markdown notebooks are provided which render these data as tables and figures in the main text.
 
 Additional derivative imagery layers from Google Earth Engine are hosted on [CyVerse DataCommons](http://datacommons.cyverse.org/). 
 
