@@ -150,9 +150,11 @@ The CyVerse iRODS data store also supports [WebDav](https://data.cyverse.org); w
 Data are ~22.8 GB in size, and will take ~18 minutes to transfer within the CyVerse workbench.
 
 ```{bash message=FALSE, warning=FALSE}
-cd ~/emsi/data/
-time wget -r -nH --cut-dirs=6 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/
+# uncomment to run
+# cd ~/emsi/data/
+# time wget -r -nH --cut-dirs=6 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/
 ```
+
 # Import Rasters from data directories and read headers
 ```{r message=FALSE, warning=FALSE}
 # Test for raster metadata with GDALinfo
@@ -300,7 +302,7 @@ addProviderTiles("OpenStreetMap.Mapnik", group = "OpenStreetMap") %>%
 #layers control panel
 addLayersControl(baseGroups = c("Stamen", "ESRI Satellite", "OpenStreetMap"), overlayGroups = c("August Mean NDVI", "August Standard Deviation NDVI", "August 1998 EMSI", "August 1999 EMSI", "August 2000 EMSI", "August 2001 EMSI", "August 2003 EMSI", "August 2004 EMSI", "August 2005 EMSI", "August 2006 EMSI", "August 2007 EMSI", "August 2008 EMSI", "August 2010 EMSI", "August 2011 EMSI"), options = layersControlOptions(collapsed = TRUE))
 
-#, "August 2013 EMSI", "August 2014 EMSI", "August 2015 EMSI", "August 2016 EMSI", "August 2017 EMSI", "August 2018 EMSI"
+# "August 2013 EMSI", "August 2014 EMSI", "August 2015 EMSI", "August 2016 EMSI", "August 2017 EMSI", "August 2018 EMSI"
 m
 ```
 
@@ -362,7 +364,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
  
-ggsave('~/Documents/ndvi_timeseries_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_timeseries_acre.png', width = 12, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -393,7 +395,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
  
-ggsave('~/Documents/ndvi_timeseries_acre.png', width = 22, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_timeseries_acre.png', width = 22, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -409,7 +411,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/ndvi_2010_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_2010_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -425,7 +427,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/ndvi_2006_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_2006_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 
@@ -453,7 +455,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_timeseries_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_timeseries_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -469,7 +471,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_2010_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_2010_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -485,7 +487,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_2006_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_2006_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -501,7 +503,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_2016_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_2016_acre.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 

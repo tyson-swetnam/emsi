@@ -1,0 +1,87 @@
+---
+title: "Global Map - Figure 3"
+author: "Tyson Lee Swetnam"
+date: "2020-08-16"
+output: html_document
+---
+
+## Install missing R Libraries
+
+The following code block executes when the notebook is opened. 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require("devtools")) {
+   install.packages("devtools")
+   library(devtools)
+}
+if (!require("dplyr")) {
+   install.packages("dplyr")
+   library(dplyr)
+}
+if (!require("ggplot2")) {
+   install.packages("ggplot2")
+   library(ggplot2)
+}  
+if (!require("ggmap")) {
+   install.packages("ggmap")
+   library(ggmap)
+}
+if (!require("ggrepel")) {
+   install.packages("ggrepel")
+   library(ggrepel)
+}
+if (!require("mapdata")) {
+   install.packages("mapdata")
+   library(mapdata)
+}
+if (!require("maps")) {
+   install.packages("maps")
+   library(maps)
+}
+if (!require("mapproj")) {
+   install.packages("mapproj")
+   library(mapproj)
+}
+if (!require("stringr")) {
+   install.packages("stringr")
+   library(stringr)
+}
+```
+
+## Global Map
+
+```{r, include=FALSE}
+#==============
+# GET WORLD MAP
+#==============
+
+map.world <- map_data("world")
+```
+
+```{r, include=FALSE}
+# Create study area locations
+study_areas=data.frame("location" = c("Okavango Delta, Botswana", "Yakutia Taiga, Russian Federation", "USA-Mexico Borderlands", "Acre Rainforest-Agriculture, Brazil"), "long" = c(22.5601, 120.3300, -110.5901, -71.9610), "lat" = c(-19.0901, 63.4300, 31.3400, -9.1901))
+```
+
+```{r}
+# Generate the map
+
+ggplot() + geom_polygon(data = map.world,  aes(x=long, y = lat, group = group), fill = "gray", color = "black", size = 0.15) + 
+  geom_point(data = study_areas, aes(x=long, y = lat, label=location), color = "black", size=2) +
+  coord_quickmap() +
+  coord_fixed(1) +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  geom_label_repel(data = study_areas, aes(x=long, y=lat, label = location),
+                  box.padding   = 0, 
+                  point.padding = 1,
+                  segment.color = 'grey50') +
+  theme_minimal()
+```
+
+```{r, include=FALSE}
+# Save the map
+ggsave('~/emsi/rmd/figures/world_map_fig3.png', width = 8.5, dpi = 300, bg = "transparent")
+```
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

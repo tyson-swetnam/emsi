@@ -44,9 +44,9 @@ In GEE I filtered the time series using the Landsat Surface Reflectance Tier 1 d
 ## Import Gridmet 1000-hour Fuel Moistures, Energy Release Component (ERC), and Burning Index (BI)
 
 ## 1000hr Fuel Moistures
-fm1000_1984_1994 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_fm1000_chiricahua_sa1_1984_1994.csv")
-fm1000_1995_2005 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_fm1000_chiricahua_sa1_1995_2005.csv")
-fm1000_2006_2018 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_fm1000_chiricahua_sa1_2006_2018.csv")
+fm1000_1984_1994 <- read.csv("~/emsi/data/gridmet_fm1000_chiricahua_sa1_1984_1994.csv")
+fm1000_1995_2005 <- read.csv("~/emsi/data/gridmet_fm1000_chiricahua_sa1_1995_2005.csv")
+fm1000_2006_2018 <- read.csv("~/emsi/data/gridmet_fm1000_chiricahua_sa1_2006_2018.csv")
 
 fm1000 <- rbind(fm1000_1984_1994, fm1000_1995_2005, fm1000_2006_2018)
 ## Convert the dates to an R readable format
@@ -55,9 +55,9 @@ fm1000$julian <- yday(fm1000$asdate)
 fm1000$julian_rounded <- round((fm1000$julian/365)*52)*7
 
 ## ERC
-erc_1984_1994 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_erc_chiricahua_sa1_1984_1994.csv")
-erc_1995_2005 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_erc_chiricahua_sa1_1995_2005.csv")
-erc_2006_2018 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_erc_chiricahua_sa1_2006_2018.csv")
+erc_1984_1994 <- read.csv("~/emsi/data/gridmet_erc_chiricahua_sa1_1984_1994.csv")
+erc_1995_2005 <- read.csv("~/emsi/data/gridmet_erc_chiricahua_sa1_1995_2005.csv")
+erc_2006_2018 <- read.csv("~/emsi/data/gridmet_erc_chiricahua_sa1_2006_2018.csv")
 
 erc <- rbind(erc_1984_1994, erc_1995_2005, erc_2006_2018)
 ## Convert the dates to an R readable format
@@ -67,9 +67,9 @@ erc$julian_rounded <- round((erc$julian/365)*52)*7
 
 ## BI
 ## 1000hr Fuel Moistures
-bi_1984_1994 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_bi_chiricahua_sa1_1984_1994.csv")
-bi_1995_2005 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_bi_chiricahua_sa1_1995_2005.csv")
-bi_2006_2018 <- read.csv("/Users/tyson_swetnam/emsi/data/gridmet_bi_chiricahua_sa1_2006_2018.csv")
+bi_1984_1994 <- read.csv("~/emsi/data/gridmet_bi_chiricahua_sa1_1984_1994.csv")
+bi_1995_2005 <- read.csv("~/emsi/data/gridmet_bi_chiricahua_sa1_1995_2005.csv")
+bi_2006_2018 <- read.csv("~/emsi/data/gridmet_bi_chiricahua_sa1_2006_2018.csv")
 
 bi <- rbind(bi_1984_1994, bi_1995_2005, bi_2006_2018)
 ## Convert the dates to an R readable format
@@ -78,12 +78,12 @@ bi$julian <- yday(bi$asdate)
 bi$julian_rounded <- round((bi$julian/365)*52)*7
 
 ## Import the Landsat 16-day NDVI from Google Earth Engine extract
-l8_sa2 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat8_chiricahua_sa2_ndvi.csv")
-l7_sa2 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat7_chiricahua_sa2_ndvi.csv")
-l5_sa2 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat5_chiricahua_sa2_ndvi.csv")
-l8_sa1 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat8_chiricahua_sa1_ndvi.csv")
-l7_sa1 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat7_chiricahua_sa1_ndvi.csv")
-l5_sa1 <- read.csv("/Users/tyson_swetnam/emsi/data/landsat5_chiricahua_sa1_ndvi.csv")
+l8_sa2 <- read.csv("~/emsi/data/landsat8_chiricahua_sa2_ndvi.csv")
+l7_sa2 <- read.csv("~/emsi/data/landsat7_chiricahua_sa2_ndvi.csv")
+l5_sa2 <- read.csv("~/emsi/data/landsat5_chiricahua_sa2_ndvi.csv")
+l8_sa1 <- read.csv("~/emsi/data/landsat8_chiricahua_sa1_ndvi.csv")
+l7_sa1 <- read.csv("~/emsi/data/landsat7_chiricahua_sa1_ndvi.csv")
+l5_sa1 <- read.csv("~/emsi/data/landsat5_chiricahua_sa1_ndvi.csv")
 
 ## Remove days with low NDVI values - likely due to cluds and snow.
 l8_sa2$ndvi_nans <- as.numeric(as.character(l8_sa2$ndvi))
@@ -156,8 +156,10 @@ p1 <- p1 + theme(
 
 ggplotly(p1)
 plot(p1)
-ggsave('~/Documents/landsat5_chiricahua_sa1_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat5_chiricahua_sa1_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+```
 
+```{r}
 # Landsat 5 Study Area 2
 range_dates = l5_sa2[1:478,]
 p2 <- ggplot(range_dates[!is.na(range_dates$ndvi_range),], aes(x=asdate, y=ndvi_range))+ geom_point(aes(color=ndvi_range)) + scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.5) + ggtitle("Landsat 5 1984-2011 16-Day NDVI Chiricahua Study Area 2") + xlab("Date") + ylab("NDVI") + geom_line(color='blue', size = 0.1) 
@@ -179,9 +181,10 @@ p2 <- p2 + theme(
 
 ggplotly(p2)
 plot(p2)
-ggsave('~/Documents/landsat5_chiricahua_sa2_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat5_chiricahua_sa2_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ```
+
 ```{r message=FALSE, warning=FALSE}
 # Plot examples for a range of dates
 
@@ -206,7 +209,7 @@ p1 <- p1 + theme(
 
 ggplotly(p1)
 plot(p1)
-ggsave('~/Documents/landsat7_chiricahua_sa1_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat7_chiricahua_sa1_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 # Landsat 7 Study Area 2
 range_dates = l7_sa2[1:403,]
@@ -229,9 +232,10 @@ p2 <- p2 + theme(
 
 ggplotly(p2)
 plot(p2)
-ggsave('~/Documents/landsat7_chiricahua_sa2_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat7_chiricahua_sa2_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ```
+
 ```{r message=FALSE, warning=FALSE}
 # Plot examples for a range of dates
 
@@ -256,8 +260,10 @@ p1 <- p1 + theme(
 
 ggplotly(p1)
 plot(p1)
-ggsave('~/Documents/landsat8_chiricahua_sa1_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat8_chiricahua_sa1_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+```
 
+```{r}
 # Landsat 7 Study Area 2
 range_dates = l8_sa2[1:111,]
 p2 <- ggplot(range_dates[!is.na(range_dates$ndvi_range),], aes(x=asdate, y=ndvi_range))+ geom_point(aes(color=ndvi_range)) + scale_colour_gradient2(low = "red", mid = "green", high = "blue", midpoint = 0.5) + ggtitle("Landsat 8 2013-2018 16-Day NDVI Chiricahua Study Area 2") + xlab("Date") + ylab("NDVI") + geom_line(color='blue', size = 0.1) 
@@ -279,7 +285,7 @@ p2 <- p2 + theme(
 
 ggplotly(p2)
 plot(p2)
-ggsave('~/Documents/landsat7_chiricahua_sa2_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat7_chiricahua_sa2_ndvi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ```
 
@@ -314,7 +320,7 @@ p2 <- p2 + theme(
 )
 
 plot(p2)
-ggsave('~/Documents/landsat8_chiricahua_ndvi_mean.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat8_chiricahua_ndvi_mean.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ggplotly(p2)
 
@@ -375,7 +381,7 @@ p4 <- p4 + theme(
 )
 
 plot(p4)
-ggsave('~/Documents/landsat7_chiricahua_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat7_chiricahua_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ggplotly(p4)
 ```
@@ -424,7 +430,7 @@ p2 <- p2 + theme(
     plot.background = element_rect(fill = "transparent",colour = NA)
 )
 
-ggsave('~/Documents/landsat_chiricahua_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat_chiricahua_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 plot(p2)
 ggplotly(p2)
@@ -461,7 +467,7 @@ p2 <- p2 + theme(
     plot.background = element_rect(fill = "transparent",colour = NA)
 )
 
-ggsave('~/Documents/landsat_chiricahua_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat_chiricahua_emsi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 plot(p2)
 ggplotly(p2)
@@ -495,7 +501,7 @@ p <- p + theme(
 ) + scale_y_continuous(position = "right")
 
 plot(p)
-ggsave('~/Documents/landsat_chiricahua_fm1000.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat_chiricahua_fm1000.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ```
 
@@ -528,7 +534,7 @@ p <- p + theme(
 ) + scale_y_continuous(position = "right")
 
 plot(p)
-ggsave('~/Documents/landsat_chiricahua_erc.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat_chiricahua_erc.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ```
 
@@ -559,7 +565,7 @@ p <- p + theme(
 ) + scale_y_continuous(position = "right")
 
 plot(p)
-ggsave('~/Documents/landsat_chiricahua_bi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat_chiricahua_bi.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ```
 
@@ -592,7 +598,7 @@ p4 <- p4 + theme(
 
 plot(p4)
 
-ggsave('~/Documents/landsat_chiricahua_emsi_l7_sr2.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat_chiricahua_emsi_l7_sr2.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ```
 
@@ -626,7 +632,7 @@ p4 <- p4 + theme(
 
 plot(p4)
 
-ggsave('~/Documents/landsat_chiricahua_ndvi_l5_sr2.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/landsat_chiricahua_ndvi_l5_sr2.png', width = 8, height = 4.5, dpi = 300, bg = "transparent")
 
 ```
 
