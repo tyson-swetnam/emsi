@@ -21,11 +21,11 @@ See our [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for additional detail
 
 Tabular time series data presented in the manuscript. 
 
-Raster data are from [NASA data archive](https://earthdata.nasa.gov/earth-observation-data) services (e.g., [landsat](https://landsat.gsfc.nasa.gov/data/), [modis](https://modis.gsfc.nasa.gov/data/)) and ESA data services. Data are also hosted as [Google Earth Engine Collections](https://developers.google.com/earth-engine/datasets/). These raster data can be extracted to your local computer using our example `/ipynb` and `/rmd` notebooks. 
+Raster data are from [NASA data archive](https://earthdata.nasa.gov/earth-observation-data) services (e.g., [landsat](https://landsat.gsfc.nasa.gov/data/), [modis](https://modis.gsfc.nasa.gov/data/)) and ESA data services. Data are also hosted as [Google Earth Engine Collections](https://developers.google.com/earth-engine/datasets/). These raster data can be extracted to your local computer using our example `/python/*.py` scripting and `/rmd/*.Rmd` notebooks. 
 
-Prevously extracted data are stored as `.csv` and geotiff `.tif` files on [CyVerse Data Store](https://data.cyverse.org/dav-anon/tswetnam/emsi), and R Markdown notebooks are provided in this repo which wil extract and render these data as the tables and figures used in the main text.
+Previously extracted data are stored as `.csv` and geotiff `.tif` files on [CyVerse Data Store](https://data.cyverse.org/dav-anon/tswetnam/emsi), and R Markdown notebooks are provided in this repo which wil extract and render these data as the tables and figures used in the main text.
 
-Additional derivative imagery layers from Google Earth Engine are hosted on [CyVerse DataCommons](http://datacommons.cyverse.org/). 
+Additional derivative imagery layers from Google Earth Engine (GEE) are hosted on [CyVerse DataCommons](http://datacommons.cyverse.org/). 
 
 Original commercial imagery are available from [Planet.com](https://planet.com).
 
@@ -48,7 +48,7 @@ Notebooks (Python3) for data analyses and extraction with GEE & Planet Labs enab
 
 ### /javascripts
 
-JavaScript code used in [Earth Engine Code UI](https://code.earthengine.google.com/) for point and area data extraction.
+The JavaScript code used within [Earth Engine Code UI](https://code.earthengine.google.com/) for the intial time series point extractions, cloud-free NDVI calculations, and EMSI calculations within GEE.
 
 ### /rmd
 
