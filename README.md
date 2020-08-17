@@ -29,7 +29,7 @@ Original commercial imagery are available from [Planet.com](https://planet.com).
 
 ### /docker
 
-Dockerfile and automated container builds hosted on [![DockerHub](https://img.shields.io/badge/DockerHub-blue.svg?style=popout&logo=Docker)](https://hub.docker.com/r/cyversevice/rstudio-geospatial) [![CircleCI](https://circleci.com/gh/cyverse-vice/rstudio-geospatial.svg?style=svg)](https://circleci.com/gh/cyverse-vice/rstudio-geospatial) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3246938.svg)](https://doi.org/10.5281/zenodo.3246938)
+Dockerfiles w/ automated container builds hosted on [![DockerHub](https://img.shields.io/badge/DockerHub-blue.svg?style=popout&logo=Docker)](https://hub.docker.com/r/cyversevice/rstudio-geospatial) [![CircleCI](https://circleci.com/gh/cyverse-vice/rstudio-geospatial.svg?style=svg)](https://circleci.com/gh/cyverse-vice/rstudio-geospatial) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3246938.svg)](https://doi.org/10.5281/zenodo.3246938)
 
 Container can be run on [CyVerse Discovery Environment](https://de.cyverse.org)
 
@@ -39,9 +39,10 @@ quick launch | tag | size | metrics | build |
 <a href="https://de.cyverse.org/de/?type=quick-launch&quick-launch-id=e7383172-dafd-42a2-b539-a67a9b65425e&app-id=6943b4f2-b663-11ea-92c5-008cfa5ae621" target="_blank"><img src="https://de.cyverse.org/Powered-By-CyVerse-blue.svg"></a> | [![TAG](https://images.microbadger.com/badges/version/cyversevice/rstudio-geospatial:3.6.3.svg)](https://microbadger.com/images/cyversevice/rstudio-geospatial:3.6.3) | [![SIZE](https://images.microbadger.com/badges/image/cyversevice/rstudio-geospatial:3.6.3.svg)](https://microbadger.com/images/cyversevice/rstudio-geospatial:3.6.3) | [![Docker Pulls](https://img.shields.io/docker/pulls/cyversevice/rstudio-geospatial?color=blue&logo=docker&logoColor=white)](https://hub.docker.com/r/cyversevice/rstudio-geospatial) | [![Docker Automated build](https://img.shields.io/docker/automated/cyversevice/rstudio-geospatial.svg)](https://hub.docker.com/r/cyversevice/rstudio-geospatial/builds) 
 
 Other CyVerse VICE images: https://github.com/cyverse-vice 
+
 ### /ipynb
 
-Jupyter Notebooks (Python3, R) for data analyses.
+Notebooks (Python3) for data analyses and extraction with GEE & Planet Labs enabled Jupyter Notebooks.
 
 ### /javascripts
 
