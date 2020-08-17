@@ -7,6 +7,8 @@ Lead Author: [Tyson Lee Swetnam](http://tyson-swetnam.github.io/) [![](https://o
 
 Co-Authors: [Donald A. Falk](https://snre.arizona.edu/people/donald-falk) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0003-3873-722X), [Samapriya Roy](https://samapriya.github.io/) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-1527-2602), & Stephen Yool.
 
+![Example](./images/fig2.svg)
+
 ## Contents
 
 The repository is organized (in the attempt) to enable reproducible research. 
