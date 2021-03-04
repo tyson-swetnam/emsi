@@ -1,7 +1,7 @@
 ---
 title: "Acre EMSI Raster Calculation"
 author: "Tyson Lee Swetnam"
-date: "2020-08-17"
+date: "2021-03-03"
 output: html_document
 ---
 
@@ -9,7 +9,7 @@ output: html_document
 
 ## Linux Dependencies
 
-If you are running this on a VM outside CyVerse, you may need to install additional dependencies
+If you are running this for the first time, you may need to install additional geospatial dependencies
 
 ```{bash message=FALSE, warning=FALSE}
 # sudo add-apt-repository ppa:ubuntugis
@@ -17,48 +17,6 @@ If you are running this on a VM outside CyVerse, you may need to install additio
 # sudo apt-get install libgdal-dev libgeos-dev libproj-dev
 # sudo apt-get install libudunits2-dev
 ```
-
-## Using iCommands
-
-If you haven't used iRODS iCommands before, you'll need to set up a CyVerse account. 
-
-In the running RStudio container open a terminal window and initiate a connection to the CyVerse Data Store.
-
-Below is the example from Terminal:
-
-```
-$ iinit
-One or more fields in your iRODS environment file (irods_environment.json) are
-missing; please enter them.
-Enter the host name (DNS) of the server to connect to: data.cyverse.org
-Enter the port number: 1247
-Enter your irods user name: tswetnam
-Enter your irods zone: iplant
-Those values will be added to your environment file (for use by
-other iCommands) if the login succeeds.
-
-Enter your current iRODS password:
-```
-
-This will generate an iRODS environment JSON file located in a hidden folder in your user home directory
-
-```
-/home/rstudio/.irods/irods_environment.json
-```
-
-The contents of which are:
-
-```
-{
-    "irods_host": "data.cyverse.org",
-    "irods_port": 1247,
-    "irods_user_name": "tswetnam",
-    "irods_zone_name": "iplant"
-}
-```
-
-Once this `irods_environment.json` exists, you'll be able to view your data store contents by typing the `ils` command.
-
 
 ## Install missing R Libraries
 
@@ -147,15 +105,17 @@ This command uses `wget` to download data into the container.
 
 The CyVerse iRODS data store also supports [WebDav](https://data.cyverse.org); we are hosting the extracted raster data in a folder with anonymous public read-only settings.
 
-Data are ~22.8 GB in size, and will take ~18 minutes to transfer within the CyVerse workbench.
+All of the landsat data are ~22.8 GB in size, and will take ~18 minutes to transfer within the CyVerse workbench for all four sites.
+
+A subset of the collection will take less time, here we're taking the `/acre` collection. 
 
 ```{bash message=FALSE, warning=FALSE}
 # uncomment to run
-# cd ~/emsi/data/
-# time wget -r -nH --cut-dirs=6 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/
+ cd ~/emsi/data/
+time wget -r -nH --cut-dirs=7 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/acre
 ```
 
-# Import Rasters from data directories and read headers
+# Import Raster from data directory and check the header
 ```{r message=FALSE, warning=FALSE}
 # Test for raster metadata with GDALinfo
 GDALinfo("~/emsi/data/collections/acre/gee-collection-acre-landsat8/LC08_004066_20130611.tif")

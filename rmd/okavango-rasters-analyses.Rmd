@@ -1,64 +1,121 @@
 ---
-title: "okavango EMSI Raster Calculation"
+title: "Okavango EMSI Raster Calculation"
 author: "Tyson Lee Swetnam"
-date: "10/13/2018"
+date: "2021-03-03"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# Setup
 
-Instructions for installing geospatial packages are provided by [The Carpentries](https://datacarpentry.org/geospatial-workshop/setup.html)
+## Linux Dependencies
 
-# Linux Dependencies
-```{bash}
+If you are running this for the first time, you may need to install additional geospatial dependencies
+
+```{bash message=FALSE, warning=FALSE}
 # sudo add-apt-repository ppa:ubuntugis
 # sudo apt-get update
 # sudo apt-get install libgdal-dev libgeos-dev libproj-dev
 # sudo apt-get install libudunits2-dev
 ```
 
-# R Packages
-```{r message=FALSE, warning=FALSE}
-# Carpentries recommended raster packages
-update.packages(checkBuilt = TRUE, ask=FALSE)
-install.packages(c('dplyr', 'ggplot2', 'raster', 'rgdal', 'rasterVis', 'remotes', 'sf'))
+## Install missing R Libraries
+
+The following code block executes when the notebook is opened. 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+if (!require("dplyr")) {
+   install.packages("dplyr")
+   library(dplyr)
+}
+if (!require("ggplot2")) {
+   install.packages("ggplot2")
+   library(ggplot2)
+}  
+if (!require("grid")) {
+   install.packages("grid")
+   library(grid)
+} 
+if (!require("lattice")) {
+   install.packages("lattice")
+   library(lattice)
+}
+if (!require("leaflet")) {
+   install.packages("leaflet")
+   library(leaflet)
+}
+if (!require("lubridate")) {
+   install.packages("lubridate")
+   library(lubridate)
+}
+if (!require("magrittr")) {
+   install.packages("magrittr")
+   library(magrittr)
+}
+if (!require("raster")) {
+   install.packages("raster")
+   library(raster)  
+}
+if (!require("rasterVis")) {
+   install.packages("rasterVis")
+   library(rasterVis)   
+}
+if (!require("RColorBrewer")) {
+   install.packages("RColorBrewer")
+   library(RColorBrewer)
+}
+if (!require("reshape")) {
+   install.packages("reshape")
+   library(reshape)
+}
+if (!require("rgdal")) {
+   install.packages("rgdal")
+   library(rgdal)   
+}  
+if (!require("remotes")) {
+   install.packages("remotes")
+   library(remotes)   
+}  
+if (!require("PerformanceAnalytics")) {
+   install.packages("PerformanceAnalytics")
+   library(PerformanceAnalytics)
+}
+if (!require("scales")) {
+   install.packages("scales")
+   library(scales)
+}
+if (!require("sf")) {
+   install.packages("sf")
+   library(sf)   
+}
+if (!require("stringr")) {
+   install.packages("stringr")
+   library(stringr)
+}
+if (!require("viridis")) {
+   install.packages("viridis")
+   library(viridis)
+}
 ```
 
-## A few more R Packages (just to be sure)
-```{r message=FALSE, warning=FALSE}
-## Install additional R Packages
-# install.packages("maptools")
-# install.packages("lattice")
-# install.packages("RQGIS")
-# install.packages("leaflet")
-# install.packages("magrittr")
-# install.packages("xlsx")
+# Transfer datasets from CyVerse
+
+This command uses `wget` to download data into the container.
+
+The CyVerse iRODS data store also supports [WebDav](https://data.cyverse.org); we are hosting the extracted raster data in a folder with anonymous public read-only settings.
+
+All of the landsat data are ~22.8 GB in size, and will take ~18 minutes to transfer within the CyVerse workbench for all four sites.
+
+A subset of the collection will take less time, here we're taking the `/okavango` collection. 
+
+```{bash message=FALSE, warning=FALSE}
+# uncomment to run
+ cd ~/emsi/data/
+time wget -r -nH --cut-dirs=7 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/okavango
 ```
 
-# Load R Libraries
-```{r message=FALSE, warning=FALSE}
-# Load libraries
-library(rgdal)
-library(grid)
-library(lattice)
-library(raster) 
-library(ggplot2)
-library(RColorBrewer)
-library(leaflet)
-library(magrittr)
-library(PerformanceAnalytics)
-library(lubridate)
-library(stringr)
-library(reshape)
-library(scales)
-library(rasterVis)
-library(RColorBrewer)
-library(viridis)
-```
-
-# Import Rasters from data directories and read headers
+# Import Raster from data directory and check the header
 ```{r message=FALSE, warning=FALSE}
 # Test for raster metadata with GDALinfo
 GDALinfo("~/emsi/data/collections/okavango/gee-collection-okavango-landsat8/LC08_175073_20171026.tif")

@@ -1,12 +1,12 @@
 ---
 title: "Figures 5 and 6 NDVI & EMSI time series of LANDSAT 5,7,8 & Sentinel-2"
 author: "Tyson Lee Swetnam <tswetnam@arizona.edu>"
-date: "2020-08-17"
+date: "2021-03-04"
 output:
   pdf_document: default
   html_document: default
 editor_options: 
-  chunk_output_type: console  
+  chunk_output_type: console
 always_allow_html: yes
 ---
 
@@ -22,47 +22,6 @@ If you are running this on a VM outside CyVerse, you may need to install additio
 # sudo apt-get install libgdal-dev libgeos-dev libproj-dev
 # sudo apt-get install libudunits2-dev
 ```
-
-## Using iCommands
-
-If you haven't used iRODS iCommands before, you'll need to set up a CyVerse account. 
-
-In the running RStudio container open a terminal window and initiate a connection to the CyVerse Data Store.
-
-Below is the example from Terminal:
-
-```
-$ iinit
-One or more fields in your iRODS environment file (irods_environment.json) are
-missing; please enter them.
-Enter the host name (DNS) of the server to connect to: data.cyverse.org
-Enter the port number: 1247
-Enter your irods user name: tswetnam
-Enter your irods zone: iplant
-Those values will be added to your environment file (for use by
-other iCommands) if the login succeeds.
-
-Enter your current iRODS password:
-```
-
-This will generate an iRODS environment JSON file located in a hidden folder in your user home directory
-
-```
-/home/rstudio/.irods/irods_environment.json
-```
-
-The contents of which are:
-
-```
-{
-    "irods_host": "data.cyverse.org",
-    "irods_port": 1247,
-    "irods_user_name": "tswetnam",
-    "irods_zone_name": "iplant"
-}
-```
-
-Once this `irods_environment.json` exists, you'll be able to view your data store contents by typing the `ils` command.
 
 
 ## Install missing R Libraries

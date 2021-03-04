@@ -1,7 +1,7 @@
 ---
 title: "Global Map - Figure 3"
 author: "Tyson Lee Swetnam"
-date: "2020-08-16"
+date: "2021-03-04"
 output: html_document
 ---
 
@@ -82,6 +82,7 @@ ggplot() + geom_polygon(data = map.world,  aes(x=long, y = lat, group = group), 
 
 ```{r, include=FALSE}
 # Save the map
+system('mkdir ~/emsi/rmd/figures')
 ggsave('~/emsi/rmd/figures/world_map_fig3.png', width = 8.5, dpi = 300, bg = "transparent")
 ```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
