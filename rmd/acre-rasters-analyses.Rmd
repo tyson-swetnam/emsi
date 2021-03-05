@@ -111,8 +111,8 @@ A subset of the collection will take less time, here we're taking the `/acre` co
 
 ```{bash message=FALSE, warning=FALSE}
 # uncomment to run
- cd ~/emsi/data/
-time wget -r -nH --cut-dirs=7 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/acre
+# cd ~/emsi/data/
+# time wget -r -nH --cut-dirs=7 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/acre
 ```
 
 # Import Raster from data directory and check the header

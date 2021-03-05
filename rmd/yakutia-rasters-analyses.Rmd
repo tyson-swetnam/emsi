@@ -112,13 +112,13 @@ A subset of the collection will take less time, here we're taking the `/okavango
 ```{bash message=FALSE, warning=FALSE}
 # uncomment to run
  cd ~/emsi/data/
-time wget -r -nH --cut-dirs=7 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/okavango
+time wget -r -nH --cut-dirs=7 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/yakutia
 ```
 
 # Import Raster from data directory and check the header
 ```{r message=FALSE, warning=FALSE}
 # Test for raster metadata with GDALinfo
-GDALinfo("~/emsi/data/collections/yakutia/gee-collection-yakutia-landsat8/LC08_175073_20171026.tif")
+GDALinfo("~/emsi/data/collections/yakutia/gee-collection-yakutia-landsat8/LC08_126016_20130408.tif")
 ```
 
 ## Import Raster time series for Landsats 5,7,8
@@ -158,7 +158,8 @@ list_07
 
 # June (peak greenness) EMSI calc prep
 ```{r}
-      
+
+# Landsat 5,7,8 Summer Scene 128016      
 lall_06 <- brick(LT05_128016_19990728,
                   LT05_128016_20010701,
                   LT05_128016_20010717,
@@ -201,7 +202,7 @@ lall_06 <- brick(LT05_128016_19990728,
                   )
     
 
-# Landsat 5,7,8 June
+# Add Landsat 5,7,8 Summer Scene 127016
 lall_06 <- brick(LT05_127016_20000605, 
                  LT05_127016_20010624,
                  LT05_127016_20020627,
@@ -227,29 +228,7 @@ lall_06_mean <- calc(lall_06, mean, na.rm=T)
 lall_06_sd <- calc(lall_06, sd, na.rm=T)
 
 
-#l5_08_emsi <- overlay(l5_08, l5_08_mean, l5_08_sd, fun = function(r1, r2, r3) { return( (r1 - r2)/r3) })
-
-#l7_08_emsi <- overlay(l7_08, l7_08_mean, l7_08_sd, fun = function(r1, r2, r3) { return( (r1 - r2)/r3) })
-
-#l8_08_emsi <- overlay(l8_08, l5_08_mean, l5_08_sd, fun = function(r1, r2, r3) { return( (r1 - r2)/r3) })
-
 lall_06_emsi <- overlay(lall_06, lall_06_mean, lall_06_sd, fun = function(r1, r2, r3) { return( (r1 - r2)/r3) })
-```
-
-```{r}
-#l5_09 <- brick()
-
-# Landsat 8 September dates
-#l8_09 <- brick(LC08_035038_20130924,
-#                       LC08_035038_20140911,
-#                       LC08_035038_20150930,
-#                       LC08_035038_20160916,
-#                       LC08_035038_20180906)
-# Calculate mean
-#l8_09_mean <- calc(l8_09, mean)
-# Calculate sd
-#l8_09_sd <- calc(l8_09, sd)
-#l8_09_emsi <- overlay(l8_09, l8_09_mean, l8_09_sd, fun = function(r1, r2, r3) { return( (r1 - r2)/r3) })
 ```
 
 
@@ -306,7 +285,7 @@ m <- leaflet() %>%
   #addLegend(pal = pal1, values = values(lall_06_mean), title = "NDVI") %>%
   addRasterImage(lall_06_mean, group = "June Mean NDVI", colors = pal1, opacity = 1.0, maxBytes = 32 * 1024 * 1024) %>%
   addRasterImage(lall_06_sd, group = "June Standard Deviation NDVI", colors = pal1, opacity = 1.0, maxBytes = 32 * 1024 * 1024) %>%
-  addRasterImage(lall_06_emsi[[21]], group = "June 2013 EMSI", colors = pal, opacity = 1.0, maxBytes = 32 * 1024 * 1024) %>%
+  #addRasterImage(lall_06_emsi[[21]], group = "June 2013 EMSI", colors = pal, opacity = 1.0, maxBytes = 32 * 1024 * 1024) %>%
   addRasterImage(lall_06_emsi[[22]], group = "June 2014a EMSI", colors = pal, opacity = 1.0, maxBytes = 32 * 1024 * 1024) %>%
   addRasterImage(lall_06_emsi[[23]], group = "June 2014b EMSI", colors = pal, opacity = 1.0, maxBytes = 32 * 1024 * 1024) %>%
   addRasterImage(lall_06_emsi[[24]], group = "June 2015 EMSI", colors = pal, opacity = 1.0, maxBytes = 32 * 1024 * 1024) %>%
@@ -327,7 +306,6 @@ m
 
 
 ```{r}
-
 year_id <- c('LT05_128016_19990728' = "1999",
                   'LT05_128016_20010701' = "2001",
                   'LT05_128016_20010717' = "2001",
@@ -434,11 +412,11 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
  
-ggsave('~/Documents/ndvi_timeseries_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_timeseries_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
-## Multipanel graph Augusts 2000 - 2018
+## Multipanel graph Summers 2000 - 2018
 lall_stack <- stack(LT05_128016_19990728,
                   LT05_128016_20010701,
                   LT05_128016_20010717,
@@ -492,7 +470,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
  
-ggsave('~/Documents/ndvi_timeseries_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_timeseries_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -508,7 +486,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/ndvi_2000_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_2000_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -524,7 +502,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/ndvi_1996_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_1996_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -540,7 +518,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/ndvi_2016_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_2016_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 
@@ -579,7 +557,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_timeseries_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_timeseries_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -595,7 +573,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_2010_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_2010_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -611,7 +589,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_2007_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_2007_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -627,7 +605,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_2016_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_2016_yakutia.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 

@@ -489,7 +489,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
  
-ggsave('~/Documents/ndvi_timeseries_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_timeseries_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -520,7 +520,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/ndvi_2001_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_2001_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 ```{r}
 l2016_stack_ndvi_df <- as.data.frame(lall_stack[[29]], xy = TRUE) %>%
@@ -535,7 +535,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/ndvi_2016_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_2016_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 
@@ -598,7 +598,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_timeseries_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_timeseries_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -614,7 +614,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_1994_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_1994_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 ```{r}
@@ -630,7 +630,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_2001_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_2001_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 ```{r}
 l2016_stack_emsi_df <- as.data.frame(lall_stack_emsi[[29]], xy = TRUE) %>%
@@ -645,7 +645,7 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/emsi_2016_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/emsi_2016_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
 
 
