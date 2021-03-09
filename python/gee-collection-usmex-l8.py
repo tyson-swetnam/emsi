@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import time
 import oauth2client
 import ee
@@ -6,13 +8,13 @@ ee.Initialize()
 
 ## Polygon area for extraction
 geom=ee.Geometry.Polygon(
-        [[[-110.56030161232809, 31.356061922317178],
-          [-110.55721170754293, 31.321460260775417],
-          [-110.53146250099996, 31.326152757145508],
-          [-110.52905924172262, 31.35078452529268]]])
+       [[[-110.700, 31.245],
+          [-110.367, 31.245],
+          [-110.367, 31.429],
+          [-110.700, 31.429]]])
 
 ## Landsat 8 Collection 
-l8=ee.ImageCollection('LANDSAT/LC08/C01/T1_SR').filterDate('2018-05-01', '2018-08-30').filterBounds(geom)
+l8=ee.ImageCollection('LANDSAT/LC08/C01/T1_SR').filterDate('2013-01-01', '2021-03-01').filterBounds(geom)
 
 def exportCollectionToDrive (userCollection,folderName):
     userCollection2=userCollection
@@ -44,16 +46,15 @@ def exportCollectionToDrive (userCollection,folderName):
         imgp=ee.Number(imgarea.get(band)).multiply(sc).multiply(sc).divide(area)
 
         ##Check for overlap
-        if imgp.getInfo()>=0.8:
+        if imgp.getInfo()>=0.7:
             task = ee.batch.Export.image.toDrive(
                 image = img.normalizedDifference(['B5', 'B4']).rename('NDVI').toFloat(),
                 description = fileName,
-                folder = 'NDVI-Test',
+                folder = 'gee-collection-usmex-landsat8-2021',
                 maxPixels = 1e13,
                 region = fileGeometry,
                 scale = 30)
             task.start()
-
 
     index = 0
     while index < length:
@@ -66,4 +67,4 @@ def exportCollectionToDrive (userCollection,folderName):
 
     print('Finished exporting data')
     print('')
-exportCollectionToDrive(userCollection=l8, folderName="emsi/gee-collections/landsat8")
+exportCollectionToDrive(userCollection=l8, folderName="gee-collection-usmex-landsat8-2021")

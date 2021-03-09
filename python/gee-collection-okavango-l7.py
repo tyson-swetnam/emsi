@@ -14,7 +14,7 @@ geom=ee.Geometry.Polygon(
           [22.840, -18.730]]])
 
 ## Landsat 7 Collection
-l7=ee.ImageCollection('LANDSAT/LE07/C01/T1_SR').filterDate('1999-01-01', '2018-09-30').filterBounds(geom)
+l7=ee.ImageCollection('LANDSAT/LE07/C01/T1_SR').filterDate('1999-01-01', '2021-03-01').filterBounds(geom)
 
 def exportCollectionToDrive (userCollection,folderName):
     userCollection2=userCollection#.map(toals)

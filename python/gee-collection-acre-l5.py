@@ -7,7 +7,6 @@ import ee
 ee.Initialize()
 
 ## Polygon area for extraction
-## Polygon area for extraction
 geom=ee.Geometry.Polygon(
        [[[-72.050, -9.128],
           [-72.050, -9.235],
@@ -15,7 +14,7 @@ geom=ee.Geometry.Polygon(
           [-71.916, -9.128]]])
 
 ## Landsat 5 Collection
-l5=ee.ImageCollection('LANDSAT/LT05/C01/T1_SR').filterDate('1998-01-01', '2011-11-30').filterBounds(geom)
+l5=ee.ImageCollection('LANDSAT/LT05/C01/T1_SR').filterDate('1984-01-01', '2011-11-30').filterBounds(geom)
 
 def exportCollectionToDrive (userCollection,folderName):
     userCollection2=userCollection#.map(toals)
@@ -51,7 +50,7 @@ def exportCollectionToDrive (userCollection,folderName):
             task = ee.batch.Export.image.toDrive(
                 image = img.normalizedDifference(['B4', 'B3']).rename('NDVI').toFloat(),
                 description = fileName,
-                folder = 'gee-collection-acre-landsat5',
+                folder = 'gee-collection-acre-landsat5-2021',
                 maxPixels = 1e13,
                 region = fileGeometry,
                 scale = 30)
@@ -68,4 +67,4 @@ def exportCollectionToDrive (userCollection,folderName):
 
     print('Finished exporting data')
     print('')
-exportCollectionToDrive(userCollection=l5, folderName="gee-collection-acre-landsat5")
+exportCollectionToDrive(userCollection=l5, folderName="gee-collection-acre-landsat5-2021")

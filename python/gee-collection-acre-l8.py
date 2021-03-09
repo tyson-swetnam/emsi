@@ -13,7 +13,8 @@ geom=ee.Geometry.Polygon(
           [-71.916, -9.235],
           [-71.916, -9.128]]])
 
-l8=ee.ImageCollection('LANDSAT/LC08/C01/T1_SR').filterDate('2013-01-01', '2018-08-30').filterBounds(geom)
+## Landsat 8 Collection
+l8=ee.ImageCollection('LANDSAT/LC08/C01/T1_SR').filterDate('2013-01-01', '2021-03-01').filterBounds(geom)
 
 def exportCollectionToDrive (userCollection,folderName):
     userCollection2=userCollection#.map(toals)
@@ -27,7 +28,7 @@ def exportCollectionToDrive (userCollection,folderName):
         task = ee.batch.Export.image.toDrive(
             image = img.normalizedDifference(['B5', 'B4']).rename('NDVI').toFloat(),
             description = fileName,
-            folder = 'gee-collection-acre-landsat8',
+            folder = 'gee-collection-acre-landsat8-2021',
             maxPixels = 1e13,
             region = fileGeometry,
             scale = 30)
@@ -43,4 +44,4 @@ def exportCollectionToDrive (userCollection,folderName):
 
     print('Finished exporting data')
     print('')
-exportCollectionToDrive(userCollection=l8, folderName="gee-collection-acre-landsat8")
+exportCollectionToDrive(userCollection=l8, folderName="gee-collection-acre-landsat8-2021")

@@ -36,7 +36,7 @@ Copy paste the token and code above:
 earthengine authenticate --authorization-code=4/aABGWQkfckJYuI_XFgGoVpiGKU_vVF3F-eS3TFvuVEYjRBLV1xF72xg
 ```
 
-## Run the python scripts
+## Run the python scripts to extract files from GEE to GoogleDrive
 
 To extract the collection, you must establish an area of interest in the `.py` file
 
@@ -46,11 +46,21 @@ Run the `.py` file locally:
 python gee-collection-usmex-l7.py
 ```
 
-# CyberDuck
+# Using CyberDuck to transfer files from GoogleDrive to my local computer
 
 After transfering the file collections to a Google Drive Account, I used [CyberDuck CLI ](https://duck.sh/) to move the files from my Google Drive onto my workstation.
 
 ```
-duck --verbose --parallel 2 --username <username>@<my-institution-email> --download googledrive://<my-institution-email>/My%20Drive/<collection-name>/ ~/emsi/data/collections/<collection-name>
+duck --verbose --parallel 2 --username <username>@<my-institution-email> --download googledrive://My%20Drive/<collection-name>/ ~/emsi/data/collections/<collection-name>
 
+```
+
+## Sharing the data from CyVerse
+
+Because users won't have access to my personal GDrive, I've moved the files to the CyVerse Data Store.
+
+I moved the files using iRODS iCommands.
+
+```
+iput -KPbrvf ~/emsi/data/collections /iplant/home/tswetnam/emsi/data/
 ```

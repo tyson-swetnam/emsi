@@ -99,7 +99,7 @@ if (!require("viridis")) {
 }
 ```
 
-# Transfer datasets from CyVerse
+## Transfer datasets from CyVerse
 
 This command uses `wget` to download data into the container.
 
@@ -111,11 +111,15 @@ A subset of the collection will take less time, here we're taking the `/okavango
 
 ```{bash message=FALSE, warning=FALSE}
 # uncomment to run
- cd ~/emsi/data/
-time wget -r -nH --cut-dirs=7 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/okavango
+ cd ~/emsi/data/collections
+time wget -r -nH --cut-dirs=6 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/okavango
 ```
 
-# Import Raster from data directory and check the header
+# Begin Raster Analyses
+
+Rasters were downloaded using `../python` scripts from the command line. 
+
+## Import Raster from data directory and check the header
 ```{r message=FALSE, warning=FALSE}
 # Test for raster metadata with GDALinfo
 GDALinfo("~/emsi/data/collections/okavango/gee-collection-okavango-landsat8/LC08_175073_20171026.tif")
@@ -138,6 +142,8 @@ setwd("~/emsi/data/collections/okavango/gee-collection-okavango-landsat8/")
 rlist8=list.files(getwd(), pattern="tif$", full.names=FALSE)
 for(i in rlist8) { assign(unlist(strsplit(i, "[.]"))[1], raster(i)) }
 ```
+
+### Create lists for each platform
 
 ```{r}
 list_l5 <- ls(pattern="LT05", all.names = TRUE) 

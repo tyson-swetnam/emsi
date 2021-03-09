@@ -3,7 +3,6 @@ title: "Figures 5 and 6 NDVI & EMSI time series of LANDSAT 5,7,8 & Sentinel-2"
 author: "Tyson Lee Swetnam <tswetnam@arizona.edu>"
 date: "2021-03-04"
 output:
-  pdf_document: default
   html_document: default
 editor_options: 
   chunk_output_type: console

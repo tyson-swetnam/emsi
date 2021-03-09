@@ -163,9 +163,9 @@ The CyVerse iRODS data store also supports [WebDav](https://data.cyverse.org); w
 Data are ~22.8 GB in size, and will take ~18 minutes to transfer within the CyVerse workbench.
 
 ```{bash message=FALSE, warning=FALSE}
-# uncomment to run
-# cd ~/emsi/data/
-# time wget -r -nH --cut-dirs=6 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/
+ #uncomment to run
+ cd ~/emsi/data/
+ time wget -r -nH --cut-dirs=6 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/
 ```
 
 ## Data

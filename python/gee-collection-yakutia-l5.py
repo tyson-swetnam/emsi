@@ -7,7 +7,6 @@ import ee
 ee.Initialize()
 
 ## Polygon area for extraction
-## Polygon area for extraction
 geom=ee.Geometry.Polygon(
        [[[120.080, 63.590],
           [120.080, 63.160],

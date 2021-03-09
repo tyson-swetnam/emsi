@@ -99,6 +99,10 @@ if (!require("viridis")) {
 }
 ```
 
+# Download rasters from GEE
+
+We have already downloaded these data from the GEE, using the python scripts in the `../python` folder.
+
 # Transfer datasets from CyVerse
 
 This command uses `wget` to download data into the container.
@@ -111,8 +115,8 @@ A subset of the collection will take less time, here we're taking the `/okavango
 
 ```{bash message=FALSE, warning=FALSE}
 # uncomment to run
- cd ~/emsi/data/
-time wget -r -nH --cut-dirs=7 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/okavango
+# cd ~/emsi/data/collections
+#time wget -r -nH --cut-dirs=6 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/usmex
 ```
 
 # Import Raster from data directory and check the header
@@ -139,14 +143,15 @@ rlist8=list.files(getwd(), pattern="tif$", full.names=FALSE)
 for(i in rlist8) { assign(unlist(strsplit(i, "[.]"))[1], raster(i)) }
 ```
 
-```{r}
+test files
+```{r message=FALSE, warning=FALSE}
 setwd("~/emsi/data/collections/usmex/gee-collection-usmex-landsat5/")
 rlist5 <- list.files(getwd(),full.names = TRUE,pattern = ".tif$")
 l5_stack <- stack(rlist5)
 l5_stack
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 list_l5 <- ls(pattern="LT05", all.names = TRUE) 
 list_l5
 dates_l5 = as.Date(str_sub(list_l5, -8 ,-1), format="%Y%m%d")
@@ -163,7 +168,7 @@ list_09 <- ls(pattern = "09", all.names = TRUE)
 ```
 
 # August EMSI calc prep
-```{r}
+```{r message=FALSE, warning=FALSE}
 # Landsat 5,7,8 August scenes
 l5_08 <- brick(LT05_035038_19850826,
                         LT05_035038_19870816,
@@ -211,12 +216,19 @@ l7_08 <- brick(LE07_035038_19990809,
                         LE07_035038_20110826,
                         LE07_035038_20120812,
                         LE07_035038_20160807,
-                        LE07_035038_20180829)
+                        LE07_035038_20180829,
+                        LE07_035038_20190816,
+                        LE07_035038_20200818)
             
 l8_08 <- brick( LC08_035038_20150813,
                         LC08_035038_20150829,
                         LC08_035038_20160815,
-                        LC08_035038_20180805)
+                        LC08_035038_20180805,
+                        LC08_035038_20190824,
+                        LC08_035038_20200810,
+                        LC08_035038_20200826,
+                        LC08_036038_20190815, 
+                        LC08_036038_20200817)
 
 lall_08 <- brick(LT05_035038_19850826,
                         LT05_035038_19870816,
@@ -264,11 +276,17 @@ lall_08 <- brick(LT05_035038_19850826,
                         LE07_035038_20120812,
                         LE07_035038_20160807,
                         LE07_035038_20180829,
+                        LE07_035038_20190816,
+                        LE07_035038_20200818,
                         LC08_035038_20150813,
                         LC08_035038_20150829,
                         LC08_035038_20160815,
-                        LC08_035038_20180805)
+                        LC08_035038_20180805,
+                        LC08_036038_20190815, 
+                        LC08_036038_20200817)
+```
 
+```{r message=FALSE, warning=FALSE}
 # Calculate mean
 l5_08_mean <- calc(l5_08, mean, na.rm=T)
 l7_08_mean <- calc(l7_08, mean, na.rm=T)
@@ -282,6 +300,7 @@ l8_08_sd <- calc(l8_08, sd, na.rm=T)
 lall_08_sd <- calc(lall_08, sd, na.rm=T)
 
 
+# Calculate EMSI
 l5_08_emsi <- overlay(l5_08, l5_08_mean, l5_08_sd, fun = function(r1, r2, r3) { return( (r1 - r2)/r3) })
 
 l7_08_emsi <- overlay(l7_08, l7_08_mean, l7_08_sd, fun = function(r1, r2, r3) { return( (r1 - r2)/r3) })
@@ -291,7 +310,7 @@ l8_08_emsi <- overlay(l8_08, l5_08_mean, l5_08_sd, fun = function(r1, r2, r3) { 
 lall_08_emsi <- overlay(lall_08, lall_08_mean, lall_08_sd, fun = function(r1, r2, r3) { return( (r1 - r2)/r3) })
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 l5_09 <- brick()
 
 # Landsat 8 September dates
@@ -307,7 +326,6 @@ l8_09_sd <- calc(l8_09, sd)
 l8_09_emsi <- overlay(l8_09, l8_09_mean, l8_09_sd, fun = function(r1, r2, r3) { return( (r1 - r2)/r3) })
 ```
 
-
 # Create Leaflet Map of study area 
 https://rstudio.github.io/leaflet
 http://leafletjs.com/
@@ -317,15 +335,6 @@ https://www.color-hex.com/color-palette/19447
 We are going to use a topo map, overlayed with a street map to show states.
 To browse all the provider layers,
 see http://leaflet-extras.github.io/leaflet-providers/preview/index.html
-
-
-```{r}
-m <- leaflet() %>%
-  addTiles() %>%  # Add default OpenStreetMap map tiles
-  addMarkers(lng=174.768, lat=-36.852,
-    popup="The birthplace of R")
-m  # Print the map
-```
 
 ```{r message=FALSE, warning=FALSE}
 # Create custom NDVI color pallete
@@ -356,58 +365,11 @@ m
 ```
 
 ```{r}
-# Landsat 5
-m <- leaflet() %>%
-  addTiles() %>%
-  addLegend(pal = pal, values = values(l5_08_emsi[[1]]), title = "EMSI") %>%
-  addLegend(pal = pal1, values = values(l5_08_mean), title = "NDVI") %>%
-  addRasterImage(l5_08_mean, group = "August Mean NDVI", colors = pal1, opacity = 1.0) %>%
-  addRasterImage(l5_08_sd, group = "August Standard Deviation NDVI", colors = pal1, opacity = 1.0) %>%
-  addRasterImage(l5_08_emsi[[1]], group = "August 1985 EMSI", colors = pal, opacity = 1.0) %>%
-  addRasterImage(l5_08_emsi[[2]], group = "August 1987 EMSI", colors = pal, opacity = 1.0) %>%
-  addRasterImage(l5_08_emsi[[3]], group = "August 1988 EMSI", colors = pal, opacity = 1.0) %>%
-  addRasterImage(l5_08_emsi[[4]], group = "August 1989 EMSI", colors = pal, opacity = 1.0) %>%
-  addRasterImage(l5_08_emsi[[5]], group = "August 1990 EMSI", colors = pal, opacity = 1.0) %>%
-  addRasterImage(l5_08_emsi[[6]], group = "August 1991 EMSI", colors = pal, opacity = 1.0) %>%  
-  addRasterImage(l5_08_emsi[[7]], group = "August 1992 EMSI", colors = pal, opacity = 1.0) %>%
-  addRasterImage(l5_08_emsi[[8]], group = "August 1993 EMSI", colors = pal, opacity = 1.0) %>%  
-  addRasterImage(l5_08_emsi[[9]], group = "August 1994 EMSI", colors = pal, opacity = 1.0) %>%
-setView(lng = -110.55, lat = 31.3, zoom = 12) %>%
-addProviderTiles("Stamen.Toner", group = "Stamen") %>%
-addProviderTiles("Esri.WorldImagery", group = "ESRI Satellite", options = providerTileOptions(opacity = 0.66, transparent = TRUE)) %>%
-addProviderTiles("OpenStreetMap.Mapnik", group = "OpenStreetMap") %>%
-#layers control panel
-addLayersControl(baseGroups = c("Stamen", "ESRI Satellite", "OpenStreetMap"), overlayGroups = c("August Mean NDVI", "August Standard Deviation NDVI", "August 1985 EMSI", "August 1987 EMSI", "August 1988 EMSI", "August 1989 EMSI", "August 1990 EMSI", "August 1991 EMSI", "August 1992 EMSI", "August 1993 EMSI", "August 1994 EMSI"), options = layersControlOptions(collapsed = TRUE))
-
-m
-```
-
-```{r}
 
 library(raster)
 library(rasterVis)
 ```
 
-```{r}
-m <- leaflet() %>%
-  addTiles() %>%
-  #addLegend(pal = pal, values = values(l8_08_emsi[[1]]), title = "EMSI") %>%
-  #addLegend(pal = pal1, values = values(l8_08_mean), title = "NDVI") %>%
-  addRasterImage(lall_08_mean, group = "August Mean NDVI", colors = pal1, opacity = 1.0) %>%
-  addRasterImage(lall_08_sd, group = "August Standard Deviation NDVI", colors = pal1, opacity = 1.0) %>%
-  addRasterImage(lall_08_emsi[[1]], group = "early August 2015 EMSI", colors = pal, opacity = 1.0) %>%
-  addRasterImage(lall_08_emsi[[2]], group = "August 2015 EMSI", colors = pal, opacity = 1.0) %>%
-  addRasterImage(lall_08_emsi[[3]], group = "August 2016 EMSI", colors = pal, opacity = 1.0) %>%
-  addRasterImage(lall_08_emsi[[4]], group = "August 2018 EMSI", colors = pal, opacity = 1.0) %>%
-setView(lng = -110.55, lat = 31.3, zoom = 12) %>%
-addProviderTiles("Stamen.Toner", group = "Stamen") %>%
-addProviderTiles("Esri.WorldImagery", group = "ESRI Satellite", options = providerTileOptions(opacity = 0.66, transparent = TRUE)) %>%
-addProviderTiles("OpenStreetMap.Mapnik", group = "OpenStreetMap") %>%
-#layers control panel
-addLayersControl(baseGroups = c("Stamen", "ESRI Satellite", "OpenStreetMap"), overlayGroups = c("August Mean NDVI", "August Standard Deviation NDVI", "early August 2015 EMSI", "August 2015 EMSI", "August 2016 EMSI", "August 2018 EMSI"), options = layersControlOptions(collapsed = TRUE))
-
-m
-```
 
 ```{r}
 year_id <- c('LT05_035038_19850826'="1985",
@@ -505,8 +467,9 @@ ggplot() +
         axis.ticks = element_blank(),
         rect = element_blank())
 
-ggsave('~/Documents/ndvi_1994_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
+ggsave('~/emsi/rmd/figures/ndvi_1994_grassmx.png', width = 12, height = 8, dpi = 300, bg = "transparent")
 ```
+
 ```{r}
 l2001_stack_ndvi_df <- as.data.frame(lall_stack[[16]], xy = TRUE) %>%
     melt(id.vars = c('x','y'))
@@ -638,7 +601,7 @@ l2016_stack_emsi_df <- as.data.frame(lall_stack_emsi[[29]], xy = TRUE) %>%
 
 ggplot() +
   geom_raster(data = l2016_stack_emsi_df, aes(x = x, y = y, fill = value)) +
-  scale_fill_gradientn(colours=c("#6E462C", "#9C8448", "#CCCC66", "#9CAB68", "#306466"), limits=c(-3,2.7), guide = guide_colorbar(title ="EMSI")) +
+  scale_fill_gradientn(colours=c("#6E462C", "#9C8448", "#CCCC66", "#9CAB68", "#306466"), limits=c(-3,3.2), guide = guide_colorbar(title ="EMSI")) +
   theme(axis.title = element_blank(),
         axis.text.x = element_blank(),
         axis.text.y = element_blank(),
@@ -651,9 +614,9 @@ ggsave('~/emsi/rmd/figures/emsi_2016_grassmx.png', width = 12, height = 8, dpi =
 
 ```{r}
 ggplot(lall_stack_emsi_df) + geom_histogram(aes(value, fill = value)) +
-  scale_fill_gradientn(colours=c("#6E462C", "#9C8448", "#CCCC66", "#9CAB68", "#306466"), limits=c(-2.5,2.7), guide = guide_colorbar(title ="EMSI")) +
-  ylab("Density") + xlab("EMSI") + ggtitle("August") +
-  facet_wrap(~variable, labeller = as_labeller(year_ids), ncol = 6) +
+  scale_fill_gradientn(colours=c("#6E462C", "#9C8448", "#CCCC66", "#9CAB68", "#306466"), limits=c(-2.7,2.7), guide = guide_colorbar(title ="EMSI")) +
+  ylab("Density") + xlab("EMSI") + ggtitle("June") +
+  facet_wrap(~variable, labeller = as_labeller(year_ids), ncol = 5) +
   theme_bw() +
   theme(axis.text.y = element_blank(),
         axis.ticks = element_blank(),

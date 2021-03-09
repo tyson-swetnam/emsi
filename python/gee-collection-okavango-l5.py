@@ -7,7 +7,6 @@ import ee
 ee.Initialize()
 
 ## Polygon area for extraction
-## Polygon area for extraction
 geom=ee.Geometry.Polygon(
        [[[21.870, -18.730],
           [21.870, -19.510],
@@ -15,7 +14,7 @@ geom=ee.Geometry.Polygon(
           [22.840, -18.730]]])
 
 ## Landsat 5 Collection
-l5=ee.ImageCollection('LANDSAT/LT05/C01/T1_SR').filterDate('1984-01-01', '1997-12-31').filterBounds(geom)
+l5=ee.ImageCollection('LANDSAT/LT05/C01/T1_SR').filterDate('1984-01-01', '2011-11-30').filterBounds(geom)
 
 def exportCollectionToDrive (userCollection,folderName):
     userCollection2=userCollection#.map(toals)

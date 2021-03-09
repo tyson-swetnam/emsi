@@ -99,6 +99,14 @@ if (!require("viridis")) {
 }
 ```
 
+# Download rasters from GEE
+
+We have already downloaded these data from the GEE, using the python scripts in the `../python` folder.
+
+```{python}
+
+```
+
 # Transfer datasets from CyVerse
 
 This command uses `wget` to download data into the container.
@@ -107,12 +115,12 @@ The CyVerse iRODS data store also supports [WebDav](https://data.cyverse.org); w
 
 All of the landsat data are ~22.8 GB in size, and will take ~18 minutes to transfer within the CyVerse workbench for all four sites.
 
-A subset of the collection will take less time, here we're taking the `/okavango` collection. 
+A subset of the collection will take less time, here we're taking the `/yakutia` collection. 
 
 ```{bash message=FALSE, warning=FALSE}
 # uncomment to run
- cd ~/emsi/data/
-time wget -r -nH --cut-dirs=7 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/yakutia
+ cd ~/emsi/data/collections
+time wget -r -nH --cut-dirs=6 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/yakutia
 ```
 
 # Import Raster from data directory and check the header

@@ -1,0 +1,1073 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Figures 5 and 6 NDVI \& EMSI time series of LANDSAT 5,7,8 \& Sentinel-2},
+  pdfauthor={Tyson Lee Swetnam tswetnam@arizona.edu},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Figures 5 and 6 NDVI \& EMSI time series of LANDSAT 5,7,8 \& Sentinel-2}
+\author{Tyson Lee Swetnam
+\href{mailto:tswetnam@arizona.edu}{\nolinkurl{tswetnam@arizona.edu}}}
+\date{2021-03-04}
+
+\begin{document}
+\maketitle
+
+\hypertarget{setup}{%
+\section{Setup}\label{setup}}
+
+\hypertarget{linux-dependencies}{%
+\subsection{Linux Dependencies}\label{linux-dependencies}}
+
+If you are running this on a VM outside CyVerse, you may need to install
+additional dependencies
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# sudo add-apt-repository ppa:ubuntugis}
+\CommentTok{# sudo apt-get update}
+\CommentTok{# sudo apt-get install libgdal-dev libgeos-dev libproj-dev}
+\CommentTok{# sudo apt-get install libudunits2-dev}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{install-missing-r-libraries}{%
+\subsection{Install missing R
+Libraries}\label{install-missing-r-libraries}}
+
+The following code block executes when the notebook is opened.
+
+\hypertarget{transfer-datasets-from-cyverse}{%
+\section{Transfer datasets from
+CyVerse}\label{transfer-datasets-from-cyverse}}
+
+This command uses \texttt{wget} to download data into the container.
+
+The CyVerse iRODS data store also supports
+\href{https://data.cyverse.org}{WebDav}; we are hosting the extracted
+raster data in a folder with anonymous public read-only settings.
+
+Data are \textasciitilde22.8 GB in size, and will take \textasciitilde18
+minutes to transfer within the CyVerse workbench.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# uncomment to run}
+\CommentTok{# cd ~/emsi/data/}
+\CommentTok{# time wget -r -nH --cut-dirs=6 --no-parent -l8 --reject="index.html*" https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/data/collections/}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{create-multi-plot-ability}{%
+\subsection{Create Multi-Plot ability}\label{create-multi-plot-ability}}
+
+\hypertarget{import-example-data}{%
+\subsection{Import Example Data}\label{import-example-data}}
+
+In the Git repository \texttt{/data/examples} folder I've saved data
+exported from the Google Earth Engine (GEE) NDVI Explorer (.js files
+provided in the \texttt{/javascripts} folder).
+
+I have extracted the time series of 16-day Landsat 5,7,8 and 5-day
+Sentinel-2 NDVI data using their Surface Reflectance model with bit-mask
+flags for cloud, cloud shadow, water, or snow (Landsat), scenes with
+cloud \textless20\% (Sentinel-2). Even with these filters turned on
+there are some pixels affected by snow or cloud contaminated pixels.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## Import Landsat 5,7,8 16-day and Sentinel-2 5 day NDVI from Google Earth Engine extracted CSVs}
+
+\CommentTok{## Okavango Thornscrub}
+\NormalTok{aoi1 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l5-okavango-shrubland-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi1) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi2 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l7-okavango-shrubland-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi2) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi3 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l8-okavango-shrubland-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi3) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi4 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/s2-okavango-shrubland-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi4) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+
+\CommentTok{## Okavango Swamp}
+\NormalTok{aoi5 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l5-okavango-swamp-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi5) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi6 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l7-okavango-swamp-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi6) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi7 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l8-okavanog-swamp-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi7) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi8 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/s2-okavango-swamp-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi8) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+
+\CommentTok{## US Mexico Grassland Mexico}
+\NormalTok{aoi9 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l5-usmex-grassmx-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi9) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi10 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l7-usmex-grassmx-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi10) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi11 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l8-usmex-grassmx-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi11) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi12 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/s2-usmex-grassmx-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi12) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+
+\CommentTok{## US Mexico Grassland USA}
+\NormalTok{aoi13 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l5-usmex-grassus-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi13) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi14 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l7-usmex-grassus-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi14) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi15 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l8-usmex-grassus-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi15) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi16 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/s2-usmex-grassus-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi16) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+
+\CommentTok{## Acre Brazil Agricultural Areas}
+\NormalTok{aoi17 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l5-acre-ag-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi17) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi18 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l7-acre-ag-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi18) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi19 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l8-acre-ag-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi19) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi20 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/s2-acre-ag-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi20) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+
+\CommentTok{## Acre Brazil Rainforest}
+\NormalTok{aoi21 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l5-acre-rainforest-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi21) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi22 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l7-acre-rainforest-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi22) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi23 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l8-acre-rainforest-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi23) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi24 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/s2-acre-rainforest-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi24) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+
+\CommentTok{## Yakutia Taiga}
+\NormalTok{aoi25 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l5-yakutia-taiga-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi25) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi26 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l7-yakutia-taiga-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi26) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi27 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l8-yakutia-taiga-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi27) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi28 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/s2-yakutia-taiga-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi28) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+
+\CommentTok{## Yakutia Alaas}
+\NormalTok{aoi29 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l5-yakutia-alaas-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi29) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi30 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l7-yakutia-alaas-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi30) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi31 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/l8-yakutia-alaas-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi31) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\NormalTok{aoi32 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/emsi/data/examples/s2-yakutia-alaas-ndvi.csv"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(aoi32) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"ndvi"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{calculate-julian-dates-from-calendar}{%
+\subsection{Calculate Julian dates from
+calendar}\label{calculate-julian-dates-from-calendar}}
+
+Create a function to set the Julian (1-366) dates from the data, also
+flags any dates with no data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create Functions for calculating Julian Dates }
+\NormalTok{aoi.date_julian <-}\StringTok{  }\ControlFlowTok{function}\NormalTok{(df)\{}
+\NormalTok{    df}\OperatorTok{$}\NormalTok{ndvi_nans <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(df}\OperatorTok{$}\NormalTok{ndvi))}
+\NormalTok{    df}\OperatorTok{$}\NormalTok{ndvi_range <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(df}\OperatorTok{$}\NormalTok{ndvi_nans}\OperatorTok{>}\FloatTok{0.05}\NormalTok{,df}\OperatorTok{$}\NormalTok{ndvi_nans,}\OtherTok{NA}\NormalTok{)}
+\NormalTok{    df}\OperatorTok{$}\NormalTok{ndvi_range <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(df}\OperatorTok{$}\NormalTok{ndvi_nans}\OperatorTok{<}\FloatTok{0.95}\NormalTok{,df}\OperatorTok{$}\NormalTok{ndvi_nans,}\OtherTok{NA}\NormalTok{)}
+\NormalTok{    df}\OperatorTok{$}\NormalTok{asdate <-}\StringTok{ }\KeywordTok{as.Date}\NormalTok{(df}\OperatorTok{$}\NormalTok{date, }\DataTypeTok{format =} \StringTok{"%b %d, %Y"}\NormalTok{)}
+\NormalTok{    df}\OperatorTok{$}\NormalTok{julian <-}\StringTok{ }\KeywordTok{yday}\NormalTok{(df}\OperatorTok{$}\NormalTok{asdate)}
+\NormalTok{    df}\OperatorTok{$}\NormalTok{julian_rounded <-}\StringTok{ }\KeywordTok{round}\NormalTok{((df}\OperatorTok{$}\NormalTok{julian}\OperatorTok{/}\DecValTok{365}\NormalTok{)}\OperatorTok{*}\DecValTok{52}\NormalTok{)}\OperatorTok{*}\DecValTok{7}
+\NormalTok{    df}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{execute-functions-recursively-through-all-of-the-aoi}{%
+\subsection{\texorpdfstring{Execute Functions recursively through all of
+the
+\texttt{aoi}}{Execute Functions recursively through all of the aoi}}\label{execute-functions-recursively-through-all-of-the-aoi}}
+
+Runs the Julian function on the 32 example data sets.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aoi1 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi1)}
+\NormalTok{aoi2 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi2)}
+\NormalTok{aoi3 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi3)}
+\NormalTok{aoi4 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi4)}
+\NormalTok{aoi5 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi5)}
+\NormalTok{aoi6 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi6)}
+\NormalTok{aoi7 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi7)}
+\NormalTok{aoi8 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi8)}
+\NormalTok{aoi9 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi9)}
+\NormalTok{aoi10 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi10)}
+\NormalTok{aoi11 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi11)}
+\NormalTok{aoi12 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi12)}
+\NormalTok{aoi13 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi13)}
+\NormalTok{aoi14 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi14)}
+\NormalTok{aoi15 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi15)}
+\NormalTok{aoi16 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi16)}
+\NormalTok{aoi17 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi17)}
+\NormalTok{aoi18 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi18)}
+\NormalTok{aoi19 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi19)}
+\NormalTok{aoi20 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi20)}
+\NormalTok{aoi21 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi21)}
+\NormalTok{aoi22 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi22)}
+\NormalTok{aoi23 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi23)}
+\NormalTok{aoi24 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi24)}
+\NormalTok{aoi25 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi25)}
+\NormalTok{aoi26 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi26)}
+\NormalTok{aoi27 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi27)}
+\NormalTok{aoi28 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi28)}
+\NormalTok{aoi29 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi29)}
+\NormalTok{aoi30 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi30)}
+\NormalTok{aoi31 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi31)}
+\NormalTok{aoi32 <-}\StringTok{ }\KeywordTok{aoi.date_julian}\NormalTok{(aoi32)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{calculate-the-loess-smoothed-mean-ndvi-for-each-julian-date-and-emsi}{%
+\subsection{Calculate the loess smoothed mean NDVI for each Julian date
+and
+EMSI}\label{calculate-the-loess-smoothed-mean-ndvi-for-each-julian-date-and-emsi}}
+
+Create a function that calculates the EMSI from the NDVI Julian date
+time series.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate EMSI for each area of interest}
+\NormalTok{aoi.emsi <-}\StringTok{  }\ControlFlowTok{function}\NormalTok{(df)\{}
+\NormalTok{    mean_loess <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\KeywordTok{loess}\NormalTok{(ndvi_range }\OperatorTok{~}\StringTok{ }\NormalTok{julian_rounded, df), df}\OperatorTok{$}\NormalTok{julian_rounded)}
+\NormalTok{    df}\OperatorTok{$}\NormalTok{emsi =}\StringTok{ }\NormalTok{(df}\OperatorTok{$}\NormalTok{ndvi_range }\OperatorTok{-}\StringTok{ }\NormalTok{mean_loess) }\OperatorTok{/}\StringTok{ }\KeywordTok{sd.multiperiod}\NormalTok{(df}\OperatorTok{$}\NormalTok{ndvi_range,}\DataTypeTok{scale=}\DecValTok{1}\NormalTok{)}
+\NormalTok{    df}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Runs the EMSI function on the 32 example data sets.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aoi1 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi1)}
+\NormalTok{aoi2 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi2)}
+\NormalTok{aoi3 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi3)}
+\NormalTok{aoi4 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi4)}
+\NormalTok{aoi5 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi5)}
+\NormalTok{aoi6 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi6)}
+\NormalTok{aoi7 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi7)}
+\NormalTok{aoi8 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi8)}
+\NormalTok{aoi9 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi9)}
+\NormalTok{aoi10 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi10)}
+\NormalTok{aoi11 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi11)}
+\NormalTok{aoi12 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi12)}
+\NormalTok{aoi13 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi13)}
+\NormalTok{aoi14 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi14)}
+\NormalTok{aoi15 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi15)}
+\NormalTok{aoi16 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi16)}
+\NormalTok{aoi17 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi17)}
+\NormalTok{aoi18 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi18)}
+\NormalTok{aoi19 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi19)}
+\NormalTok{aoi20 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi20)}
+\NormalTok{aoi21 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi21)}
+\NormalTok{aoi22 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi22)}
+\NormalTok{aoi23 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi23)}
+\NormalTok{aoi24 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi24)}
+\NormalTok{aoi25 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi25)}
+\NormalTok{aoi26 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi26)}
+\NormalTok{aoi27 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi27)}
+\NormalTok{aoi28 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi28)}
+\NormalTok{aoi29 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi29)}
+\NormalTok{aoi30 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi30)}
+\NormalTok{aoi31 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi31)}
+\NormalTok{aoi32 <-}\StringTok{ }\KeywordTok{aoi.emsi}\NormalTok{(aoi32)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{merge-landsat-5-7-8-and-sentinel-2-time-series}{%
+\subsubsection{Merge Landsat 5, 7, 8, and Sentinel-2 time
+series}\label{merge-landsat-5-7-8-and-sentinel-2-time-series}}
+
+This code block creates a single data.frame with all of the NDVI time
+series. Currently, it is commented out to limit the effect of Sentinel-2
+cloud artifacts in the mean NDVI calculation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#all1 <- rbind(aoi1,aoi2,aoi3,aoi4)}
+\CommentTok{#all2 <- rbind(aoi5,aoi6,aoi7,aoi8)}
+\CommentTok{#all3 <- rbind(aoi9,aoi10,aoi11,aoi12)}
+\CommentTok{#all4 <- rbind(aoi13,aoi14,aoi15,aoi16)}
+\CommentTok{#all5 <- rbind(aoi17,aoi18,aoi19,aoi20)}
+\CommentTok{#all6 <- rbind(aoi21,aoi22,aoi23,aoi24)}
+\CommentTok{#all7 <- rbind(aoi25,aoi26,aoi27,aoi28)}
+\CommentTok{#all8 <- rbind(aoi29,aoi30,aoi31,aoi32)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{merge-landsat-5-7-8-time-series}{%
+\subsubsection{Merge Landsat 5, 7, 8 time
+series}\label{merge-landsat-5-7-8-time-series}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{all1 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(aoi1,aoi2,aoi3)}
+\NormalTok{all2 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(aoi5,aoi6,aoi7)}
+\NormalTok{all3 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(aoi9,aoi10,aoi11)}
+\NormalTok{all4 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(aoi13,aoi14,aoi15)}
+\NormalTok{all5 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(aoi17,aoi18,aoi19)}
+\NormalTok{all6 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(aoi21,aoi22,aoi23)}
+\NormalTok{all7 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(aoi25,aoi26,aoi27)}
+\NormalTok{all8 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(aoi29,aoi30,aoi31)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{calculate-the-loess-regression-spine-for-the-mean-ndvi-and}{%
+\subsection{Calculate the Loess regression spine for the mean NDVI
+and}\label{calculate-the-loess-regression-spine-for-the-mean-ndvi-and}}
+
+We use a \texttt{loess} regression to show the running mean for the NDVI
+and EMSI time series. \#\#\# Okavango
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate mean NDVI for Julian period in Shrubland}
+\NormalTok{ndvi_mean_shrubland <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{)}
+\NormalTok{ndvi_mean_shrubland}\OperatorTok{$}\NormalTok{l5 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi1}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi1}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_shrubland}\OperatorTok{$}\NormalTok{l7 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi2}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi2}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_shrubland}\OperatorTok{$}\NormalTok{l8 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi3}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi3}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_shrubland}\OperatorTok{$}\NormalTok{s2 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi4}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi4}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_shrubland}\OperatorTok{$}\NormalTok{all <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(all1}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(all1}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate mean NDVI for Julian period in Swamp}
+\NormalTok{ndvi_mean_swamp <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{)}
+\NormalTok{ndvi_mean_swamp}\OperatorTok{$}\NormalTok{l5 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi5}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi5}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_swamp}\OperatorTok{$}\NormalTok{l7 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi6}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi6}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_swamp}\OperatorTok{$}\NormalTok{l8 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi7}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi7}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_swamp}\OperatorTok{$}\NormalTok{s2 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi8}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi8}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_swamp}\OperatorTok{$}\NormalTok{all <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(all2}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(all2}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{us-mexico}{%
+\subsubsection{US Mexico}\label{us-mexico}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate mean NDVI for Julian period in Mexico}
+\NormalTok{ndvi_mean_grassmx <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{)}
+\NormalTok{ndvi_mean_grassmx}\OperatorTok{$}\NormalTok{l5 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi9}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi9}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_grassmx}\OperatorTok{$}\NormalTok{l7 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi10}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi10}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_grassmx}\OperatorTok{$}\NormalTok{l8 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi11}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi11}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_grassmx}\OperatorTok{$}\NormalTok{s2 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi12}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi12}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_grassmx}\OperatorTok{$}\NormalTok{all <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(all3}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(all3}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate mean NDVI for Julian period in USA}
+\NormalTok{ndvi_mean_grassus <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{)}
+\NormalTok{ndvi_mean_grassus}\OperatorTok{$}\NormalTok{l5 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi13}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi13}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_grassus}\OperatorTok{$}\NormalTok{l7 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi14}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi14}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_grassus}\OperatorTok{$}\NormalTok{l8 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi15}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi15}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_grassus}\OperatorTok{$}\NormalTok{s2 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi16}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi16}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_grassus}\OperatorTok{$}\NormalTok{all <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(all4}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(all4}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{acre}{%
+\subsubsection{Acre}\label{acre}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate mean NDVI for Julian period in Agricultural}
+\NormalTok{ndvi_mean_ag <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{)}
+\NormalTok{ndvi_mean_ag}\OperatorTok{$}\NormalTok{l5 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi17}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi17}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_ag}\OperatorTok{$}\NormalTok{l7 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi18}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi18}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_ag}\OperatorTok{$}\NormalTok{l8 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi19}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi19}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_ag}\OperatorTok{$}\NormalTok{s2 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi20}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi20}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_ag}\OperatorTok{$}\NormalTok{all <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(all5}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(all5}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate mean NDVI for Julian period in Rainforest}
+\NormalTok{ndvi_mean_rainforest <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{)}
+\NormalTok{ndvi_mean_rainforest}\OperatorTok{$}\NormalTok{l5 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi21}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi21}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_rainforest}\OperatorTok{$}\NormalTok{l7 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi22}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi22}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_rainforest}\OperatorTok{$}\NormalTok{l8 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi23}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi23}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_rainforest}\OperatorTok{$}\NormalTok{s2 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi24}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi24}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_rainforest}\OperatorTok{$}\NormalTok{all <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(all6}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(all6}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{yakutia}{%
+\subsubsection{Yakutia}\label{yakutia}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate mean NDVI for Julian period in Taiga}
+\NormalTok{ndvi_mean_taiga <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{)}
+\NormalTok{ndvi_mean_taiga}\OperatorTok{$}\NormalTok{l5 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi25}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi25}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_taiga}\OperatorTok{$}\NormalTok{l7 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi26}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi26}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_taiga}\OperatorTok{$}\NormalTok{l8 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi27}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi27}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_taiga}\OperatorTok{$}\NormalTok{s2 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi28}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi28}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_taiga}\OperatorTok{$}\NormalTok{all <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(all7}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(all7}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate mean NDVI for Julian period in Alaas}
+\NormalTok{ndvi_mean_alaas <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{)}
+\NormalTok{ndvi_mean_alaas}\OperatorTok{$}\NormalTok{l5 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi29}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi29}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_alaas}\OperatorTok{$}\NormalTok{l7 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi30}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi30}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_alaas}\OperatorTok{$}\NormalTok{l8 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi31}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi31}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_alaas}\OperatorTok{$}\NormalTok{s2 <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(aoi32}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(aoi32}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\NormalTok{ndvi_mean_alaas}\OperatorTok{$}\NormalTok{all <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{aggregate}\NormalTok{(all8}\OperatorTok{$}\NormalTok{ndvi_range, }\KeywordTok{list}\NormalTok{(all8}\OperatorTok{$}\NormalTok{julian_rounded), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{na.action=}\OtherTok{NULL}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\StringTok{"julian"}\NormalTok{, }\StringTok{"ndvi_mean"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{plot-scene-frequency-histograms}{%
+\subsection{Plot Scene Frequency
+Histograms}\label{plot-scene-frequency-histograms}}
+
+Histograms show the frequency of scences that are available to derive
+mean values.
+
+To plot additional histograms, change the \texttt{aoi} to another
+example area.
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-19-1.pdf}
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-19-2.pdf}
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-19-3.pdf}
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-19-4.pdf}
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-19-5.pdf}
+
+\hypertarget{plot-time-series}{%
+\section{Plot Time Series}\label{plot-time-series}}
+
+Create sets of time series plots for the Julian dates
+
+\hypertarget{okavango-thornscrub-with-legend}{%
+\subsubsection{Okavango Thornscrub with
+Legend}\label{okavango-thornscrub-with-legend}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\hypertarget{htmlwidget-2b073ffb3961375f86a4}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{okavango-thornscrub}{%
+\subsubsection{Okavango Thornscrub}\label{okavango-thornscrub}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+\hypertarget{htmlwidget-79ea5715cc276b3cd47a}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{okavango-swamp}{%
+\subsubsection{Okavango Swamp}\label{okavango-swamp}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\hypertarget{htmlwidget-fd469c644fb84d280e04}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{us-mex-border-mexico}{%
+\subsubsection{US-Mex Border Mexico}\label{us-mex-border-mexico}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\hypertarget{htmlwidget-b26c959b796d5aecd9cd}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{us-mex-border-usa}{%
+\subsubsection{US-Mex Border USA}\label{us-mex-border-usa}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+\hypertarget{htmlwidget-1e1776bc6607d6444610}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{acre-agriculture}{%
+\subsubsection{Acre Agriculture}\label{acre-agriculture}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-25-1.pdf}
+
+\hypertarget{htmlwidget-26c919c39df417c8e5f9}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{acre-rainforest}{%
+\subsubsection{Acre Rainforest}\label{acre-rainforest}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-26-1.pdf}
+
+\hypertarget{htmlwidget-adddb9d9579a3127db97}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{yakutia-taiga}{%
+\subsubsection{Yakutia Taiga}\label{yakutia-taiga}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+\hypertarget{htmlwidget-c9a5e29748559a8f7acd}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{yakutia-alaas}{%
+\subsubsection{Yakutia Alaas}\label{yakutia-alaas}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-28-1.pdf}
+
+\hypertarget{htmlwidget-93c1580a7053b86e33bb}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{okavango-thornscrub-1}{%
+\subsubsection{Okavango Thornscrub}\label{okavango-thornscrub-1}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+\hypertarget{htmlwidget-866a1e9c6c933af3d38e}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{okavango-swamp-1}{%
+\subsubsection{Okavango Swamp}\label{okavango-swamp-1}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-30-1.pdf}
+
+\hypertarget{htmlwidget-c1b8f194c92d455798e2}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{mexico-grassland}{%
+\subsubsection{Mexico Grassland}\label{mexico-grassland}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-31-1.pdf}
+
+\hypertarget{htmlwidget-ca079151cbf6cf9334da}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{usa-grassland}{%
+\subsubsection{USA Grassland}\label{usa-grassland}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+\hypertarget{htmlwidget-450511c6d3ef593b1f8d}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{acre-agriculture-1}{%
+\subsubsection{Acre Agriculture}\label{acre-agriculture-1}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-33-1.pdf}
+
+\hypertarget{htmlwidget-16791988ecb1a6cd2575}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{acre-rainforest-1}{%
+\subsubsection{Acre Rainforest}\label{acre-rainforest-1}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-34-1.pdf}
+
+\hypertarget{htmlwidget-0a6658adaa47528052a6}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{yakutia-taiga-1}{%
+\subsubsection{Yakutia Taiga}\label{yakutia-taiga-1}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-35-1.pdf}
+
+\hypertarget{htmlwidget-59bd6d40a3e0866375b0}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{yakutia-alaas-1}{%
+\subsubsection{Yakutia Alaas}\label{yakutia-alaas-1}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-36-1.pdf}
+
+\hypertarget{htmlwidget-abcac8ae7ecd1dd5771f}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{plot-all-julian-ndvi-and-emsi}{%
+\subsection{Plot all Julian NDVI and
+EMSI}\label{plot-all-julian-ndvi-and-emsi}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-37-1.pdf}
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-37-2.pdf}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-38-1.pdf}
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-38-2.pdf}
+\# NDVI Time Series
+
+These plot use the calendar dates to create NDVI time series \#\#\#
+Okavango Thornscrub
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-39-1.pdf}
+
+\hypertarget{htmlwidget-ddd8eb5b5c51c3f8f527}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{okavango-swamp-2}{%
+\subsubsection{Okavango Swamp}\label{okavango-swamp-2}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-40-1.pdf}
+
+\hypertarget{htmlwidget-a9a424091c47fc9ffa81}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{mexico-grassland-1}{%
+\subsubsection{Mexico Grassland}\label{mexico-grassland-1}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-41-1.pdf}
+
+\hypertarget{htmlwidget-04de02b040be5f09cd6a}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{usa-grassland-1}{%
+\subsubsection{USA Grassland}\label{usa-grassland-1}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-42-1.pdf}
+
+\hypertarget{htmlwidget-0e026846a385bb3a79ac}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{acre-agriculture-2}{%
+\subsubsection{Acre Agriculture}\label{acre-agriculture-2}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-43-1.pdf}
+
+\hypertarget{htmlwidget-ff9585b107a18dc5c83f}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{acre-rainforest-2}{%
+\subsubsection{Acre Rainforest}\label{acre-rainforest-2}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-44-1.pdf}
+
+\hypertarget{htmlwidget-0040ec9b5f36076c8a3b}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{yakutia-taiga-2}{%
+\subsubsection{Yakutia Taiga}\label{yakutia-taiga-2}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-45-1.pdf}
+
+\hypertarget{htmlwidget-43b13671f6137b6a7d40}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{yakutia-alaas-2}{%
+\subsubsection{Yakutia Alaas}\label{yakutia-alaas-2}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-46-1.pdf}
+
+\hypertarget{htmlwidget-fa614feb6b231bb2ba26}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{emsi-time-series}{%
+\section{EMSI Time Series}\label{emsi-time-series}}
+
+These plot use the calendar dates to create EVI time series \#\#\#
+Okavango Thornscrub
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-47-1.pdf}
+
+\hypertarget{htmlwidget-4b998d149a45084297db}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{okavango-swamp-3}{%
+\subsubsection{Okavango Swamp}\label{okavango-swamp-3}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-48-1.pdf}
+
+\hypertarget{htmlwidget-68834d32986c6d42fed3}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{mexico-grassland-2}{%
+\subsubsection{Mexico Grassland}\label{mexico-grassland-2}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-49-1.pdf}
+
+\hypertarget{htmlwidget-f99b2439727905eaee73}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{usa-grassland-2}{%
+\subsubsection{USA Grassland}\label{usa-grassland-2}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-50-1.pdf}
+
+\hypertarget{htmlwidget-6070a9b732cc7f101d5b}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{acre-agriculture-3}{%
+\subsubsection{Acre Agriculture}\label{acre-agriculture-3}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-51-1.pdf}
+
+\hypertarget{htmlwidget-e3090adce76f3ebf7fc4}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{acre-rainforest-3}{%
+\subsubsection{Acre Rainforest}\label{acre-rainforest-3}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-52-1.pdf}
+
+\hypertarget{htmlwidget-588914b52f32cf781384}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{yakutia-taiga-3}{%
+\subsubsection{Yakutia Taiga}\label{yakutia-taiga-3}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-53-1.pdf}
+
+\hypertarget{htmlwidget-68dc6c1326533dcd4753}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{yakutia-alaas-3}{%
+\subsubsection{Yakutia Alaas}\label{yakutia-alaas-3}}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-54-1.pdf}
+
+\hypertarget{htmlwidget-606f69d39ccf38be3fff}{}
+\begin{plotly}
+
+\end{plotly}
+
+\hypertarget{plot-all-calendar-ndvi-and-emsi}{%
+\subsubsection{Plot all Calendar NDVI and
+EMSI}\label{plot-all-calendar-ndvi-and-emsi}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m1 <-}\StringTok{ }\KeywordTok{multiplot}\NormalTok{(emsi_shrubland, ndvi_shrubland, emsi_swamp, ndvi_swamp, emsi_grassmx, ndvi_grassmx, emsi_grassus, ndvi_grassus, }\DataTypeTok{cols=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : k-d tree limited by memory. ncmax= 418
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 5 rows containing missing values (geom_point).
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : k-d tree limited by memory. ncmax= 415
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 3 rows containing missing values (geom_point).
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+## `geom_smooth()` using formula 'y ~ x'
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-55-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m2 <-}\StringTok{ }\KeywordTok{multiplot}\NormalTok{(emsi_acreag, ndvi_acreag, emsi_acrerainforest, ndvi_acrerainforest, emsi_taiga, ndvi_taiga, emsi_alaas, ndvi_alaas, }\DataTypeTok{cols=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 21 rows containing missing values (geom_point).
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : k-d tree limited by memory. ncmax= 463
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 13 rows containing missing values (geom_point).
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : k-d tree limited by memory. ncmax= 476
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : pseudoinverse used at 17327
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : neighborhood radius 8
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : reciprocal condition number 5.0191e-17
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : k-d tree limited by memory. ncmax= 312
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 rows containing missing values (geom_point).
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : pseudoinverse used at 17327
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : neighborhood radius 8
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : reciprocal condition number 5.0191e-17
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : k-d tree limited by memory. ncmax= 313
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : k-d tree limited by memory. ncmax= 300
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : k-d tree limited by memory. ncmax= 300
+\end{verbatim}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-55-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m1 <-}\StringTok{ }\KeywordTok{multiplot}\NormalTok{(emsi_shrubland, ndvi_shrubland,}\DataTypeTok{cols=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : k-d tree limited by memory. ncmax= 418
+\end{verbatim}
+
+\includegraphics{fig5_fig6_ndvi_emsi_files/figure-latex/unnamed-chunk-56-1.pdf}
+
+\end{document}
