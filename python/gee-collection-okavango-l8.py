@@ -6,12 +6,14 @@ import ee
 
 ee.Initialize()
 
+## Polygon area for extraction
 geom=ee.Geometry.Polygon(
-        [[[21.870, -18.730],
+       [[[21.870, -18.730],
           [21.870, -19.510],
           [22.840, -19.510],
           [22.840, -18.730]]])
 
+## Landsat 8 Collection
 l8=ee.ImageCollection('LANDSAT/LC08/C01/T1_SR').filterDate('2013-01-01', '2021-03-01').filterBounds(geom)
 
 def exportCollectionToDrive (userCollection,folderName):
@@ -26,7 +28,7 @@ def exportCollectionToDrive (userCollection,folderName):
         task = ee.batch.Export.image.toDrive(
             image = img.normalizedDifference(['B5', 'B4']).rename('NDVI').toFloat(),
             description = fileName,
-            folder = 'gee-collection-okavango-landsat8',
+            folder = 'gee-collection-okavango-landsat8-2021',
             maxPixels = 1e13,
             region = fileGeometry,
             scale = 30)
@@ -42,4 +44,4 @@ def exportCollectionToDrive (userCollection,folderName):
 
     print('Finished exporting data')
     print('')
-exportCollectionToDrive(userCollection=l8, folderName="gee-collection-okavango-landsat8")
+exportCollectionToDrive(userCollection=l8, folderName="gee-collection-okavango-landsat8-2021")

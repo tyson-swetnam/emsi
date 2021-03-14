@@ -7,7 +7,6 @@ import ee
 ee.Initialize()
 
 ## Polygon area for extraction
-## Polygon area for extraction
 geom=ee.Geometry.Polygon(
        [[[120.080, 63.590],
           [120.080, 63.160],
@@ -15,10 +14,10 @@ geom=ee.Geometry.Polygon(
           [121.280, 63.590]]])
 
 ## Landsat 5 Collection
-l5=ee.ImageCollection('LANDSAT/LT05/C01/T1_SR').filterDate('1984-01-01', '1998-01-01').filterBounds(geom)
+l5=ee.ImageCollection('LANDSAT/LT05/C01/T1_SR').filterDate('1984-01-01', '2011-11-30').filterBounds(geom)
 
 def exportCollectionToDrive (userCollection,folderName):
-    userCollection2=userCollection#.map(toals)
+    userCollection2=userCollection
     imageList = ee.List(userCollection2.toList(userCollection2.size().add(1)))
     length = userCollection2.size().getInfo()
     print(length)
@@ -51,12 +50,11 @@ def exportCollectionToDrive (userCollection,folderName):
             task = ee.batch.Export.image.toDrive(
                 image = img.normalizedDifference(['B4', 'B3']).rename('NDVI').toFloat(),
                 description = fileName,
-                folder = 'gee-collection-yakutia-landsat5',
+                folder = 'gee-collection-yakutia-landsat5-2021',
                 maxPixels = 1e13,
                 region = fileGeometry,
                 scale = 30)
             task.start()
-
 
     index = 0
     while index < length:
@@ -68,4 +66,4 @@ def exportCollectionToDrive (userCollection,folderName):
 
     print('Finished exporting data')
     print('')
-exportCollectionToDrive(userCollection=l5, folderName="gee-collection-yakutia-landsat5")
+exportCollectionToDrive(userCollection=l5, folderName="gee-collection-yakutia-landsat5-2021")

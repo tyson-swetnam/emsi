@@ -8,13 +8,13 @@ ee.Initialize()
 
 ## Polygon area for extraction
 geom=ee.Geometry.Polygon(
-       [[[21.870, -18.730],
-          [21.870, -19.510],
-          [22.840, -19.510],
-          [22.840, -18.730]]])
+       [[[-72.050, -9.128],
+          [-72.050, -9.235],
+          [-71.916, -9.235],
+          [-71.916, -9.128]]])
 
-## Landsat 7 Collection
-l7=ee.ImageCollection('LANDSAT/LE07/C01/T1_SR').filterDate('1999-01-01', '2021-03-01').filterBounds(geom)
+## Landsat 5 Collection
+l5=ee.ImageCollection('users/samapriya/emsi/multiband_okavango').filterDate('1984-01-01', '2021-03-01').filterBounds(geom)
 
 def exportCollectionToDrive (userCollection,folderName):
     userCollection2=userCollection#.map(toals)
@@ -46,11 +46,11 @@ def exportCollectionToDrive (userCollection,folderName):
         imgp=ee.Number(imgarea.get(band)).multiply(sc).multiply(sc).divide(area)
 
         ##Check for overlap
-        if imgp.getInfo()>=0.7:
+        if imgp.getInfo()>=0.8:
             task = ee.batch.Export.image.toDrive(
                 image = img.normalizedDifference(['B4', 'B3']).rename('NDVI').toFloat(),
                 description = fileName,
-                folder = 'gee-collection-okavango-landsat7-2021',
+                folder = 'gee-collection-acre-landsat5-2021',
                 maxPixels = 1e13,
                 region = fileGeometry,
                 scale = 30)
@@ -67,4 +67,4 @@ def exportCollectionToDrive (userCollection,folderName):
 
     print('Finished exporting data')
     print('')
-exportCollectionToDrive(userCollection=l7, folderName="gee-collection-okavango-landsat7-2021")
+exportCollectionToDrive(userCollection=l5, folderName="gee-collection-acre-landsat5-2021")

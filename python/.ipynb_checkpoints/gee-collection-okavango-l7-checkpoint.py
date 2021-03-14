@@ -50,7 +50,7 @@ def exportCollectionToDrive (userCollection,folderName):
             task = ee.batch.Export.image.toDrive(
                 image = img.normalizedDifference(['B4', 'B3']).rename('NDVI').toFloat(),
                 description = fileName,
-                folder = 'gee-collection-okavango-landsat7',
+                folder = 'gee-collection-okavango-landsat7-2021',
                 maxPixels = 1e13,
                 region = fileGeometry,
                 scale = 30)
@@ -67,4 +67,4 @@ def exportCollectionToDrive (userCollection,folderName):
 
     print('Finished exporting data')
     print('')
-exportCollectionToDrive(userCollection=l7, folderName="gee-collection-okavango-landsat7")
+exportCollectionToDrive(userCollection=l7, folderName="gee-collection-okavango-landsat7-2021")
