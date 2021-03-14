@@ -4,7 +4,7 @@ These data are also hosted as .html on CyVerse data store:
 
 https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/rmd/fig5_fig6_ndvi_emsi.html
 
-## Study sites Raster analyses
+# Study sites Raster analyses
 
 https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/rmd/acre-rasters-analyses.html
 
