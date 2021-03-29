@@ -5,3 +5,4 @@
 data/collections/*
 rmd/figures/*
 .html
+.ipynb_checkpoints
