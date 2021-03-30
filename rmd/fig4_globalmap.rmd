@@ -82,7 +82,7 @@ ggplot() + geom_polygon(data = map.world,  aes(x=long, y = lat, group = group), 
 
 ```{r, include=FALSE}
 # Save the map
-system('mkdir ~/emsi/rmd/figures')
+system('mkdir -p ~/emsi/rmd/figures')
 ggsave('~/emsi/rmd/figures/world_map_fig3.png', width = 8.5, dpi = 300, bg = "transparent")
 ```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
