@@ -54,6 +54,12 @@ The JavaScript code used within [Earth Engine Code UI](https://code.earthengine.
 You can also clone the repo scripts for Earth Engine directly by running:
 
 ```
+git clone https://earthengine.googlesource.com/users/tswetnam/emsi
+```
+
+Calculate and export EMSI time series videos from GEE:
+
+```
 git clone https://earthengine.googlesource.com/users/samapriya/emsi-utils
 ```
 
