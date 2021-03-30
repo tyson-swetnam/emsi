@@ -48,9 +48,9 @@ Dockerfiles w/ automated container builds hosted on [![DockerHub](https://img.sh
 
 Container can be run on [CyVerse Discovery Environment](https://de.cyverse.org)
 
-quick launch | tag | size | metrics | build | 
------------- | --- | ---- | ------- | ------|
-<a href="https://sonora.cyverse.org/apps/de/6943b4f2-b663-11ea-92c5-008cfa5ae621/launch?quick-launch-id=31dcb760-f872-4c1a-850a-a4a6a25febc4" target="_blank" rel="noopener noreferrer"><img src="https://sonora.cyverse.org/Powered-By-CyVerse-blue.svg"></a>| [![TAG](https://images.microbadger.com/badges/version/cyversevice/rstudio-geospatial.svg)](https://microbadger.com/images/cyversevice/rstudio-geospatial) | [![SIZE](https://images.microbadger.com/badges/image/cyversevice/rstudio-geospatial.svg)](https://microbadger.com/images/cyversevice/rstudio-geospatial) | [![Docker Pulls](https://img.shields.io/docker/pulls/cyversevice/rstudio-geospatial?color=blue&logo=docker&logoColor=white)](https://hub.docker.com/r/cyversevice/rstudio-geospatial) | [![Docker Automated build](https://img.shields.io/docker/automated/cyversevice/rstudio-geospatial.svg)](https://hub.docker.com/r/cyversevice/rstudio-geospatial/builds) 
+quick launch | 
+------------ | 
+<a href="https://sonora.cyverse.org/apps/de/6943b4f2-b663-11ea-92c5-008cfa5ae621/launch?quick-launch-id=31dcb760-f872-4c1a-850a-a4a6a25febc4" target="_blank" rel="noopener noreferrer"><img src="https://sonora.cyverse.org/Powered-By-CyVerse-blue.svg"></a> | 
 
 Other CyVerse VICE images: https://github.com/cyverse-vice 
 
