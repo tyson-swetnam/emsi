@@ -80,7 +80,3 @@ These Rmd are also hosted as HTML on the CyVerse Data Store
 ### /python
 
 Python `.py` files for extracting image collections to Google Drive.
-
-### Quickstart
-
-Start a [CyVerse](https://cyverse.org) cloud instance on Atmosphere and provision it with [Earth Engine API](atmo.md)
