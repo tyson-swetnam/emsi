@@ -12,11 +12,11 @@ Co-Authors: [Donald A. Falk](https://snre.arizona.edu/people/donald-falk) [![](h
 
 ## Contents
 
-The repository is organized (in the attempt) to enable reproducible research. 
+The repository is organized (in the attempt) to enable reproducible research as part of the [FAIR data principles](). 
 
-You can (re)run our analyses using your own computer or cloud-based data science workbench, e.g., [CyVerse](https://cyverse.org) Discovery Environment. 
+You can (re)run the analyses using your own computer, or the cloud data science workbench [CyVerse](https://cyverse.org) Discovery Environment. 
 
-See our [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for additional details
+See our [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for additional details.
 
 ### /data
 
@@ -51,9 +51,22 @@ Notebooks (Python3) for data analyses and extraction with GEE & Planet Labs enab
 
 The JavaScript code used within [Earth Engine Code UI](https://code.earthengine.google.com/) for the intial time series point extractions, cloud-free NDVI calculations, and EMSI calculations within GEE.
 
+You can also clone the repo scripts for Earth Engine directly by running:
+
+```
+git clone https://earthengine.googlesource.com/users/samapriya/emsi-utils
+```
+
 ### /rmd
 
 R Markdown files with statistical data analyses for figures in manuscript. 
+
+These Rmd are also hosted as HTML on the CyVerse Data Store
+
+[Okavango Delta example](https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/rmd/okavango-rasters-analyses.html)
+[US-Mexico Border grasslands example](https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/rmd/usmex-rasters-analyses.html)
+[Acre Rainforest example](https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/rmd/acre-rasters-analyses.html)
+[Yakutia Taiga Forest example](https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi/rmd/yakutia-rasters-analyses.html)
 
 ### /python
 
