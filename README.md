@@ -18,6 +18,16 @@ You can (re)run the analyses using your own computer, or the cloud data science 
 
 See our [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for additional details.
 
+Clone the repo to your local or VM:
+
+```
+git clone https://github.com/tyson-swetnam/emsi
+```
+
+```
+gh repo clone tyson-swetnam/emsi
+```
+
 ### /data
 
 Tabular time series data presented in the manuscript. 
@@ -31,6 +41,8 @@ Additional derivative imagery layers from Google Earth Engine (GEE) are hosted o
 Original commercial imagery are available from [Planet.com](https://planet.com).
 
 ### /docker
+
+We are hosting RStudio Server containers on CyVerse for reproducing the Rmd figures.
 
 Dockerfiles w/ automated container builds hosted on [![DockerHub](https://img.shields.io/badge/DockerHub-blue.svg?style=popout&logo=Docker)](https://hub.docker.com/r/cyversevice/rstudio-geospatial) [![CircleCI](https://circleci.com/gh/cyverse-vice/rstudio-geospatial.svg?style=svg)](https://circleci.com/gh/cyverse-vice/rstudio-geospatial) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3246938.svg)](https://doi.org/10.5281/zenodo.3246938)
 
