@@ -12,11 +12,11 @@ Co-Authors: [Donald A. Falk](https://snre.arizona.edu/people/donald-falk) [![](h
 
 ## Contents
 
-The repository is organized (in the attempt) to enable reproducible research as part of the [FAIR data principles](). 
+The repository is organized (in the attempt) to enable reproducible research as part of the [FAIR data principles](https://www.go-fair.org/fair-principles/). 
 
-You can (re)run the analyses using your own computer, or the cloud data science workbench [CyVerse](https://cyverse.org) Discovery Environment. 
+You can (re)run these analyses using your own computer, on commercial cloud, or a data science workbench [CyVerse](https://cyverse.org) Discovery Environment. 
 
-See our [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for additional details.
+See our [Wiki](https://github.com/tyson-swetnam/emsi/wiki) for additional details on the background for this work.
 
 Clone the repo to your local or VM:
 
