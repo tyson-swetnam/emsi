@@ -56,7 +56,7 @@ Notebooks (Python3) for data analyses and extraction with GEE & Planet Labs enab
 
 ### /javascripts
 
-The JavaScript code used within [Earth Engine Code UI](https://code.earthengine.google.com/) for the intial time series point extractions, cloud-free NDVI calculations, and EMSI calculations within GEE.
+The JavaScript code used within [Earth Engine Code UI](https://code.earthengine.google.com/) for the intial time series point extractions, cloud-free NDVI calculations, and EMSI calculations within GEE. The [EMSI utils code repo could be found here](https://code.earthengine.google.com/?accept_repo=users/samapriya/emsi-utils) once added it should appear in your reader repositories. This contains code to generate a multiband EMSI product and to then generate a video from the multiband imagery.
 
 You can also clone the repo scripts for Earth Engine directly by running:
 
