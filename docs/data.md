@@ -6,7 +6,7 @@ Data are also hosted as [Google Earth Engine Collections](https://developers.goo
 
 Raster data downloads can be replicated using our example `/python/*.py` scripting and `/rmd/*.Rmd` notebooks in the GitHub.
 
-Previously extracted data are stored as `.csv` and geotiff `.tif` files on [CyVerse Data Store](https://data.cyverse.org/dav-anon/tswetnam/emsi).
+Previously extracted data are stored as `.csv` and geotiff `.tif` files on [CyVerse Data Store](https://data.cyverse.org/dav-anon/iplant/home/tswetnam/emsi).
 
 R Markdown notebooks are provided in this repo which will extract and render these data as figures used in the main text.
 
