@@ -2,7 +2,7 @@
 
 # EMSI (Ecosystem Moisture Stress Index)
 
-Code, example data, and manuscript supplemental materials which accompany **Swetnam et al. The Ecosystem Moisture Stress Index XXXX**
+Code, example data, and manuscript supplemental materials which accompany **Swetnam, T.L.; Yool, S.R.; Roy, S.; Falk, D.A. On the Use of Standardized Multi-Temporal Indices for Monitoring Disturbance and Ecosystem Moisture Stress across Multiple Earth Observation Systems in the Google Earth Engine. Remote Sens. 2021, 13, 1448. https://doi.org/10.3390/rs13081448**
 
 Lead Author: [Tyson Lee Swetnam](http://tyson-swetnam.github.io/) [![](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0002-6639-7181)
 
